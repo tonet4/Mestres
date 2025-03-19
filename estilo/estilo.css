@@ -1,8 +1,9 @@
 /* Variables para colores y fuentes */
 :root {
     --primary-color: #402110;
+    --accent-color : #C9CFD9;
     --secondary-color: #A66844;
-    --accent-color: #D9985F;
+   /* --accent-color: #D9985F;*/
     --text-color: #402110;
     --light-color: #F2BC8D;
     --dark-color: #333;
@@ -23,6 +24,11 @@
 }
 
 
+@font-face {
+    font-family:"fuente3";
+    src:  url(../fuentes/skolateka/skolateka.otf);
+}
+
 /* Estilos generales */
 * {
     margin: 0;
@@ -34,7 +40,7 @@ body {
     font-family: var(--font-main);
     color: var(--text-color);
     line-height: 1.6;
-    background-color: var(--light-color);
+    background-color: white;
 }
 
 a {
@@ -120,47 +126,57 @@ img {
     color: var(--primary-color);
 }
 
-/* Sección Hero */
-.hero {
-    display: flex;
-    padding: 80px 5%;
-    background-color: white;
-    align-items: center;
+/* Estilos para la sección de la imagen de Canva */
+.canva-section {
+    padding: 0;
+    width: 100%;
+    margin: 40px 0;
 }
 
-.hero-content {
-    flex: 1;
-    padding-right: 40px;
+.canva-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.hero-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: var(--secondary-color);
+.canva-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color: var(--text-color);
+/* Media queries para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .canva-section {
+        margin: 30px 0;
+    }
+    
+    .canva-container {
+        padding: 0 10px;
+    }
 }
 
-.hero-image {
-    flex: 1;
-    text-align: center;
+@media screen and (max-width: 480px) {
+    .canva-section {
+        margin: 20px 0;
+    }
 }
+
 
 /* Características */
 .features {
     padding: 60px 5%;
-    background-color: var(--light-color);
+    background-color: var(--accent-color);
     text-align: center;
 }
 
 .features h2 {
     margin-bottom: 50px;
     font-size: 2rem;
-    color: var(--secondary-color);
+    color: black;
+    font-family: "fuente3";
 }
 
 .feature-cards {
@@ -178,21 +194,98 @@ img {
     flex: 1 1 20%;
     min-width: 250px;
     transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card:hover {
     transform: translateY(-10px);
 }
 
+/* Estilos para los iconos de Font Awesome (mantenerlos por compatibilidad) */
 .card i {
     font-size: 3rem;
     color: var(--primary-color);
     margin-bottom: 20px;
 }
 
+/* Nuevos estilos para los iconos de imagen */
+.card-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+}
+
+.card-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 .card h3 {
     margin-bottom: 15px;
     color: var(--secondary-color);
+}
+
+/* Media queries para responsividad */
+@media screen and (max-width: 768px) {
+    .card-icon {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card-icon {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Contenedor para el título y la imagen */
+.title-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Estilos para la imagen del sol */
+.sun-image {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.sun-image img {
+    width: 100%;
+    height: auto;
+    animation: rotate 20s linear infinite;
+}
+
+/* Animación de rotación suave */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Media queries para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .sun-image {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sun-image {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 /* Footer */
