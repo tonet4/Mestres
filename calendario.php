@@ -20,7 +20,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <title>Calendario - QUADERN MESTRES</title>
     <link rel="stylesheet" href="./estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="./estilo/calendar.css?v=<?php echo time(); ?>">
+    <!--Biblioteca de iconos-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!--Biblioteca JS para realizar capturs de pantalla-->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>

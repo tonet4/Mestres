@@ -147,57 +147,56 @@ document.addEventListener('DOMContentLoaded', function() {
         return months[month];
     }
     
-    // Función para actualizar el título del calendario
-    // Modificación a la función updateCalendarTitle()
-function updateCalendarTitle() {
-    const firstDate = weekDates[0];
-    const lastDate = weekDates[4]; // Viernes
-    
-    // Formato de fecha: DD/MM/YY
-    const formatDateShort = (date) => {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear().toString().slice(-2);
-        return `${day}/${month}/${year}`;
-    };
-    
-    // Verificar si la semana abarca dos meses diferentes
-    let monthText;
-    if (firstDate.getMonth() === lastDate.getMonth()) {
-        monthText = getMonthName(firstDate.getMonth());
-    } else {
-        monthText = `${getMonthName(firstDate.getMonth())}-${getMonthName(lastDate.getMonth())}`;
-    }
-    
-    // Actualizar el título del calendario con el rango de fechas y el mes
-    calendarTitle.textContent = `${formatDateShort(firstDate)} - ${formatDateShort(lastDate)} (${monthText} ${firstDate.getFullYear()})`;
-    
-    // Actualizar los encabezados de los días con sus nombres y números
-    const dayHeaders = document.querySelectorAll('#week-day-headers th');
-    const dayNames = ['Hora', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
-    
-    for (let i = 1; i <= 5; i++) {  // Columnas 1-5 (Lunes a Viernes)
-        if (dayHeaders[i]) {
-            const date = weekDates[i-1];
-            const dayNum = date.getDate();
-            dayHeaders[i].innerHTML = `${dayNames[i]}<br>${dayNum}`;
+    // Función para actualizar el calendario
+    function updateCalendarTitle() {
+        const firstDate = weekDates[0];
+        const lastDate = weekDates[4]; // Viernes
+        
+        // Formato de fecha: DD/MM/YY
+        const formatDateShort = (date) => {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString().slice(-2);
+            return `${day}/${month}/${year}`;
+        };
+        
+        // Verificar si la semana abarca dos meses diferentes
+        let monthText;
+        if (firstDate.getMonth() === lastDate.getMonth()) {
+            monthText = getMonthName(firstDate.getMonth());
+        } else {
+            monthText = `${getMonthName(firstDate.getMonth())}-${getMonthName(lastDate.getMonth())}`;
+        }
+        
+        // Actualizar el título del calendario con el rango de fechas y el mes
+        calendarTitle.textContent = `${formatDateShort(firstDate)} - ${formatDateShort(lastDate)} (${monthText} ${firstDate.getFullYear()})`;
+        
+        // Actualizar los encabezados de los días con sus nombres y números
+        const dayHeaders = document.querySelectorAll('#week-day-headers th');
+        const dayNames = ['Hora', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+        
+        for (let i = 1; i <= 5; i++) {  // Columnas 1-5 (Lunes a Viernes)
+            if (dayHeaders[i]) {
+                const date = weekDates[i-1];
+                const dayNum = date.getDate();
+                dayHeaders[i].innerHTML = `${dayNames[i]}<br>${dayNum}`;
+            }
+        }
+        
+        // Actualizar los encabezados de los paneles de sábado y domingo con sus números de día
+        const saturdayHeader = document.querySelector('.panel:nth-child(2) .panel-header h3');
+        const sundayHeader = document.querySelector('.panel:nth-child(3) .panel-header h3');
+        
+        if (saturdayHeader && weekDates[5]) {
+            const saturdayNum = weekDates[5].getDate();
+            saturdayHeader.innerHTML = `Sábado <span class="day-number">${saturdayNum}</span>`;
+        }
+        
+        if (sundayHeader && weekDates[6]) {
+            const sundayNum = weekDates[6].getDate();
+            sundayHeader.innerHTML = `Domingo <span class="day-number">${sundayNum}</span>`;
         }
     }
-    
-    // Actualizar los encabezados de los paneles de sábado y domingo con sus números de día
-    const saturdayHeader = document.querySelector('.panel:nth-child(2) .panel-header h3');
-    const sundayHeader = document.querySelector('.panel:nth-child(3) .panel-header h3');
-    
-    if (saturdayHeader && weekDates[5]) {
-        const saturdayNum = weekDates[5].getDate();
-        saturdayHeader.innerHTML = `Sábado <span class="day-number">${saturdayNum}</span>`;
-    }
-    
-    if (sundayHeader && weekDates[6]) {
-        const sundayNum = weekDates[6].getDate();
-        sundayHeader.innerHTML = `Domingo <span class="day-number">${sundayNum}</span>`;
-    }
-}
     
     // Función para cargar las horas desde el servidor
     function loadHours() {
@@ -235,209 +234,208 @@ function updateCalendarTitle() {
     }
     
     // Función para cargar las notas y eventos de fin de semana
-    // Modificación a la función loadWeekContent
-function loadWeekContent() {
-    fetch(`get_week_content.php?week=${currentWeek}&year=${currentYear}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Procesar notas como array de objetos
-                if (data.notes) {
-                    try {
-                        // Verificar si data.notes ya es un objeto JSON
-                        if (typeof data.notes === 'string') {
-                            // Intentar parsear como JSON
-                            try {
-                                weekNotes = JSON.parse(data.notes);
-                            } catch (e) {
-                                // Si no es un JSON válido, crear una sola nota con el contenido
+    function loadWeekContent() {
+        fetch(`get_week_content.php?week=${currentWeek}&year=${currentYear}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Procesar notas como array de objetos
+                    if (data.notes) {
+                        try {
+                            // Verificar si data.notes ya es un objeto JSON
+                            if (typeof data.notes === 'string') {
+                                // Intentar parsear como JSON
+                                try {
+                                    weekNotes = JSON.parse(data.notes);
+                                } catch (e) {
+                                    // Si no es un JSON válido, crear una sola nota con el contenido
+                                    weekNotes = [{
+                                        id: 1,
+                                        text: data.notes
+                                    }];
+                                }
+                            } else if (Array.isArray(data.notes)) {
+                                // Si ya es un array, usarlo directamente
+                                weekNotes = data.notes;
+                            } else {
+                                // Si es otro tipo de objeto, convertirlo en texto
                                 weekNotes = [{
                                     id: 1,
-                                    text: data.notes
+                                    text: String(data.notes)
                                 }];
                             }
-                        } else if (Array.isArray(data.notes)) {
-                            // Si ya es un array, usarlo directamente
-                            weekNotes = data.notes;
-                        } else {
-                            // Si es otro tipo de objeto, convertirlo en texto
-                            weekNotes = [{
-                                id: 1,
-                                text: String(data.notes)
-                            }];
+                        } catch (e) {
+                            // En caso de cualquier error, crear una nota vacía
+                            weekNotes = [];
+                            console.error("Error al procesar notas:", e);
                         }
-                    } catch (e) {
-                        // En caso de cualquier error, crear una nota vacía
+                    } else {
                         weekNotes = [];
-                        console.error("Error al procesar notas:", e);
                     }
-                } else {
-                    weekNotes = [];
-                }
 
-                // Procesar eventos del sábado de manera similar
-                if (data.saturday) {
-                    try {
-                        if (typeof data.saturday === 'string') {
-                            try {
-                                saturdayEvents = JSON.parse(data.saturday);
-                            } catch (e) {
+                    // Procesar eventos del sábado de manera similar
+                    if (data.saturday) {
+                        try {
+                            if (typeof data.saturday === 'string') {
+                                try {
+                                    saturdayEvents = JSON.parse(data.saturday);
+                                } catch (e) {
+                                    saturdayEvents = [{
+                                        id: 1,
+                                        text: data.saturday
+                                    }];
+                                }
+                            } else if (Array.isArray(data.saturday)) {
+                                saturdayEvents = data.saturday;
+                            } else {
                                 saturdayEvents = [{
                                     id: 1,
-                                    text: data.saturday
+                                    text: String(data.saturday)
                                 }];
                             }
-                        } else if (Array.isArray(data.saturday)) {
-                            saturdayEvents = data.saturday;
-                        } else {
-                            saturdayEvents = [{
-                                id: 1,
-                                text: String(data.saturday)
-                            }];
+                        } catch (e) {
+                            saturdayEvents = [];
+                            console.error("Error al procesar eventos del sábado:", e);
                         }
-                    } catch (e) {
+                    } else {
                         saturdayEvents = [];
-                        console.error("Error al procesar eventos del sábado:", e);
                     }
-                } else {
-                    saturdayEvents = [];
-                }
 
-                // Procesar eventos del domingo de manera similar
-                if (data.sunday) {
-                    try {
-                        if (typeof data.sunday === 'string') {
-                            try {
-                                sundayEvents = JSON.parse(data.sunday);
-                            } catch (e) {
+                    // Procesar eventos del domingo de manera similar
+                    if (data.sunday) {
+                        try {
+                            if (typeof data.sunday === 'string') {
+                                try {
+                                    sundayEvents = JSON.parse(data.sunday);
+                                } catch (e) {
+                                    sundayEvents = [{
+                                        id: 1,
+                                        text: data.sunday
+                                    }];
+                                }
+                            } else if (Array.isArray(data.sunday)) {
+                                sundayEvents = data.sunday;
+                            } else {
                                 sundayEvents = [{
                                     id: 1,
-                                    text: data.sunday
+                                    text: String(data.sunday)
                                 }];
                             }
-                        } else if (Array.isArray(data.sunday)) {
-                            sundayEvents = data.sunday;
-                        } else {
-                            sundayEvents = [{
-                                id: 1,
-                                text: String(data.sunday)
-                            }];
+                        } catch (e) {
+                            sundayEvents = [];
+                            console.error("Error al procesar eventos del domingo:", e);
                         }
-                    } catch (e) {
+                    } else {
                         sundayEvents = [];
-                        console.error("Error al procesar eventos del domingo:", e);
                     }
-                } else {
-                    sundayEvents = [];
-                }
 
-                // Renderizar listas
-                renderNotesList(weekNotes, notesListContainer, 'note');
-                renderNotesList(saturdayEvents, saturdayListContainer, 'saturday');
-                renderNotesList(sundayEvents, sundayListContainer, 'sunday');
-            }
-        })
-        .catch(error => {
-            console.error('Error loading week content:', error);
-            showModal('Error', 'No se pudieron cargar los datos de la semana.');
-        });
-}
+                    // Renderizar listas
+                    renderNotesList(weekNotes, notesListContainer, 'note');
+                    renderNotesList(saturdayEvents, saturdayListContainer, 'saturday');
+                    renderNotesList(sundayEvents, sundayListContainer, 'sunday');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading week content:', error);
+                showModal('Error', 'No se pudieron cargar los datos de la semana.');
+            });
+    }
     
     
     // Función para renderizar listas de notas y eventos
-function renderNotesList(items, container, type) {
-    // Limpiar el contenedor
-    container.innerHTML = '';
-    
-    // Si no hay elementos o items es una cadena (probablemente JSON sin procesar)
-    if (!items || items.length === 0) {
-        const emptyMessage = document.createElement('div');
-        emptyMessage.className = 'empty-notes';
-        emptyMessage.textContent = `No hay ${type === 'note' ? 'notas' : 'eventos'} guardados.`;
-        container.appendChild(emptyMessage);
-        return;
-    }
-    
-    // Si los items están en formato de cadena, intentar convertirlos
-    if (typeof items === 'string') {
-        try {
-            // Primero intentamos decodificar caracteres HTML
-            const decodedString = decodeHTMLEntities(items);
-            
-            // Luego intentamos parsear como JSON
-            try {
-                items = JSON.parse(decodedString);
-            } catch (e) {
-                // Si no podemos parsear como JSON, creamos un solo item
-                items = [{
-                    id: 1,
-                    text: decodedString
-                }];
-            }
-        } catch (e) {
-            console.error('Error al procesar texto de notas:', e);
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-notes';
-            errorMessage.textContent = 'Error al cargar las notas. Por favor, actualiza la página.';
-            container.appendChild(errorMessage);
+    function renderNotesList(items, container, type) {
+        // Limpiar el contenedor
+        container.innerHTML = '';
+        
+        // Si no hay elementos o items es una cadena (probablemente JSON sin procesar)
+        if (!items || items.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.className = 'empty-notes';
+            emptyMessage.textContent = `No hay ${type === 'note' ? 'notas' : 'eventos'} guardados.`;
+            container.appendChild(emptyMessage);
             return;
         }
-    }
-    
-    // Ahora renderizamos los elementos
-    items.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'note-item';
-        itemElement.id = `${type}-${item.id}`;
-       // console.log(type + " " + item.id)
         
-        const textElement = document.createElement('div');
-        textElement.className = 'note-text';
-        
-        // Asegurarse de que el texto se decodifica correctamente si contiene entidades HTML
-        if (typeof item.text === 'string') {
-            textElement.textContent = decodeHTMLEntities(item.text);
-        } else {
-            textElement.textContent = String(item.text);
+        // Si los items están en formato de cadena, intentar convertirlos
+        if (typeof items === 'string') {
+            try {
+                // Primero intentamos decodificar caracteres HTML
+                const decodedString = decodeHTMLEntities(items);
+                
+                // Luego intentamos parsear como JSON
+                try {
+                    items = JSON.parse(decodedString);
+                } catch (e) {
+                    // Si no podemos parsear como JSON, creamos un solo item
+                    items = [{
+                        id: 1,
+                        text: decodedString
+                    }];
+                }
+            } catch (e) {
+                console.error('Error al procesar texto de notas:', e);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'error-notes';
+                errorMessage.textContent = 'Error al cargar las notas. Por favor, actualiza la página.';
+                container.appendChild(errorMessage);
+                return;
+            }
         }
         
-        const actionsElement = document.createElement('div');
-        actionsElement.className = 'note-actions';
-        
-        const editButton = document.createElement('button');
-        editButton.className = 'edit-note';
-        editButton.innerHTML = '<i class="fas fa-edit"></i>';
-        editButton.title = 'Editar';
-        editButton.addEventListener('click', function() {
-            editItem(type, item.id, textElement.textContent);
+        // Ahora renderizamos los elementos
+        items.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'note-item';
+            itemElement.id = `${type}-${item.id}`;
+        // console.log(type + " " + item.id)
+            
+            const textElement = document.createElement('div');
+            textElement.className = 'note-text';
+            
+            // Asegurarse de que el texto se decodifica correctamente si contiene entidades HTML
+            if (typeof item.text === 'string') {
+                textElement.textContent = decodeHTMLEntities(item.text);
+            } else {
+                textElement.textContent = String(item.text);
+            }
+            
+            const actionsElement = document.createElement('div');
+            actionsElement.className = 'note-actions';
+            
+            const editButton = document.createElement('button');
+            editButton.className = 'edit-note';
+            editButton.innerHTML = '<i class="fas fa-edit"></i>';
+            editButton.title = 'Editar';
+            editButton.addEventListener('click', function() {
+                editItem(type, item.id, textElement.textContent);
+            });
+            
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-note';
+            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteButton.title = 'Eliminar';
+            deleteButton.addEventListener('click', function() {
+                deleteItem(type, item.id);
+            });
+            
+            actionsElement.appendChild(editButton);
+            actionsElement.appendChild(deleteButton);
+            
+            itemElement.appendChild(textElement);
+            itemElement.appendChild(actionsElement);
+            
+            container.appendChild(itemElement);
         });
-        
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'delete-note';
-        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-        deleteButton.title = 'Eliminar';
-        deleteButton.addEventListener('click', function() {
-            deleteItem(type, item.id);
-        });
-        
-        actionsElement.appendChild(editButton);
-        actionsElement.appendChild(deleteButton);
-        
-        itemElement.appendChild(textElement);
-        itemElement.appendChild(actionsElement);
-        
-        container.appendChild(itemElement);
-    });
-}
+    }
 
-// Función auxiliar para decodificar entidades HTML
-function decodeHTMLEntities(text) {
-    if (!text || typeof text !== 'string') return text;
-    
-    const textArea = document.createElement('textarea');
-    textArea.innerHTML = text;
-    return textArea.value;
-}
+    // Función auxiliar para decodificar entidades HTML
+    function decodeHTMLEntities(text) {
+        if (!text || typeof text !== 'string') return text;
+        
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = text;
+        return textArea.value;
+    }
     
     // Función para renderizar el calendario
     function renderCalendar(hours) {
@@ -919,219 +917,163 @@ function decodeHTMLEntities(text) {
         });
     }
     
-   // Función para exportar el calendario como imagen
-// Función para exportar el calendario como imagen
-function exportCalendar() {
-    // Mostrar indicador de carga
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = 'loading-indicator';
-    loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando imagen...';
-    loadingIndicator.style.position = 'fixed';
-    loadingIndicator.style.top = '50%';
-    loadingIndicator.style.left = '50%';
-    loadingIndicator.style.transform = 'translate(-50%, -50%)';
-    loadingIndicator.style.padding = '20px';
-    loadingIndicator.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    loadingIndicator.style.color = 'white';
-    loadingIndicator.style.borderRadius = '5px';
-    loadingIndicator.style.zIndex = '9999';
-    document.body.appendChild(loadingIndicator);
-    
-    // Preparar el contenedor que queremos exportar
-    const exportContainer = document.createElement('div');
-    exportContainer.style.width = '1200px'; // Ancho fijo para mejor calidad
-    exportContainer.style.backgroundColor = 'white';
-    exportContainer.style.padding = '20px';
-    exportContainer.style.position = 'absolute';
-    exportContainer.style.left = '-9999px'; // Fuera de la vista
-    document.body.appendChild(exportContainer);
-    
-    // Añadir el título
-    const titleDiv = document.createElement('div');
-    titleDiv.style.textAlign = 'center';
-    titleDiv.style.marginBottom = '20px';
-    titleDiv.innerHTML = `
-        <div style="font-size: 24px; font-weight: bold; color: #3498db;">QUADERN MESTRES</div>
-        <div style="font-size: 18px; margin: 10px 0;">${calendarTitle.textContent}</div>
-    `;
-    exportContainer.appendChild(titleDiv);
-    
-    // Clonar la tabla del calendario
-    const calendarTable = document.querySelector('.calendar-table').cloneNode(true);
-    
-    // Eliminar botones y controles
-    const buttons = calendarTable.querySelectorAll('button');
-    buttons.forEach(button => button.remove());
-    
-    exportContainer.appendChild(calendarTable);
-    
-    // Añadir paneles inferiores
-    const panelsContainer = document.createElement('div');
-    panelsContainer.style.marginTop = '20px';
-    panelsContainer.style.display = 'flex';
-    panelsContainer.style.flexWrap = 'wrap';
-    panelsContainer.style.justifyContent = 'space-between';
-    
-    // Notas
-    const notesPanel = createPanel('Notas de la Semana', document.querySelector('#notes-list').cloneNode(true));
-    // Sábado
-    const saturdayPanel = createPanel('Sábado', document.querySelector('#saturday-list').cloneNode(true));
-    // Domingo
-    const sundayPanel = createPanel('Domingo', document.querySelector('#sunday-list').cloneNode(true));
-    
-    panelsContainer.appendChild(notesPanel);
-    panelsContainer.appendChild(saturdayPanel);
-    panelsContainer.appendChild(sundayPanel);
-    exportContainer.appendChild(panelsContainer);
-    
-    // Función para crear un panel
-    function createPanel(title, content) {
-        const panel = document.createElement('div');
-        panel.style.flex = '1';
-        panel.style.minWidth = '30%';
-        panel.style.marginRight = '10px';
-        panel.style.marginBottom = '10px';
-        panel.style.border = '1px solid #ddd';
-        panel.style.borderRadius = '5px';
+    // Función para exportar el calendario como imagen
+    function exportCalendar() {
+        // Mostrar indicador de carga
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'loading-indicator';
+        loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando imagen...';
+        document.body.appendChild(loadingIndicator);
         
-        const header = document.createElement('div');
-        header.style.backgroundColor = '#3498db';
-        header.style.color = 'white';
-        header.style.padding = '10px';
-        header.style.fontWeight = 'bold';
-        header.textContent = title;
+        // Preparar el contenedor que queremos exportar
+        const exportContainer = document.createElement('div');
+        exportContainer.className = 'export-container';
+        document.body.appendChild(exportContainer);
         
-        const body = document.createElement('div');
-        body.style.padding = '10px';
+        // Añadir el título
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'export-title';
+        titleDiv.innerHTML = `
+            <div class="export-title-main">QUADERN MESTRES</div>
+            <div class="export-title-sub">${calendarTitle.textContent}</div>
+        `;
+        exportContainer.appendChild(titleDiv);
         
-        // Limpiar contenido de botones y controles
-        const buttons = content.querySelectorAll('button');
+        // Clonar la tabla del calendario
+        const calendarTable = document.querySelector('.calendar-table').cloneNode(true);
+        
+        // Eliminar botones y controles
+        const buttons = calendarTable.querySelectorAll('button');
         buttons.forEach(button => button.remove());
         
-        body.appendChild(content);
-        panel.appendChild(header);
-        panel.appendChild(body);
+        exportContainer.appendChild(calendarTable);
         
-        return panel;
+        // Añadir paneles inferiores
+        const panelsContainer = document.createElement('div');
+        panelsContainer.className = 'export-panels-container';
+        
+        // Notas
+        const notesPanel = createPanel('Notas de la Semana', document.querySelector('#notes-list').cloneNode(true));
+        // Sábado
+        const saturdayPanel = createPanel('Sábado', document.querySelector('#saturday-list').cloneNode(true));
+        // Domingo
+        const sundayPanel = createPanel('Domingo', document.querySelector('#sunday-list').cloneNode(true));
+        
+        panelsContainer.appendChild(notesPanel);
+        panelsContainer.appendChild(saturdayPanel);
+        panelsContainer.appendChild(sundayPanel);
+        exportContainer.appendChild(panelsContainer);
+        
+        // Función para crear un panel
+        function createPanel(title, content) {
+            const panel = document.createElement('div');
+            panel.className = 'export-panel';
+            
+            const header = document.createElement('div');
+            header.className = 'export-panel-header';
+            header.textContent = title;
+            
+            const body = document.createElement('div');
+            body.className = 'export-panel-body';
+            
+            // Limpiar contenido de botones y controles
+            const buttons = content.querySelectorAll('button');
+            buttons.forEach(button => button.remove());
+            
+            body.appendChild(content);
+            panel.appendChild(header);
+            panel.appendChild(body);
+            
+            return panel;
+        }
+        
+        // Usar html2canvas para convertir a imagen
+        html2canvas(exportContainer, {
+            scale: 2, // Mayor escala para mejor calidad
+            useCORS: true, // Permitir recursos externos
+            logging: false, // Desactivar logs para mejor rendimiento
+            backgroundColor: '#ffffff' // Fondo blanco
+        }).then(canvas => {
+            // Eliminar el contenedor temporal
+            document.body.removeChild(exportContainer);
+            document.body.removeChild(loadingIndicator);
+            
+            // Crear modal para vista previa
+            const modalContainer = document.createElement('div');
+            modalContainer.className = 'export-preview-modal';
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'export-preview-content';
+            
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'export-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = function() {
+                document.body.removeChild(modalContainer);
+            };
+            
+            const title = document.createElement('h2');
+            title.className = 'export-preview-title';
+            title.textContent = 'Vista previa del calendario';
+            
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'export-image-container';
+            
+            // Hacer la imagen más pequeña para que quepa en la vista previa
+            const previewImg = document.createElement('img');
+            previewImg.className = 'export-preview-img';
+            previewImg.src = canvas.toDataURL('image/png');
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'export-download-btn';
+            downloadBtn.textContent = 'Descargar imagen';
+            downloadBtn.onclick = function() {
+                // Usar la API de blob para descarga segura
+                canvas.toBlob(function(blob) {
+                    // Crear URL temporal
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Crear enlace para descarga
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = url;
+                    downloadLink.download = `calendario_semana_${currentWeek}_${currentYear}_${Date.now()}.png`;
+                    
+                    // Añadir a documento, hacer clic y eliminar
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Cerrar el modal automáticamente
+                    document.body.removeChild(modalContainer);
+                    
+                    // Mostrar mensaje de éxito
+                    showModal('Éxito', 'Calendario exportado correctamente como imagen.');
+                    
+                    // Liberar la URL después de un momento
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                }, 'image/png', 1.0);
+            };
+            
+            imageContainer.appendChild(previewImg);
+            modalContent.appendChild(closeBtn);
+            modalContent.appendChild(title);
+            modalContent.appendChild(imageContainer);
+            modalContent.appendChild(downloadBtn);
+            modalContainer.appendChild(modalContent);
+            
+            document.body.appendChild(modalContainer);
+            
+        }).catch(error => {
+            console.error('Error exportando el calendario:', error);
+            document.body.removeChild(exportContainer);
+            document.body.removeChild(loadingIndicator);
+            showModal('Error', 'Error al exportar el calendario como imagen. Por favor, inténtelo de nuevo.');
+        });
     }
     
-    // Usar html2canvas para convertir a imagen
-    html2canvas(exportContainer, {
-        scale: 2, // Mayor escala para mejor calidad
-        useCORS: true, // Permitir recursos externos
-        logging: false, // Desactivar logs para mejor rendimiento
-        backgroundColor: '#ffffff' // Fondo blanco
-    }).then(canvas => {
-        // Eliminar el contenedor temporal
-        document.body.removeChild(exportContainer);
-        document.body.removeChild(loadingIndicator);
-        
-        // Crear modal para vista previa
-        const modalContainer = document.createElement('div');
-        modalContainer.className = 'modal export-preview-modal';
-        modalContainer.style.display = 'block';
-        modalContainer.style.position = 'fixed';
-        modalContainer.style.zIndex = '1000';
-        modalContainer.style.left = '0';
-        modalContainer.style.top = '0';
-        modalContainer.style.width = '100%';
-        modalContainer.style.height = '100%';
-        modalContainer.style.overflow = 'auto';
-        modalContainer.style.backgroundColor = 'rgba(0,0,0,0.7)';
-        
-        const modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
-        modalContent.style.backgroundColor = '#fefefe';
-        modalContent.style.margin = '5% auto';
-        modalContent.style.padding = '20px';
-        modalContent.style.border = '1px solid #888';
-        modalContent.style.width = '90%';
-        modalContent.style.maxWidth = '1000px';
-        modalContent.style.borderRadius = '5px';
-        modalContent.style.textAlign = 'center';
-        
-        const closeBtn = document.createElement('span');
-        closeBtn.innerHTML = '&times;';
-        closeBtn.style.color = '#aaa';
-        closeBtn.style.float = 'right';
-        closeBtn.style.fontSize = '28px';
-        closeBtn.style.fontWeight = 'bold';
-        closeBtn.style.cursor = 'pointer';
-        closeBtn.onclick = function() {
-            document.body.removeChild(modalContainer);
-        };
-        
-        const title = document.createElement('h2');
-        title.textContent = 'Vista previa del calendario';
-        title.style.marginBottom = '15px';
-        
-        const imageContainer = document.createElement('div');
-        imageContainer.style.marginBottom = '20px';
-        imageContainer.style.maxHeight = '70vh';
-        imageContainer.style.overflow = 'auto';
-        
-        // Hacer la imagen más pequeña para que quepa en la vista previa
-        const previewImg = document.createElement('img');
-        previewImg.src = canvas.toDataURL('image/png');
-        previewImg.style.maxWidth = '100%';
-        previewImg.style.border = '1px solid #ddd';
-        
-        const downloadBtn = document.createElement('button');
-        downloadBtn.textContent = 'Descargar imagen';
-        downloadBtn.style.backgroundColor = '#3498db';
-        downloadBtn.style.color = 'white';
-        downloadBtn.style.padding = '10px 20px';
-        downloadBtn.style.border = 'none';
-        downloadBtn.style.borderRadius = '5px';
-        downloadBtn.style.cursor = 'pointer';
-        downloadBtn.style.fontSize = '16px';
-        downloadBtn.onclick = function() {
-            // Usar la API de blob para descarga segura
-            canvas.toBlob(function(blob) {
-                // Crear URL temporal
-                const url = URL.createObjectURL(blob);
-                
-                // Crear enlace para descarga
-                const downloadLink = document.createElement('a');
-                downloadLink.href = url;
-                downloadLink.download = `calendario_semana_${currentWeek}_${currentYear}_${Date.now()}.png`;
-                
-                // Añadir a documento, hacer clic y eliminar
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                
-                // Cerrar el modal automáticamente
-                document.body.removeChild(modalContainer);
-                
-                // Mostrar mensaje de éxito
-                showModal('Éxito', 'Calendario exportado correctamente como imagen.');
-                
-                // Liberar la URL después de un momento
-                setTimeout(() => {
-                    URL.revokeObjectURL(url);
-                }, 1000);
-            }, 'image/png', 1.0);
-        };
-        
-        imageContainer.appendChild(previewImg);
-        modalContent.appendChild(closeBtn);
-        modalContent.appendChild(title);
-        modalContent.appendChild(imageContainer);
-        modalContent.appendChild(downloadBtn);
-        modalContainer.appendChild(modalContent);
-        
-        document.body.appendChild(modalContainer);
-        
-    }).catch(error => {
-        console.error('Error exportando el calendario:', error);
-        document.body.removeChild(exportContainer);
-        document.body.removeChild(loadingIndicator);
-        showModal('Error', 'Error al exportar el calendario como imagen. Por favor, inténtelo de nuevo.');
-    });
-}
-    
-    // Modal personalizado para reemplazar alerts
+    // Modal personalizado
     function showModal(title, message) {
         const modalContainer = document.createElement('div');
         modalContainer.className = 'modal custom-modal';
