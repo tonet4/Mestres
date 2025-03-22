@@ -60,7 +60,7 @@ try {
     $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
     $stmt->execute();
     $notas = $stmt->fetchAll();
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     $notas = [];
     // En producción, deberíamos registrar este error
     // error_log("Error al obtener notas: " . $e->getMessage());
@@ -70,25 +70,25 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'add') {
         $texto = limpiarDatos($_POST['nota_texto'] ?? '');
-        
+
         if (!empty($texto)) {
             try {
                 $stmt = $conn->prepare("INSERT INTO notas (usuario_id, texto) VALUES (:usuario_id, :texto)");
                 $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
                 $stmt->bindParam(':texto', $texto);
                 $stmt->execute();
-                
+
                 // Redireccionar para evitar reenvío de formulario
                 header('Location: dashboard.php');
                 exit;
-            } catch(PDOException $e) {
+            } catch (PDOException $e) {
                 // Manejo de error
             }
         }
     } elseif ($_POST['action'] === 'edit' && isset($_POST['nota_id'])) {
         $nota_id = (int)$_POST['nota_id'];
         $texto = limpiarDatos($_POST['nota_texto'] ?? '');
-        
+
         if (!empty($texto)) {
             try {
                 // Verificar que la nota pertenece al usuario
@@ -97,28 +97,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $stmt->bindParam(':id', $nota_id);
                 $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
                 $stmt->execute();
-                
+
                 // Redireccionar
                 header('Location: dashboard.php');
                 exit;
-            } catch(PDOException $e) {
+            } catch (PDOException $e) {
                 // Manejo de error
             }
         }
     } elseif ($_POST['action'] === 'delete' && isset($_POST['nota_id'])) {
         $nota_id = (int)$_POST['nota_id'];
-        
+
         try {
             // Verificar que la nota pertenece al usuario
             $stmt = $conn->prepare("UPDATE notas SET estado = 'eliminado' WHERE id = :id AND usuario_id = :usuario_id");
             $stmt->bindParam(':id', $nota_id);
             $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
             $stmt->execute();
-            
+
             // Redireccionar
             header('Location: dashboard.php');
             exit;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             // Manejo de error
         }
     }
@@ -126,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <link rel="stylesheet" href="./estilo/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -141,14 +143,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-            <div class="logo">QUADERN MESTRES</div>
+            <div class="logo">
+                <img src="img/logo2.png" alt="Logo Quadern Mestres">
+            </div>
+            <h1>QUADERN de Mestres</h1>
         </div>
         <div class="nav-right">
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($_SESSION['user_nombre']); ?></span>
             </div>
             <div class="logout-btn" onclick="location.href='logout.php'">
-                <i class="fas fa-sign-out-alt"></i>
+                <img src="./img/salida.png"></img>
             </div>
         </div>
     </nav>
@@ -213,14 +218,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                                 <div class="task-item" id="nota-<?php echo $nota['id']; ?>">
                                     <div class="task-text"><?php echo htmlspecialchars($nota['texto']); ?></div>
                                     <div class="task-actions">
-                                        <button class="edit-task" data-id="<?php echo $nota['id']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button class="delete-task" data-id="<?php echo $nota['id']; ?>"><i class="fas fa-trash"></i></button>
+                                        <button class="edit-task" data-id="<?php echo $nota['id']; ?>">
+                                        <img src="./img/notas.png" alt="editar" class="delete-icon">
+                                        </button>
+                                        <button class="delete-task" data-id="<?php echo $nota['id']; ?>">
+                                            <img src="./img/basura.png" alt="Eliminar" class="delete-icon">
+                                        </button>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                    
+
                     <!-- Formulario para añadir notas (inicialmente oculto) -->
                     <div class="add-task-form" id="add-task-form">
                         <form method="POST" action="dashboard.php">
@@ -250,6 +259,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <input type="hidden" name="nota_id" id="delete-nota-id">
     </form>
 
+    <footer>
+        <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+    </footer>
+
     <script src="js/dashboard.js"></script>
+
+    <!-- Scripts para el nav sin borde -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+
+                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                if (window.scrollY > 10) {
+                    navbar.classList.add('navbar-shadow');
+                } else {
+                    navbar.classList.remove('navbar-shadow');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

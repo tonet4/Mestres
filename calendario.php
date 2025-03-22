@@ -32,14 +32,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-            <div class="logo">QUADERN MESTRES</div>
-        </div>
+                <h1>QUADERN de Mestres</h1>
+            </div>
         <div class="nav-right">
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($usuario_nombre); ?></span>
             </div>
             <div class="logout-btn" onclick="location.href='logout.php'">
-                <i class="fas fa-sign-out-alt"></i>
+                <img src="./img/salida.png"></img>
             </div>
         </div>
     </nav>
@@ -73,16 +73,16 @@ $usuario_nombre = $_SESSION['user_nombre'];
         <!-- Selector de vistas de calendario -->
         <div class="calendar-views">
             <a href="#" class="calendar-view-btn" id="yearly-view">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Anual</span>
+                <img class="iconos-calendario" src="./img/calendario.png" alt="anual">
+                <h2>Anual</h2>
             </a>
             <a href="#" class="calendar-view-btn" id="monthly-view">
-                <i class="fas fa-calendar-day"></i>
-                <span>Mensual</span>
+            <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
+                <h2>Mensual</h2>
             </a>
             <a href="#" class="calendar-view-btn active" id="weekly-view">
-                <i class="fas fa-calendar-week"></i>
-                <span>Semanal</span>
+            <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
+                <h2>Semanal</h2>
             </a>
         </div>
 
@@ -309,6 +309,21 @@ $usuario_nombre = $_SESSION['user_nombre'];
             overlay.addEventListener('click', function() {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
+            });
+        });
+    </script>
+    <!-- Scripts para el nav sin borde -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+
+                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                if (window.scrollY > 10) {
+                    navbar.classList.add('navbar-shadow');
+                } else {
+                    navbar.classList.remove('navbar-shadow');
+                }
             });
         });
     </script>

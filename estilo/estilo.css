@@ -123,14 +123,6 @@ img {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* Media query para dispositivos móviles */
-@media screen and (max-width: 768px) {
-    .btn {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-    }
-}
-
 
 
 .navbar {
@@ -248,40 +240,7 @@ img {
     margin-top: 0;
 }
 
-/* Media queries para dispositivos móviles */
-@media screen and (max-width: 768px) {
-    .canva-section {
-        margin: 30px 0;
-    }
-    
-    .canva-container {
-        padding: 0 10px;
-    }
 
-    .sun-image {
-        width: 60px;
-        height: 60px;
-    }
-
-    .title-section h2 {
-        font-size: 2rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .canva-section {
-        margin: 20px 0;
-    }
-
-    .sun-image {
-        width: 50px;
-        height: 50px;
-    }
-
-    .title-section h2 {
-        font-size: 1.8rem;
-    }
-}
 
 /* Características */
 .features {
@@ -349,20 +308,6 @@ img {
     color: var(--secondary-color);
 }
 
-/* Media queries para responsividad */
-@media screen and (max-width: 768px) {
-    .card-icon {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .card-icon {
-        width: 60px;
-        height: 60px;
-    }
-}
 
 /* Contenedor para el título y la imagen */
 .title-container {
@@ -391,20 +336,6 @@ img {
     to { transform: rotate(360deg); }
 }
 
-/* Media queries para dispositivos móviles */
-@media screen and (max-width: 768px) {
-    .sun-image {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .sun-image {
-        width: 30px;
-        height: 30px;
-    }
-}
 
 /* Footer */
 footer {
@@ -414,6 +345,10 @@ footer {
     padding: 20px;
     margin-top: 40px;
 }
+
+
+
+/* R E S P O N S I V */
 
 /* Media Queries para Responsive */
 @media screen and (max-width: 992px) {
@@ -468,6 +403,39 @@ footer {
     .card {
         flex: 1 1 100%;
     }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .canva-section {
+        margin: 30px 0;
+    }
+    
+    .canva-container {
+        padding: 0 10px;
+    }
+
+    .sun-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .title-section h2 {
+        font-size: 2rem;
+    }
+
+    .card-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .sun-image {
+        width: 35px;
+        height: 35px;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -485,5 +453,28 @@ footer {
     
     .hero-content p {
         font-size: 1rem;
+    }
+
+    .canva-section {
+        margin: 20px 0;
+    }
+
+    .sun-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .sun-image {
+        width: 30px;
+        height: 30px;
     }
 }

@@ -77,22 +77,23 @@
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>
 
-    <!-- Scripts -->
+   
     <script src="js/main.js"></script>
-    /* Script JavaScript para detectar el scroll y añadir la sombra */
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        
-        // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
-        if (window.scrollY > 10) {
-            navbar.classList.add('navbar-shadow');
-        } else {
-            navbar.classList.remove('navbar-shadow');
-        }
-    });
-});
-</script>
+
+     <!-- Scripts para el nav sin borde -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.addEventListener('scroll', function () {
+                const navbar = document.querySelector('.navbar');
+
+                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                if (window.scrollY > 10) {
+                    navbar.classList.add('navbar-shadow');
+                } else {
+                    navbar.classList.remove('navbar-shadow');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

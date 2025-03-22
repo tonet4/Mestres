@@ -1,49 +1,66 @@
-/* Estilos para la página del calendario */
+/* Variables de colores pastel */
+:root {
+    --primary-color: #a6d8f0;      /* Azul pastel */
+    --secondary-color: #ffcbc4;    /* Rosa pastel */
+    --accent-color: #ffd6a5;       /* Naranja pastel */
+    --success-color: #b5ead7;      /* Verde pastel */
+    --warning-color: #fdffb6;      /* Amarillo pastel */
+    --light-color: #f8f9fa;        /* Gris muy claro */
+    --border-color: #e2e8f0;       /* Gris claro para bordes */
+    --text-color: #4a5568;         /* Gris oscuro para texto */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Sombra suave */
+}
 
 /* Contenedor principal */
 .calendar-container {
     width: 100%;
-    padding: 20px;
+    padding: 25px;
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 25px;
+    transition: all 0.3s ease;
 }
 
 /* Barra de navegación de vistas (anual, mensual, semanal) */
 .calendar-views {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 30px;
+    margin-bottom: 35px;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
+    padding-bottom: 20px;
 }
 
 .calendar-view-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px 18px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
     color: var(--text-color);
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .calendar-view-btn:hover {
     background-color: var(--light-color);
+    transform: translateY(-3px);
 }
 
 .calendar-view-btn.active {
-    color: var(--primary-color);
-    font-weight: bold;
+    color: white;
+    background-color: var(--primary-color);
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(166, 216, 240, 0.4);
 }
 
 .calendar-view-btn i {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
 }
 
 /* Cabecera del calendario (mes, semana, navegación) */
@@ -51,17 +68,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .calendar-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
 }
 
 .calendar-navigation {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .nav-btn {
@@ -69,91 +87,130 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
 }
 
 .nav-btn:hover {
     background-color: var(--secondary-color);
+    transform: scale(1.1);
+    box-shadow: 0 5px 12px rgba(255, 203, 196, 0.5);
 }
 
 .calendar-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .action-btn {
-    padding: 8px 15px;
-    border-radius: 4px;
+    padding: 10px 18px;
+    border-radius: 10px;
     border: none;
     background-color: var(--primary-color);
     color: white;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
 }
 
 .action-btn:hover {
     background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
 .action-btn.export {
     background-color: var(--accent-color);
+    box-shadow: 0 4px 8px rgba(255, 214, 165, 0.4);
 }
 
 .action-btn.export:hover {
-    background-color: #c0392b;
+    background-color: #ffc082;
+    box-shadow: 0 6px 12px rgba(255, 214, 165, 0.5);
+}
+
+.iconos-calendario {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.calendar-view-btn:hover .iconos-calendario {
+    transform: scale(1.1);
+}
+
+.calendar-views h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 8px;
 }
 
 /* Tabla del calendario */
 .calendar-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 3px;
     table-layout: fixed;
 }
 
 .calendar-table th {
     background-color: var(--primary-color);
     color: white;
-    padding: 10px;
+    padding: 12px 10px;
     text-align: center;
-    border: 1px solid var(--border-color);
+    border: none;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
 }
 
 .calendar-table td {
     border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: 0;
-    height: 80px;
+    height: 90px;
     vertical-align: center;
     position: relative;
+    background-color: white;
+    transition: all 0.2s ease;
 }
 
+.calendar-table td:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
 
-.hora-calendar{
+.hora-calendar {
     display: flex;
-   justify-content: space-between;
-   margin: 0px 10px 0px 10px;
+    justify-content: space-between;
+    margin: 0px 10px 0px 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
 }
 
 .hour-cell {
-    background-color: var(--light-color);
-    font-weight: bold;
-    padding: 10px;
+    background-color: var(--warning-color);
+    font-weight: 600;
+    padding: 12px;
     text-align: center;
     width: 100px;
-    
+    border-radius: 8px;
+    color: var(--text-color);
 }
 
 .hour-actions {
     display: flex;
-    gap: 5px;
+    gap: 8px;
     margin-left: 10px;
 }
 
@@ -161,10 +218,10 @@
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 0;
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -173,34 +230,36 @@
 }
 
 .hour-action-btn.add {
-    color: var(--primary-color);
+    color: var(--success-color);
+    background-color: rgba(181, 234, 215, 0.2);
 }
 
 .hour-action-btn.delete {
     color: var(--accent-color);
+    background-color: rgba(255, 214, 165, 0.2);
 }
 
 .hour-action-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.2);
 }
 
 .calendar-cell {
     height: 100%;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+    border-radius: 8px;
 }
 
 .calendar-cell:hover {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(166, 216, 240, 0.1);
 }
 
 /* Eventos en el calendario */
 .calendar-event {
-    padding: 5px 8px;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 6px;
     font-size: 0.9rem;
     color: white;
     cursor: pointer;
@@ -208,67 +267,89 @@
     text-overflow: ellipsis;
     white-space: normal;
     position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
-
-
 .calendar-event:hover {
-    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Panel inferior (notas y fin de semana) */
 .bottom-panels {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 30px;
+    gap: 25px;
+    margin-top: 35px;
 }
 
 .panel {
     flex: 1;
     min-width: 300px;
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
     overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.panel:hover {
+    transform: translateY(-5px);
 }
 
 .panel-header {
-    padding: 15px;
-    background-color: var(--primary-color);
+    padding: 18px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    font-weight: bold;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: none;
 }
 
 .panel-content {
-    padding: 15px;
+    padding: 20px;
 }
 
 .notes-editor,
 .weekend-editor {
     width: 100%;
-    min-height: 150px;
+    min-height: 160px;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 15px;
     resize: vertical;
+    font-family: inherit;
+    transition: border 0.2s ease;
+}
+
+.notes-editor:focus,
+.weekend-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(166, 216, 240, 0.2);
 }
 
 .save-btn {
     display: block;
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 12px;
+    margin-top: 15px;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
 }
 
 .save-btn:hover {
     background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
 /* Modales */
@@ -282,91 +363,122 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     overflow: auto;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
     background-color: white;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
+    margin: 8% auto;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 550px;
     position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+@keyframes modalFadeIn {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .close-modal {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.5rem;
+    top: 20px;
+    right: 20px;
+    font-size: 1.6rem;
     cursor: pointer;
     color: var(--text-color);
+    transition: transform 0.2s ease;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg);
+    color: var(--accent-color);
 }
 
 .modal-title {
     margin-top: 0;
     color: var(--primary-color);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .form-group input[type="text"],
 .form-group textarea,
 .form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px 15px;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 10px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(166, 216, 240, 0.2);
 }
 
 .form-group textarea {
     resize: vertical;
-    height: 100px;
+    height: 120px;
 }
 
 .color-options {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 .color-option {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .color-option:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .color-option.selected {
-    border: 2px solid #333;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--text-color);
 }
 
 .modal-buttons {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .modal-btn {
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .modal-btn.cancel {
@@ -375,16 +487,34 @@
     border: 1px solid var(--border-color);
 }
 
+.modal-btn.cancel:hover {
+    background-color: #e9ecef;
+}
+
 .modal-btn.save {
     background-color: var(--primary-color);
     color: white;
     border: none;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
+}
+
+.modal-btn.save:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
 .modal-btn.delete {
     background-color: var(--accent-color);
     color: white;
     border: none;
+    box-shadow: 0 4px 8px rgba(255, 214, 165, 0.4);
+}
+
+.modal-btn.delete:hover {
+    background-color: #ffc082;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 214, 165, 0.5);
 }
 
 /* Estilos para exportación de calendario */
@@ -393,62 +523,76 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px;
+    padding: 25px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    border-radius: 5px;
+    border-radius: 12px;
     z-index: 9999;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .export-container {
     width: 1200px;
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     position: absolute;
     left: -9999px; /* Fuera de la vista */
+    border-radius: 16px;
+    box-shadow: var(--shadow);
 }
 
 .export-title {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .export-title-main {
-    font-size: 24px;
-    font-weight: bold;
-    color: #3498db;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
 }
 
 .export-title-sub {
-    font-size: 18px;
-    margin: 10px 0;
+    font-size: 20px;
+    margin: 15px 0;
+    color: var(--text-color);
 }
 
 .export-panels-container {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .export-panel {
     flex: 1;
     min-width: 30%;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.export-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
 .export-panel-header {
-    background-color: #3498db;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 10px;
-    font-weight: bold;
+    padding: 15px;
+    font-weight: 600;
 }
 
 .export-panel-body {
-    padding: 10px;
+    padding: 20px;
 }
 
 .export-preview-modal {
@@ -460,80 +604,100 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
 }
 
 .export-preview-content {
-    background-color: #fefefe;
+    background-color: white;
     margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
+    padding: 30px;
+    border: none;
     width: 90%;
     max-width: 1000px;
-    border-radius: 5px;
+    border-radius: 16px;
     text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease forwards;
 }
 
 .export-close-btn {
-    color: #aaa;
+    color: var(--text-color);
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .export-close-btn:hover {
-    color: #333;
+    color: var(--accent-color);
+    transform: rotate(90deg);
 }
 
 .export-preview-title {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .export-image-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     max-height: 70vh;
     overflow: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .export-preview-img {
     max-width: 100%;
-    border: 1px solid #ddd;
+    border: none;
 }
 
 .export-download-btn {
-    background-color: #3498db;
+    background-color: var(--primary-color);
     color: white;
-    padding: 10px 20px;
+    padding: 14px 26px;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
 }
 
 .export-download-btn:hover {
-    background-color: #2980b9;
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
 /* Responsive */
 @media screen and (max-width: 992px) {
     .hour-cell {
-        width: 80px;
+        width: 85px;
     }
     
     .calendar-views {
-        gap: 10px;
+        gap: 15px;
+    }
+
+    .calendar-container {
+        padding: 20px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .calendar-container {
-        padding: 10px;
+        padding: 15px;
+        border-radius: 12px;
     }
     
     .calendar-header {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
         align-items: flex-start;
     }
     
@@ -546,19 +710,34 @@
     }
     
     .hour-cell {
-        width: 60px;
-        padding: 5px;
+        width: 65px;
+        padding: 8px;
     }
     
     .calendar-table th,
     .calendar-table td {
         padding: 5px;
     }
+
+    .iconos-calendario {
+        width: 45px;
+        height: 45px;
+    }
+
+    .calendar-view-btn {
+        padding: 10px 15px;
+    }
+
+    .modal-content {
+        padding: 20px;
+        margin: 10% auto;
+    }
 }
 
 @media screen and (max-width: 576px) {
     .calendar-views {
         flex-wrap: wrap;
+        justify-content: space-around;
     }
     
     .calendar-table {
@@ -568,5 +747,32 @@
     
     .bottom-panels {
         flex-direction: column;
+        gap: 20px;
+    }
+
+    .panel-header {
+        padding: 15px;
+    }
+
+    .action-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .calendar-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-btn {
+        padding: 10px 18px;
     }
 }

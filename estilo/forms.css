@@ -1,12 +1,10 @@
 
-
-
 body {
     background-image: 
         linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), /* Capa oscura semitransparente */
         url("../img/fondo88.png");
     background-repeat: repeat;
-    font-family: "fuente1";
+    
 }
 
 /* Estilos para formularios */
@@ -109,32 +107,6 @@ body {
     border: 1px solid #c3e6cb;
 }
 
-/* Media queries para responsive */
-@media screen and (max-width: 768px) {
-    .form-section {
-        padding: 20px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .form-container {
-        padding: 20px 10px;
-    }
-    
-    .form-section {
-        padding: 15px;
-    }
-    
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"] {
-        padding: 10px;
-    }
-    
-    .btn-block {
-        padding: 10px;
-    }
-}
 
 /* Estilos para formularios */
 .form-container {
@@ -236,11 +208,14 @@ body {
     border: 1px solid #c3e6cb;
 }
 
-/* Media queries para responsive */
+
+
+/* R E S P O N S I V */
 @media screen and (max-width: 768px) {
     .form-section {
         padding: 20px;
     }
+    
 }
 
 @media screen and (max-width: 480px) {
@@ -261,4 +236,6 @@ body {
     .btn-block {
         padding: 10px;
     }
+
+    
 }

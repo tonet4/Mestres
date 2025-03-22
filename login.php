@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
-                <a href="index.html"><img src="img/logo.png" alt="Logo Quadern Mestres"></a>
+                <a href="index.html"><img src="img/logo2.png" alt="Logo Quadern Mestres"></a>
             </div>
-            <h1><a href="index.html">QUADERN MESTRES</a></h1>
+            <h1 onclick="window.location.href='index.html'">QUADERN MESTRES</h1>
         </div>
         <div class="nav-right">
             <a href="registro.php" class="btn btn-registro">Registro</a>

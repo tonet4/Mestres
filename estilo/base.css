@@ -1,20 +1,37 @@
-/* Estilos base para toda la aplicación */
+/* Variables para colores y fuentes */
 :root {
     --primary-color: #402110;
+    --accent-color : #C9CFD9;
     --secondary-color: #A66844;
-    --accent-color: #D9985F;
+   /* --accent-color: #D9985F;*/
     --text-color: #402110;
     --light-color: #F2BC8D;
     --dark-color: #333;
     --gray-color: #F2D0A7;
     --border-color: #ddd;
-    --font-main: "fuente1";
+    --font-main: "fuente2";
 
 }
 
 @font-face {
     font-family:"fuente1";
     src:  url(../fuentes/Caveat/Caveat-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family:"fuente2";
+    src:  url(../fuentes/Patrick_Hand/PatrickHand-Regular.ttf);
+}
+
+
+@font-face {
+    font-family:"fuente3";
+    src:  url(../fuentes/skolateka/skolateka.otf);
+}
+
+@font-face {
+    font-family:"fuente4";
+    src:  url(../fuentes/Barrio/Barrio-Regular.ttf);
 }
 
 * {
@@ -27,7 +44,10 @@ body {
     font-family: var(--font-main);
     color: var(--text-color);
     line-height: 1.6;
-    background-color: var(--light-color);
+    background-image: url(../img/fondo6.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 a {
@@ -40,41 +60,80 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 15px 2%;
     background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: fixed;
+    /* Quitamos el box-shadow por defecto */
+    box-shadow: none;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+    z-index: 100;
+    height: 70px;
+    transition: box-shadow 0.3s ease; /* Añadimos transición para un efecto suave */
+}
+
+/* Clase que se añadirá con JavaScript cuando se haga scroll */
+.navbar-shadow {
+    box-shadow: 0 2px 10px rgba(14, 14, 14, 0.1);
 }
 
 .nav-left {
     display: flex;
     align-items: center;
+    position: relative; /* Para permitir posicionamiento del logo */
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-left: 10px;
-}
-
-.nav-right {
+    position: relative;
+    height: 100%;
     display: flex;
     align-items: center;
 }
 
-.user-info {
-    margin-right: 20px;
+.logo img {
+    height: 70px; /* Aumentamos el tamaño del logo */
+    margin-right: 15px;
+    position: relative;
+    top: 0;
+    /* La imagen se extenderá un poco por encima y por debajo de la navbar */
 }
 
-.logout-btn {
+.nav-left h1 {
+    font-size: 1.5rem;
+    font-family: "fuente4";
+    background-image: linear-gradient(
+        to right, 
+        #ffb6c1, /* Rosa pastel */
+        #ffd700, /* Amarillo pastel */
+        #98fb98, /* Verde pastel */
+        #add8e6, /* Azul claro pastel */
+        #d8bfd8  /* Lavanda pastel */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.nav-right {
+    display: flex;
+}
+
+.user-info {
+    margin-right: 20px;
+    font-size: 1.2rem;
+}
+
+.logout-btn{
     cursor: pointer;
     color: var(--accent-color);
     font-size: 1.2rem;
+}
+
+.logout-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .menu-toggle {
@@ -82,7 +141,7 @@ a {
     cursor: pointer;
     font-size: 1.5rem;
     margin-right: 15px;
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 /* Menú lateral */
@@ -162,7 +221,7 @@ a {
 
 /* Contenido principal */
 .main-content {
-    margin-top: 70px;
+    margin-top: 10px;
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
@@ -183,6 +242,15 @@ a {
     background-color: var(--secondary-color);
 }
 
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-content {
@@ -191,5 +259,16 @@ a {
     
     .user-info span {
         display: none;
+    }
+
+    .nav-left h1 {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .logout-btn img {
+        width: 25px;
+        height: 25px;
+        margin-left: 5px;
     }
 }
