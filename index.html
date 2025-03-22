@@ -12,9 +12,9 @@
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
-                <img src="img/logo.png" alt="Logo Quadern Mestres">
+                <img src="img/logo2.png" alt="Logo Quadern Mestres">
             </div>
-            <h1>QUADERN MESTRES</h1>
+            <h1>QUADERN de Mestres</h1>
         </div>
         <div class="nav-right">
             <a href="registro.php" class="btn btn-registro">Registro</a>
@@ -79,5 +79,20 @@
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
+    /* Script JavaScript para detectar el scroll y añadir la sombra */
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        
+        // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+        if (window.scrollY > 10) {
+            navbar.classList.add('navbar-shadow');
+        } else {
+            navbar.classList.remove('navbar-shadow');
+        }
+    });
+});
+</script>
 </body>
 </html>

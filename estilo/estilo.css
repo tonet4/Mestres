@@ -29,6 +29,11 @@
     src:  url(../fuentes/skolateka/skolateka.otf);
 }
 
+@font-face {
+    font-family:"fuente4";
+    src:  url(../fuentes/Barrio/Barrio-Regular.ttf);
+}
+
 /* Estilos generales */
 * {
     margin: 0;
@@ -53,66 +58,140 @@ img {
     height: auto;
 }
 
+/* Estilos modernos para los botones del navbar */
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 25px; /* Bordes más redondeados */
     transition: all 0.3s ease;
-    font-weight: bold;
+    font-weight: 600;
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    text-transform: uppercase;
 }
 
 .btn-registro {
-    background-color: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #ffb6c1, #ffd700); /* Gradiente de rosa a amarillo pastel */
+    color: #333; /* Texto oscuro para mejor contraste con colores pastel */
     margin-right: 10px;
+    border: none;
+}
+
+.btn-registro:hover {
+    background: linear-gradient(135deg, #ffd700, #ffb6c1); /* Invertimos el gradiente */
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 .btn-acceso {
-    background-color: var(--secondary-color);
-    color: white;
+    background: linear-gradient(135deg, #add8e6, #d8bfd8); /* Gradiente de azul a lavanda pastel */
+    color: #333; /* Texto oscuro para mejor contraste */
+    border: none;
 }
 
-.btn-hero {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 12px 24px;
-    margin-top: 20px;
-    font-size: 1.1rem;
-}
-
-.btn:hover {
-    opacity: 0.9;
+.btn-acceso:hover {
+    background: linear-gradient(135deg, #d8bfd8, #add8e6); /* Invertimos el gradiente */
     transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Navegación */
+/* Versión alternativa con borde */
+.btn-bordered {
+    background: white;
+    border: 2px solid;
+    box-shadow: none;
+    font-weight: 600;
+}
+
+.btn-registro.btn-bordered {
+    border-image: linear-gradient(135deg, #ffb6c1, #ffd700) 1;
+    color: #333;
+}
+
+.btn-acceso.btn-bordered {
+    border-image: linear-gradient(135deg, #add8e6, #d8bfd8) 1;
+    color: #333;
+}
+
+.btn-bordered:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Media query para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}
+
+
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
     background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /* Quitamos el box-shadow por defecto */
+    box-shadow: none;
     position: sticky;
     top: 0;
     z-index: 100;
+    height: 70px;
+    transition: box-shadow 0.3s ease; /* Añadimos transición para un efecto suave */
 }
 
+/* Clase que se añadirá con JavaScript cuando se haga scroll */
+.navbar-shadow {
+    box-shadow: 0 2px 10px rgba(14, 14, 14, 0.1);
+}
+
+
+
 .nav-left {
+    display: flex;
+    align-items: center;
+    position: relative; /* Para permitir posicionamiento del logo */
+}
+
+.logo {
+    position: relative;
+    height: 100%;
     display: flex;
     align-items: center;
 }
 
 .logo img {
-    height: 40px;
+    height: 70px; /* Aumentamos el tamaño del logo */
     margin-right: 15px;
+    position: relative;
+    top: 0;
+    /* La imagen se extenderá un poco por encima y por debajo de la navbar */
 }
 
 .nav-left h1 {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    font-family: "fuente4";
+    background-image: linear-gradient(
+        to right, 
+        #ffb6c1, /* Rosa pastel */
+        #ffd700, /* Amarillo pastel */
+        #98fb98, /* Verde pastel */
+        #add8e6, /* Azul claro pastel */
+        #d8bfd8  /* Lavanda pastel */
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-weight: bold;
 }
 
 .nav-right {
@@ -126,8 +205,8 @@ img {
     color: var(--primary-color);
 }
 
-/* Estilos para la sección de la imagen de Canva */
-.canva-section {
+ /* Estilos para la sección de la imagen de Canva */
+ .canva-section {
     padding: 0;
     width: 100%;
     margin: 40px 0;
@@ -147,6 +226,28 @@ img {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
+/* Estilos para la sección del título con el sol */
+.title-section {
+    text-align: center;
+    position: relative;
+    margin: 50px 0 30px;
+}
+
+.sun-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title-section h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-top: 0;
+}
+
 /* Media queries para dispositivos móviles */
 @media screen and (max-width: 768px) {
     .canva-section {
@@ -156,14 +257,31 @@ img {
     .canva-container {
         padding: 0 10px;
     }
+
+    .sun-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .title-section h2 {
+        font-size: 2rem;
+    }
 }
 
 @media screen and (max-width: 480px) {
     .canva-section {
         margin: 20px 0;
     }
-}
 
+    .sun-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title-section h2 {
+        font-size: 1.8rem;
+    }
+}
 
 /* Características */
 .features {
