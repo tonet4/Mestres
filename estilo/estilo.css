@@ -1,16 +1,15 @@
 /* Variables para colores y fuentes */
 :root {
-    --primary-color: #402110;
-    --accent-color : #C9CFD9;
-    --secondary-color: #A66844;
-   /* --accent-color: #D9985F;*/
-    --text-color: #402110;
-    --light-color: #F2BC8D;
-    --dark-color: #333;
-    --gray-color: #F2D0A7;
-    --border-color: #ddd;
+    --primary-color: #a6d8f0;      /* Azul pastel */
+    --secondary-color: #ffcbc4;    /* Rosa pastel */
+    --accent-color: #ffd6a5;       /* Naranja pastel */
+    --success-color: #b5ead7;      /* Verde pastel */
+    --warning-color: #fdffb6;      /* Amarillo pastel */
+    --light-color: #f8f9fa;        /* Gris muy claro */
+    --border-color: #e2e8f0;       /* Gris claro para bordes */
+    --text-color: #4a5568;         /* Gris oscuro para texto */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Sombra suave */
     --font-main: "fuente2";
-
 }
 
 @font-face {
@@ -48,9 +47,8 @@ body {
     background-color: white;
 }
 
-a {
-    text-decoration: none;
-    color: var(--primary-color);
+a { 
+    color: blue;
 }
 
 img {
@@ -79,18 +77,21 @@ img {
     color: #333; /* Texto oscuro para mejor contraste con colores pastel */
     margin-right: 10px;
     border: none;
+    
 }
 
 .btn-registro:hover {
     background: linear-gradient(135deg, #ffd700, #ffb6c1); /* Invertimos el gradiente */
     transform: translateY(-2px);
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    
 }
 
 .btn-acceso {
-    background: linear-gradient(135deg, #add8e6, #d8bfd8); /* Gradiente de azul a lavanda pastel */
+    background:linear-gradient(135deg, #ffb6c1, #ffd700);
     color: #333; /* Texto oscuro para mejor contraste */
     border: none;
+    font-family: var(--font-main);
 }
 
 .btn-acceso:hover {

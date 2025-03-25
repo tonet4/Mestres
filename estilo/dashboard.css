@@ -33,7 +33,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
 }
 
@@ -91,7 +91,7 @@
     margin-top: 10px;
     font-weight: bold;
     font-style: normal;
-    color: var(--primary-color);
+    color: black;
 }
 
 /* Panel de tareas/notas */
@@ -194,13 +194,15 @@
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
-    color: var(--secondary-color);
+    color: var(--text-color);
     transition: transform 0.2s ease;
 }
 
 .add-btn:hover {
     transform: rotate(90deg);
 }
+
+
 
 .save-btn, .cancel-btn {
     padding: 8px 20px;

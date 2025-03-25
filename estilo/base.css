@@ -1,16 +1,15 @@
 /* Variables para colores y fuentes */
 :root {
-    --primary-color: #402110;
-    --accent-color : #C9CFD9;
-    --secondary-color: #A66844;
-   /* --accent-color: #D9985F;*/
-    --text-color: #402110;
-    --light-color: #F2BC8D;
-    --dark-color: #333;
-    --gray-color: #F2D0A7;
-    --border-color: #ddd;
+    --primary-color: #a6d8f0;      /* Azul pastel */
+    --secondary-color: #ffcbc4;    /* Rosa pastel */
+    --accent-color: #ffd6a5;       /* Naranja pastel */
+    --success-color: #b5ead7;      /* Verde pastel */
+    --warning-color: #fdffb6;      /* Amarillo pastel */
+    --light-color: #f8f9fa;        /* Gris muy claro */
+    --border-color: #e2e8f0;       /* Gris claro para bordes */
+    --text-color: #4a5568;         /* Gris oscuro para texto */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Sombra suave */
     --font-main: "fuente2";
-
 }
 
 @font-face {
@@ -115,13 +114,18 @@ a {
     font-weight: bold;
 }
 
+p{
+    font-family: var(--font-main);
+}
+
 .nav-right {
     display: flex;
 }
 
 .user-info {
     margin-right: 20px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    font-family: "fuente1";
 }
 
 .logout-btn{

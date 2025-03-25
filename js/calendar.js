@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Actualizar el título del calendario con el rango de fechas y el mes
-        calendarTitle.textContent = `${formatDateShort(firstDate)} - ${formatDateShort(lastDate)} (${monthText} ${firstDate.getFullYear()})`;
+        calendarTitle.textContent = `${monthText} ${firstDate.getFullYear()} ${formatDateShort(firstDate)} - ${formatDateShort(lastDate)}`;
         
         // Actualizar los encabezados de los días con sus nombres y números
         const dayHeaders = document.querySelectorAll('#week-day-headers th');
