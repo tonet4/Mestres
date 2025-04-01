@@ -1,29 +1,33 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Verificar que sea una petición POST
+// Verify that it is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
     exit;
 }
 
-// Obtener datos
+// Get data
 $hour_id = isset($_POST['hour_id']) ? (int)$_POST['hour_id'] : null;
 $week = isset($_POST['week']) ? (int)$_POST['week'] : null;
 $year = isset($_POST['year']) ? (int)$_POST['year'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar datos
+// Validate data
 if (!$hour_id || !$week || !$year) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
@@ -31,10 +35,10 @@ if (!$hour_id || !$week || !$year) {
 }
 
 try {
-    // Iniciar transacción
+    // Start transaction
     $conn->beginTransaction();
     
-    // Verificar que la hora pertenece al usuario
+    // Verify that the time belongs to the user
     $stmt = $conn->prepare("
         SELECT id, orden
         FROM horas_calendario
@@ -54,7 +58,7 @@ try {
         throw new Exception('No tienes permiso para eliminar esta hora');
     }
     
-    // Eliminar eventos asociados a esta hora
+    // Delete events associated with this time
     $stmt = $conn->prepare("
         DELETE FROM eventos_calendario
         WHERE hora_id = :hora_id AND usuario_id = :usuario_id
@@ -64,7 +68,7 @@ try {
     $stmt->bindParam(':usuario_id', $usuario_id);
     $stmt->execute();
     
-    // Eliminar hora
+    // Delete time
     $stmt = $conn->prepare("
         DELETE FROM horas_calendario
         WHERE id = :id AND usuario_id = :usuario_id
@@ -74,7 +78,7 @@ try {
     $stmt->bindParam(':usuario_id', $usuario_id);
     $stmt->execute();
     
-    // Reordenar las horas restantes
+    // Reorder the remaining hours
     $stmt = $conn->prepare("
         UPDATE horas_calendario
         SET orden = orden - 1
@@ -90,14 +94,14 @@ try {
     $stmt->bindParam(':orden', $hora['orden']);
     $stmt->execute();
     
-    // Confirmar transacción
+    // Confirm transaction
     $conn->commit();
     
     header('Content-Type: application/json');
     echo json_encode(['success' => true]);
     
 } catch (Exception $e) {
-    // Revertir transacción en caso de error
+    //Roll back transaction in case of error
     $conn->rollBack();
     
     header('Content-Type: application/json');

@@ -1,24 +1,29 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'includes/utils.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Verificar que sea una petición POST
+// Verify that it is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
     exit;
 }
 
-// Obtener datos del formulario
+//Get form data
 $action = isset($_POST['action']) ? limpiarDatos($_POST['action']) : null;
 $title = isset($_POST['title']) ? limpiarDatos($_POST['title']) : null;
 $description = isset($_POST['description']) ? limpiarDatos($_POST['description']) : null;
@@ -30,14 +35,14 @@ $hour_id = isset($_POST['hour_id']) ? (int)$_POST['hour_id'] : null;
 $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar datos
+// Validate data
 if (!$action || !$title || !$week || !$year || !$day || !$hour_id) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }
 
-// Validar que el día sea válido (1-5, lunes a viernes)
+// Validate that the day is valid (1-5, Monday to Friday)
 if ($day < 1 || $day > 5) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Día no válido']);
@@ -45,7 +50,7 @@ if ($day < 1 || $day > 5) {
 }
 
 try {
-    // Verificar que la hora pertenece al usuario
+    // Verify that the time belongs to the user
     $stmt = $conn->prepare("
         SELECT id
         FROM horas_calendario
@@ -64,7 +69,7 @@ try {
     }
     
     if ($action === 'add') {
-        // Insertar nuevo evento
+        // Insert new event
         $stmt = $conn->prepare("
             INSERT INTO eventos_calendario (
                 usuario_id, semana_numero, anio, dia_semana, hora_id, titulo, descripcion, color
@@ -86,7 +91,7 @@ try {
         $new_event_id = $conn->lastInsertId();
         
     } elseif ($action === 'edit') {
-        // Verificar que el evento pertenece al usuario
+        // Verify that the event belongs to the user
         $stmt = $conn->prepare("
             SELECT id
             FROM eventos_calendario
@@ -102,7 +107,7 @@ try {
             throw new Exception('No tienes permiso para editar este evento');
         }
         
-        // Actualizar evento
+        // Update event
         $stmt = $conn->prepare("
             UPDATE eventos_calendario
             SET titulo = :titulo, descripcion = :descripcion, color = :color, dia_semana = :dia, hora_id = :hora_id

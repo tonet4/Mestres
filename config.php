@@ -1,24 +1,27 @@
 <?php
-// Configuración de la conexión a la base de datos
-$db_host = 'localhost';   // Servidor de la base de datos (por defecto en XAMPP)
-$db_name = 'mestres';     // Nombre de la base de datos
-$db_user = 'root';        // Usuario por defecto de XAMPP
-$db_pass = '';            // Contraseña por defecto de XAMPP (vacía)
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Configuring the database connection
+$db_host = 'localhost';   // Database server
+$db_name = 'mestres';     // Database name
+$db_user = 'root';        // User
+$db_pass = '';            // password
 
 try {
-    // Crear conexión PDO
+    // Create PDO connection
     $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
     
-    // Configurar el modo de error para que lance excepciones
+    // Set error mode to throw exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Configurar el modo de obtención predeterminado a asociativo
+    // Set the default fetch mode to associative
     $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     
-    // Mensaje de conexión exitosa (sólo para debug, quitar en producción)
-    // echo "Conexión exitosa a la base de datos";
     
 } catch(PDOException $e) {
-    // En caso de error en la conexión, mostrar mensaje
+    // In case of connection error, display message
     die("Error de conexión: " . $e->getMessage());
 }

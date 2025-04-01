@@ -1,11 +1,15 @@
 <?php
-// Iniciar sesión
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
 session_start();
 
-// Eliminar todas las variables de sesión
+// Delete all session variables
 $_SESSION = array();
 
-// Si se está usando una cookie de sesión, eliminarla
+// If a session cookie is being used, delete it
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -14,14 +18,14 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Eliminar cualquier cookie de "recordar sesión"
+// Delete any "session remember" cookies
 if (isset($_COOKIE['remember_user'])) {
     setcookie('remember_user', '', time() - 3600, '/');
 }
 
-// Destruir la sesión
+// Destroy the session
 session_destroy();
 
-// Redirigir a la página de inicio
+// Redirect to the home page
 header("Location: index.html");
 exit;

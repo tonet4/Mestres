@@ -1,20 +1,24 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Obtener id del evento
+// Get event id
 $event_id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar parámetros
+// Validate parameters
 if (!$event_id) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Parámetros inválidos']);
@@ -22,7 +26,7 @@ if (!$event_id) {
 }
 
 try {
-    // Obtener detalles del evento
+    // Get event details
     $stmt = $conn->prepare("
         SELECT id, dia_semana, hora_id, titulo, descripcion, color, semana_numero, anio
         FROM eventos_calendario

@@ -1,18 +1,4 @@
-/* Variables de colores pastel */
-:root {
-    --primary-color: #a6d8f0;      /* Azul pastel */
-    --secondary-color: #ffcbc4;    /* Rosa pastel */
-    --accent-color: #ffd6a5;       /* Naranja pastel */
-    --success-color: #b5ead7;      /* Verde pastel */
-    --warning-color: #fdffb6;      /* Amarillo pastel */
-    --light-color: #f8f9fa;        /* Gris muy claro */
-    --border-color: #e2e8f0;       /* Gris claro para bordes */
-    --text-color: #4a5568;         /* Gris oscuro para texto */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Sombra suave */
-    --font-main: "fuente2";
-}
-
-/* Contenedor principal */
+/* M A I N */
 .calendar-container {
     width: 100%;
     padding: 25px;
@@ -23,7 +9,7 @@
     transition: all 0.3s ease;
 }
 
-/* Barra de navegación de vistas (anual, mensual, semanal) */
+/* View navigation bar (yearly, monthly, weekly)*/
 .calendar-views {
     display: flex;
     justify-content: center;
@@ -64,7 +50,7 @@
     margin-bottom: 8px;
 }
 
-/* Cabecera del calendario (mes, semana, navegación) */
+/* Calendar header (month, week, navigation) */
 .calendar-header {
     display: flex;
     justify-content: space-between;
@@ -133,7 +119,7 @@
 }
 
 .action-btn.export {
-    background-color: #df82a3;
+    background-color: #ea6363;
     box-shadow: 0 4px 8px rgba(255, 214, 165, 0.4);
 }
 
@@ -161,7 +147,7 @@
     font-family: "fuente1";
 }
 
-/* Tabla del calendario */
+/* C A L E N D A R - T A B L E */
 .calendar-table {
     width: 100%;
     border-collapse: separate;
@@ -259,7 +245,7 @@
     background-color: rgba(166, 216, 240, 0.1);
 }
 
-/* Eventos en el calendario */
+/* E V E N T S - C A L A N D A R */
 .calendar-event {
     padding: 8px 10px;
     border-radius: 8px;
@@ -280,7 +266,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Panel inferior (notas y fin de semana) */
+/* Bottom panel (notes and weekend) */
 .bottom-panels {
     display: flex;
     flex-wrap: wrap;
@@ -341,22 +327,22 @@
     padding: 12px;
     margin-top: 15px;
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color);
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
     box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
+    font-family: var(--font-main);
 }
 
 .save-btn:hover {
-    background-color: var(--secondary-color);
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
-/* Modales */
+/* M O D A L S */
 .modal {
     display: none;
     position: fixed;
@@ -379,6 +365,48 @@
     position: relative;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     animation: modalFadeIn 0.3s ease forwards;
+}
+
+.btnMas{
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+.add-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: transform 0.2s ease;
+}
+
+.add-btn:hover {
+    transform: rotate(90deg);
+}
+
+.edit-note{
+    margin-right: 5px;
+}
+
+.cancel-btn{
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 5px;
+    box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
+    font-family: var(--font-main);
+    color: var(--text-color);
+}
+
+.cancel-btn:hover{
+    transform: translateY(-3px);
+   
 }
 
 @keyframes modalFadeIn {
@@ -410,25 +438,31 @@
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    position: relative;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 600;
     color: var(--text-color);
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .form-group input[type="text"],
 .form-group textarea,
 .form-group select {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    font-family: inherit;
-    transition: all 0.2s ease;
+    padding: 14px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    font-family: var(--font-main);
 }
 
 .form-group input[type="text"]:focus,
@@ -436,14 +470,39 @@
 .form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(166, 216, 240, 0.2);
+    box-shadow: 0 0 0 4px rgba(166, 216, 240, 0.2);
+}
+
+
+.form-group input[type="time"] {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 45px;
+}
+
+.form-group input[type="time"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(166, 216, 240, 0.2);
 }
 
 .form-group textarea {
     resize: vertical;
     height: 120px;
 }
-
 .color-options {
     display: flex;
     flex-wrap: wrap;
@@ -500,6 +559,7 @@
     color: white;
     border: none;
     box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
+    margin-top: 5px;
 }
 
 .modal-btn.save:hover {
@@ -521,7 +581,7 @@
     box-shadow: 0 6px 12px rgba(202, 122, 25, 0.5);
 }
 
-/* Estilos para exportación de calendario */
+/* E X P O R T - C A L A N D A R */
 .loading-indicator {
     position: fixed;
     top: 50%;
@@ -541,7 +601,7 @@
     background-color: white;
     padding: 30px;
     position: absolute;
-    left: -9999px; /* Fuera de la vista */
+    left: -9999px; 
     border-radius: 16px;
     box-shadow: var(--shadow);
 }
@@ -678,7 +738,8 @@
     box-shadow: 0 6px 12px rgba(255, 203, 196, 0.5);
 }
 
-/* Responsive */
+/* R E S P O N S I V */
+
 @media screen and (max-width: 992px) {
     .hour-cell {
         width: 85px;

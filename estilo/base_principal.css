@@ -1,14 +1,19 @@
-/* Variables para colores y fuentes */
+
+/********* I N D E X ****************
+********** F O R M ******************
+********** R E G I S T R O **********/
+
+/* Variables for colors and fonts */
 :root {
-    --primary-color: #a6d8f0;      /* Azul pastel */
-    --secondary-color: #ffcbc4;    /* Rosa pastel */
-    --accent-color: #ffd6a5;       /* Naranja pastel */
-    --success-color: #b5ead7;      /* Verde pastel */
-    --warning-color: #fdffb6;      /* Amarillo pastel */
-    --light-color: #f8f9fa;        /* Gris muy claro */
-    --border-color: #e2e8f0;       /* Gris claro para bordes */
-    --text-color: #4a5568;         /* Gris oscuro para texto */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Sombra suave */
+    --primary-color: #a6d8f0;      /* Pastel blue */
+    --secondary-color: #ffcbc4;    /* Pastel pink */
+    --accent-color: #ffd6a5;       /* Pastel orange */
+    --success-color: #b5ead7;      /* Pastel green */
+    --warning-color: #fdffb6;      /* Pastel yellow */
+    --light-color: #f8f9fa;        /* Very light gray */
+    --border-color: #e2e8f0;       /* Light gray for borders */
+    --text-color: #4a5568;         /* Dark gray for text */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Soft shadow */
     --font-main: "fuente2";
 }
 
@@ -56,11 +61,11 @@ img {
     height: auto;
 }
 
-/* Estilos modernos para los botones del navbar */
+/* B U T T O N S */
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    border-radius: 25px; /* Bordes más redondeados */
+    border-radius: 25px; 
     transition: all 0.3s ease;
     font-weight: 600;
     text-align: center;
@@ -73,23 +78,21 @@ img {
 }
 
 .btn-registro {
-    background: linear-gradient(135deg, #ffb6c1, #ffd700); /* Gradiente de rosa a amarillo pastel */
-    color: #333; /* Texto oscuro para mejor contraste con colores pastel */
+    background: linear-gradient(135deg, #ffb6c1, #ffd700); 
+    color: #333; 
     margin-right: 10px;
     border: none;
-    
 }
 
 .btn-registro:hover {
-    background: linear-gradient(135deg, #ffd700, #ffb6c1); /* Invertimos el gradiente */
+    background: linear-gradient(135deg, #ffd700, #ffb6c1); 
     transform: translateY(-2px);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-    
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);  
 }
 
 .btn-acceso {
-    background:linear-gradient(135deg, #ffb6c1, #ffd700);
-    color: #333; /* Texto oscuro para mejor contraste */
+    background: linear-gradient(135deg,#add8e6, #d8bfd8);
+    color: #333; 
     border: none;
     font-family: var(--font-main);
 }
@@ -100,58 +103,28 @@ img {
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Versión alternativa con borde */
-.btn-bordered {
-    background: white;
-    border: 2px solid;
-    box-shadow: none;
-    font-weight: 600;
-}
-
-.btn-registro.btn-bordered {
-    border-image: linear-gradient(135deg, #ffb6c1, #ffd700) 1;
-    color: #333;
-}
-
-.btn-acceso.btn-bordered {
-    border-image: linear-gradient(135deg, #add8e6, #d8bfd8) 1;
-    color: #333;
-}
-
-.btn-bordered:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-
-
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
     background-color: white;
-    /* Quitamos el box-shadow por defecto */
     box-shadow: none;
     position: sticky;
     top: 0;
     z-index: 100;
     height: 70px;
-    transition: box-shadow 0.3s ease; /* Añadimos transición para un efecto suave */
+    transition: box-shadow 0.3s ease; 
 }
 
-/* Clase que se añadirá con JavaScript cuando se haga scroll */
 .navbar-shadow {
     box-shadow: 0 2px 10px rgba(14, 14, 14, 0.1);
 }
 
-
-
 .nav-left {
     display: flex;
     align-items: center;
-    position: relative; /* Para permitir posicionamiento del logo */
+    position: relative; 
 }
 
 .logo {
@@ -162,11 +135,10 @@ img {
 }
 
 .logo img {
-    height: 70px; /* Aumentamos el tamaño del logo */
+    height: 70px;
     margin-right: 15px;
     position: relative;
     top: 0;
-    /* La imagen se extenderá un poco por encima y por debajo de la navbar */
 }
 
 .nav-left h1 {
@@ -174,11 +146,11 @@ img {
     font-family: "fuente4";
     background-image: linear-gradient(
         to right, 
-        #ffb6c1, /* Rosa pastel */
-        #ffd700, /* Amarillo pastel */
-        #98fb98, /* Verde pastel */
-        #add8e6, /* Azul claro pastel */
-        #d8bfd8  /* Lavanda pastel */
+        #ffb6c1, 
+        #ffd700, 
+        #98fb98, 
+        #add8e6, 
+        #d8bfd8  
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -198,7 +170,7 @@ img {
     color: var(--primary-color);
 }
 
- /* Estilos para la sección de la imagen de Canva */
+/* M A I N - I M A G E*/
  .canva-section {
     padding: 0;
     width: 100%;
@@ -219,7 +191,7 @@ img {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* Estilos para la sección del título con el sol */
+/* S U N - S E C T I ON */
 .title-section {
     text-align: center;
     position: relative;
@@ -241,9 +213,7 @@ img {
     margin-top: 0;
 }
 
-
-
-/* Características */
+/* C H A R A C T E R I S T I C S */
 .features {
     padding: 60px 5%;
     background-color: var(--accent-color);
@@ -281,14 +251,14 @@ img {
     transform: translateY(-10px);
 }
 
-/* Estilos para los iconos de Font Awesome (mantenerlos por compatibilidad) */
+
 .card i {
     font-size: 3rem;
     color: var(--primary-color);
     margin-bottom: 20px;
 }
 
-/* Nuevos estilos para los iconos de imagen */
+/* I C O N - I M A G E  */
 .card-icon {
     width: 80px;
     height: 80px;
@@ -310,13 +280,11 @@ img {
 }
 
 
-/* Contenedor para el título y la imagen */
 .title-container {
     text-align: center;
     margin-bottom: 50px;
 }
 
-/* Estilos para la imagen del sol */
 .sun-image {
     display: inline-block;
     vertical-align: middle;
@@ -331,27 +299,24 @@ img {
     animation: rotate 20s linear infinite;
 }
 
-/* Animación de rotación suave */
+/* Animation*/
 @keyframes rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
 
-/* Footer */
+/* F O O T E R */
 footer {
-    background-color: var(--dark-color);
+    background-color: var(--text-color);
     color: white;
     text-align: center;
     padding: 20px;
     margin-top: 40px;
 }
 
-
-
 /* R E S P O N S I V */
 
-/* Media Queries para Responsive */
 @media screen and (max-width: 992px) {
     .hero {
         flex-direction: column;

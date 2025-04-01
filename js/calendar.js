@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const editButton = document.createElement('button');
             editButton.className = 'edit-note';
-            editButton.innerHTML = '<i class="fas fa-edit"></i>';
+            editButton.innerHTML = '<img class=btnMas src="./img/notas.png"></img>';
             editButton.title = 'Editar';
             editButton.addEventListener('click', function() {
                 editItem(type, item.id, textElement.textContent);
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const deleteButton = document.createElement('button');
             deleteButton.className = 'delete-note';
-            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteButton.innerHTML = '<img class=btnMas src="./img/basura.png"></img>';
             deleteButton.title = 'Eliminar';
             deleteButton.addEventListener('click', function() {
                 deleteItem(type, item.id);

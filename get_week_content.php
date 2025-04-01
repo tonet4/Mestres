@@ -1,21 +1,25 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Obtener parámetros
+// Get parameters
 $week = isset($_GET['week']) ? (int)$_GET['week'] : null;
 $year = isset($_GET['year']) ? (int)$_GET['year'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar parámetros
+// Validate parameters
 if (!$week || !$year) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Parámetros inválidos']);
@@ -23,7 +27,7 @@ if (!$week || !$year) {
 }
 
 try {
-    // Inicializar array de respuesta
+    //Initialize response array
     $response = [
         'success' => true,
         'notes' => [],
@@ -31,7 +35,7 @@ try {
         'sunday' => []
     ];
     
-    // Obtener notas de la semana
+    // Get notes of the week
     $stmt = $conn->prepare("
         SELECT contenido
         FROM notas_semana
@@ -45,15 +49,15 @@ try {
     $stmt->execute();
     
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Intentar decodificar el JSON
+        // Trying to decode the JSON
         $notesContent = $row['contenido'];
         if ($notesContent) {
-            // Verificar si ya es un array JSON válido
+            // Check if it is already a valid JSON array
             $decoded = json_decode($notesContent, true);
             if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
                 $response['notes'] = $decoded;
             } else {
-                // Si no es un JSON válido, crear un array con un solo elemento
+                // If it is not a valid JSON, create an array with a single element
                 $response['notes'] = [
                     [
                         'id' => 1,
@@ -64,7 +68,7 @@ try {
         }
     }
     
-    // Obtener eventos del sábado
+    // Get Saturday Events
     $stmt = $conn->prepare("
         SELECT contenido
         FROM eventos_fin_semana
@@ -94,7 +98,7 @@ try {
         }
     }
     
-    // Obtener eventos del domingo
+    // Get Sunday Events
     $stmt = $conn->prepare("
         SELECT contenido
         FROM eventos_fin_semana

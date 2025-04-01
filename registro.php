@@ -1,19 +1,24 @@
 <?php
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
 session_start();
-// Si ya hay una sesión activa, redirigir al dashboard
+// If there is already an active session, redirect to the dashboard
 if(isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit;
 }
 
-// Incluir el procesador de registro
+//Include the record processor
 require_once 'includes/procesar_registro.php';
 
-// Variables para mensajes
+// Variables for messages
 $error = '';
 $success = '';
 
-// Procesar formulario de registro
+//Process registration form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
@@ -21,16 +26,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     
-    // Verificar que se aceptaron los términos
+    // Verify that the terms were accepted
     if(!isset($_POST['terms'])) {
         $error = "Debes aceptar los términos y condiciones";
     } else {
-        // Procesar registro
+        //Process registration
         $resultado = registrar_usuario($nombre, $apellidos, $email, $password, $confirm_password);
         
         if($resultado['success']) {
             $success = $resultado['message'];
-            // Limpiar los campos del formulario
+            // Clear form fields
             $nombre = $apellidos = $email = '';
         } else {
             $error = $resultado['message'];
@@ -44,12 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/estilo.css">
+    <link rel="stylesheet" href="./estilo/base_principal.css">
     <link rel="stylesheet" href="./estilo/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navegación -->
+    <!-- Nav -->
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
@@ -61,13 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="registro.php" class="btn btn-registro">Registro</a>
             <a href="login.php" class="btn btn-acceso">Acceso</a>
         </div>
-        <!-- Menú hamburguesa para móviles -->
+        <!-- Hamburger menu for mobile -->
         <div class="menu-toggle">
             <i class="fas fa-bars"></i>
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
+    <!-- Main-->
     <main class="form-container">
         <section class="form-section">
             <h2>Crear una cuenta</h2>
@@ -125,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </section>
     </main>
 
-    <!-- Pie de página -->
+    <!--Footer -->
     <footer>
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>

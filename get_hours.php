@@ -1,21 +1,25 @@
 <?php
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
 // Incluir los archivos necesarios
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Obtener parámetros
+// Get parameters
 $week = isset($_GET['week']) ? (int)$_GET['week'] : null;
 $year = isset($_GET['year']) ? (int)$_GET['year'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar parámetros
+// Validate parameters
 if (!$week || !$year) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Parámetros inválidos']);
@@ -23,7 +27,7 @@ if (!$week || !$year) {
 }
 
 try {
-    // Obtener horas del calendario para la semana y año especificados
+    // Get calendar hours for the specified week and year
     $stmt = $conn->prepare("
         SELECT id, hora, orden
         FROM horas_calendario

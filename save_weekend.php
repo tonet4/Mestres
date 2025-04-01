@@ -1,38 +1,43 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'includes/utils.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Verificar que sea una petición POST
+// Verify that it is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
     exit;
 }
 
-// Obtener datos
+// Get data
 $week = isset($_POST['week']) ? (int)$_POST['week'] : null;
 $year = isset($_POST['year']) ? (int)$_POST['year'] : null;
 $day = isset($_POST['day']) ? limpiarDatos($_POST['day']) : null;
 $content = isset($_POST['content']) ? $_POST['content'] : '';
 $usuario_id = $_SESSION['user_id'];
 
-// Validar datos
+// Validate data
 if (!$week || !$year || !$day) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }
 
-// Validar que el día sea válido (sábado o domingo)
+//Validate that the day is valid (Saturday or Sunday)
 if ($day !== 'sabado' && $day !== 'domingo') {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Día no válido']);
@@ -40,10 +45,10 @@ if ($day !== 'sabado' && $day !== 'domingo') {
 }
 
 try {
-    // Sanitizar el contenido para almacenamiento seguro
+    // Sanitize contents for safe storage
     $sanitized_content = $content;
     
-    // Si no es un JSON válido, lo convertimos a un formato de array simple
+    // If it's not a valid JSON, we convert it to a simple array format
     if (!isValidJSON($content)) {
         $sanitized_content = json_encode([
             [
@@ -53,7 +58,7 @@ try {
         ]);
     }
     
-    // Verificar si ya existen eventos para este día
+    // Check if there are already events for this day
     $stmt = $conn->prepare("
         SELECT id
         FROM eventos_fin_semana
@@ -70,14 +75,14 @@ try {
     $exists = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if ($exists) {
-        // Actualizar eventos existentes
+        // Update existing events
         $stmt = $conn->prepare("
             UPDATE eventos_fin_semana
             SET contenido = :contenido
             WHERE usuario_id = :usuario_id AND semana_numero = :semana AND anio = :anio AND dia = :dia
         ");
     } else {
-        // Insertar nuevos eventos
+        // Insert new events
         $stmt = $conn->prepare("
             INSERT INTO eventos_fin_semana (usuario_id, semana_numero, anio, dia, contenido)
             VALUES (:usuario_id, :semana, :anio, :dia, :contenido)
@@ -99,7 +104,7 @@ try {
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
 
-// Función para verificar si una cadena es un JSON válido
+// Function to check if a string is valid JSON
 function isValidJSON($string) {
     if (!is_string($string) || trim($string) === '') {
         return false;

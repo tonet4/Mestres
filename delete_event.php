@@ -1,27 +1,32 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Include the necessary file
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Verificar que sea una petición POST
+// Verify that it is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
     exit;
 }
 
-// Obtener datos
+// Get data
 $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar datos
+// Validate data
 if (!$event_id) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Falta el ID del evento']);
@@ -29,7 +34,7 @@ if (!$event_id) {
 }
 
 try {
-    // Verificar que el evento pertenece al usuario
+    // Verify that the event belongs to the user
     $stmt = $conn->prepare("
         SELECT id
         FROM eventos_calendario
@@ -45,7 +50,7 @@ try {
         throw new Exception('No tienes permiso para eliminar este evento');
     }
     
-    // Eliminar evento
+    // Delete event
     $stmt = $conn->prepare("
         DELETE FROM eventos_calendario
         WHERE id = :id AND usuario_id = :usuario_id

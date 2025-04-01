@@ -1,28 +1,33 @@
 <?php
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
 session_start();
-// Si ya hay una sesión activa, redirigir al dashboard
+// If there is already an active session, redirect to the dashboard
 if(isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit;
 }
 
-// Incluir el procesador de login
+// Include the login processor
 require_once 'includes/procesar_login.php';
 
-// Variables para mensajes
+// Variables for messages
 $error = '';
 
-// Procesar formulario de login
+// Process login form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $remember = isset($_POST['remember']);
     
-    // Procesar login
+    // Process login
     $resultado = login_usuario($email, $password, $remember);
     
     if($resultado['success']) {
-        // Redirigir al dashboard
+        // Redirect to dashboard
         header("Location: dashboard.php");
         exit;
     } else {
@@ -36,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/estilo.css">
+    <link rel="stylesheet" href="./estilo/base_principal.css">
     <link rel="stylesheet" href="./estilo/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navegación -->
+    <!-- Nav -->
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
@@ -53,13 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="registro.php" class="btn btn-registro">Registro</a>
             <a href="login.php" class="btn btn-acceso">Acceso</a>
         </div>
-        <!-- Menú hamburguesa para móviles -->
+        <!-- Hamburger menu for mobile -->
         <div class="menu-toggle">
             <i class="fas fa-bars"></i>
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
+    <!-- Main Content -->
     <main class="form-container">
         <section class="form-section">
             <h2>Acceso a tu cuenta</h2>
@@ -90,13 +95,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <div class="form-footer">
                     <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
-                    <p><a href="recuperar-password.php">¿Olvidaste tu contraseña?</a></p>
                 </div>
             </form>
         </section>
     </main>
 
-    <!-- Pie de página -->
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>

@@ -1,30 +1,38 @@
 <?php
-// Incluir los archivos necesarios
+
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'includes/utils.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 require_login();
 
-// Obtener información del usuario
+// Get user information
 $usuario_id = $_SESSION['user_id'];
 $usuario_nombre = $_SESSION['user_nombre'];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario - QUADERN MESTRES</title>
     <link rel="stylesheet" href="./estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="./estilo/calendar.css?v=<?php echo time(); ?>">
-    <!--Biblioteca de iconos-->
+    <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!--Biblioteca JS para realizar capturs de pantalla-->
+    <!--JS library to take screenshots-->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -32,8 +40,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-                <h1>QUADERN de Mestres</h1>
-            </div>
+            <h1>QUADERN de Mestres</h1>
+        </div>
         <div class="nav-right">
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($usuario_nombre); ?></span>
@@ -44,7 +52,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         </div>
     </nav>
 
-    <!-- Menú lateral -->
+    <!-- Side menu -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menú</h3>
@@ -65,33 +73,33 @@ $usuario_nombre = $_SESSION['user_nombre'];
         </ul>
     </div>
 
-    <!-- Overlay para cuando el sidebar está abierto -->
+    <!-- Overlay for when the sidebar is open -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Contenido principal -->
+    <!-- Main content -->
     <main class="main-content">
-        <!-- Selector de vistas de calendario -->
+        <!-- Calendar view selector -->
         <div class="calendar-views">
             <a href="#" class="calendar-view-btn" id="yearly-view">
                 <img class="iconos-calendario" src="./img/calendario.png" alt="anual">
                 <h2>Anual</h2>
             </a>
             <a href="#" class="calendar-view-btn" id="monthly-view">
-            <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
+                <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
                 <h2>Mensual</h2>
             </a>
             <a href="#" class="calendar-view-btn active" id="weekly-view">
-            <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
+                <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
                 <h2>Semanal</h2>
             </a>
         </div>
 
-        <!-- Contenedor del calendario -->
+        <!--calendar container -->
         <div class="calendar-container">
-            <!-- Cabecera del calendario -->
+            <!-- Calendar header -->
             <div class="calendar-header">
                 <div class="calendar-title" id="calendar-title">
-                    <!-- Se rellena con JavaScript -->
+                    <!-- Filled with JavaScript -->
                 </div>
                 <div class="calendar-navigation">
                     <button class="nav-btn" id="prev-week">
@@ -114,7 +122,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Tabla del calendario -->
+            <!-- Calendar table -->
             <table class="calendar-table">
                 <thead>
                     <tr id="week-day-headers">
@@ -127,24 +135,25 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     </tr>
                 </thead>
                 <tbody id="calendar-table-body">
-                    <!-- Se rellena con JavaScript -->
                 </tbody>
             </table>
         </div>
 
-        <!-- Paneles inferiores -->
+        <!-- Bottom panels -->
         <div class="bottom-panels">
-            <!-- Panel de notas de la semana -->
+            <!-- Weekly Notes Panel -->
             <div class="panel">
                 <div class="panel-header">
                     <h3>Notas de la Semana</h3>
-                    <button id="add-note-btn" class="add-btn"><i class="fas fa-plus"></i></button>
+                    <div class="add-btn" id="add-note-btn">
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
                 <div class="panel-content">
                     <div id="notes-list" class="notes-list">
-                        <!-- Se rellena con JavaScript -->
+                        <!-- Filled with JavaScript -->
                     </div>
-                    <!-- Formulario para añadir/editar notas (inicialmente oculto) -->
+                    <!-- Form to add/edit notes (initially hidden) -->
                     <div id="add-note-form" class="add-note-form" style="display: none;">
                         <textarea id="note-input" class="notes-editor" placeholder="Escribe aquí tu nota..."></textarea>
                         <div class="form-buttons">
@@ -155,7 +164,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Panel de eventos del sábado -->
+            <!-- Saturday Event Panel -->
             <div class="panel">
                 <div class="panel-header">
                     <h3>Sábado</h3>
@@ -163,9 +172,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
                 <div class="panel-content">
                     <div id="saturday-list" class="notes-list">
-                        <!-- Se rellena con JavaScript -->
+                        <!-- Filled with JavaScript -->
                     </div>
-                    <!-- Formulario para añadir/editar eventos (inicialmente oculto) -->
+                    <!-- Form to add/edit events (initially hidden) -->
                     <div id="add-saturday-form" class="add-note-form" style="display: none;">
                         <textarea id="saturday-input" class="notes-editor" placeholder="Evento para el sábado..."></textarea>
                         <div class="form-buttons">
@@ -176,7 +185,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Panel de eventos del domingo -->
+            <!--Sunday Events Panel -->
             <div class="panel">
                 <div class="panel-header">
                     <h3>Domingo</h3>
@@ -184,9 +193,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
                 <div class="panel-content">
                     <div id="sunday-list" class="notes-list">
-                        <!-- Se rellena con JavaScript -->
+                        <!--Filled with JavaScript-->
                     </div>
-                    <!-- Formulario para añadir/editar eventos (inicialmente oculto) -->
+                    <!-- Form to add/edit events (initially hidden)-->
                     <div id="add-sunday-form" class="add-note-form" style="display: none;">
                         <textarea id="sunday-input" class="notes-editor" placeholder="Evento para el domingo..."></textarea>
                         <div class="form-buttons">
@@ -199,7 +208,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         </div>
     </main>
 
-    <!-- Modal para añadir/editar horas -->
+    <!-- Modal to add/edit hours -->
     <div id="hour-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -209,7 +218,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <input type="hidden" id="hour-id" name="hour_id" value="">
                 <input type="hidden" id="reference-hour-id" name="reference_hour_id" value="">
                 <input type="hidden" id="hour-input" name="hour">
-                
+
                 <div class="form-group">
                     <label for="hour-from">Desde:</label>
                     <input type="time" id="hour-from" name="hour_from" required>
@@ -218,16 +227,15 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <label for="hour-to">Hasta:</label>
                     <input type="time" id="hour-to" name="hour_to" required>
                 </div>
-                
+
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel">Cancelar</button>
                     <button type="submit" class="modal-btn save">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal para añadir/editar eventos -->
+    <!--Modal to add/edit events -->
     <div id="event-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -236,25 +244,25 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <input type="hidden" id="event-action" name="action" value="add">
                 <input type="hidden" id="event-id" name="event_id" value="">
                 <input type="hidden" id="event-color" name="color" value="#3498db">
-                
+
                 <div class="form-group">
                     <label>Día: <span id="event-day"></span></label>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Hora: <span id="event-hour"></span></label>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="event-title">Título:</label>
                     <input type="text" id="event-title" name="title" placeholder="Título del evento" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="event-description">Descripción:</label>
                     <textarea id="event-description" name="description" placeholder="Descripción del evento"></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Color:</label>
                     <div class="color-options">
@@ -267,58 +275,62 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         <div class="color-option" data-color="#34495e" style="background-color: #34495e;"></div>
                         <div class="color-option" data-color="#e67e22" style="background-color: #e67e22;"></div>
                     </div>
-                    
+
                     <div class="color-picker-container">
                         <label for="custom-color-picker">Color personalizado:</label>
                         <input type="color" id="custom-color-picker" class="color-picker" value="#3498db">
                     </div>
                 </div>
-                
+
                 <div class="modal-buttons">
                     <button type="button" id="delete-event" class="modal-btn delete">Eliminar</button>
-                    <button type="button" class="modal-btn cancel">Cancelar</button>
                     <button type="submit" class="modal-btn save">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+    </footer>
+
     <!-- Scripts -->
     <script src="js/calendar.js?v=<?php echo time(); ?>"></script>
     <script>
-        // Script para el menú lateral
+        // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
             const closeSidebar = document.getElementById('close-sidebar');
             const overlay = document.getElementById('overlay');
 
-            // Abrir menú lateral
+            // Open side menu
             menuToggle.addEventListener('click', function() {
                 sidebar.classList.add('active');
                 overlay.classList.add('active');
             });
 
-            // Cerrar menú lateral (botón X)
+            // Close side menu (X button)
             closeSidebar.addEventListener('click', function() {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
             });
 
-            // Cerrar menú lateral (clic en overlay)
+            // Close side menu (click on overlay)
             overlay.addEventListener('click', function() {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
             });
         });
     </script>
-    <!-- Scripts para el nav sin borde -->
+    <!-- Scripts for the borderless nav -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
 
-                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                // If we have scrolled more than 10px, we add the shadow class
                 if (window.scrollY > 10) {
                     navbar.classList.add('navbar-shadow');
                 } else {
@@ -328,4 +340,5 @@ $usuario_nombre = $_SESSION['user_nombre'];
         });
     </script>
 </body>
+
 </html>

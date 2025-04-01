@@ -1,13 +1,18 @@
 <?php
-// Incluir archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Include necessary files
 require_once 'includes/auth.php';
 require_once 'includes/utils.php';
-require_once 'config.php'; // Archivo de configuración de la base de datos
+require_once 'config.php'; // Database configuration file
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 require_login();
 
-// Array de frases inspiradoras
+// Array of inspirational phrases
 $frases = [
     [
         'texto' => 'La educación es el arma más poderosa que puedes usar para cambiar el mundo.',
@@ -39,10 +44,10 @@ $frases = [
     ]
 ];
 
-// Seleccionar una frase aleatoria
+// Select a random phrase
 $frase_random = $frases[array_rand($frases)];
 
-// Array de imágenes inspiradoras
+// Array of inspiring images
 $imagenes = [
     "img/inspira1.avif",
     "img/inspira2.webp",
@@ -51,10 +56,10 @@ $imagenes = [
     "img/inspira6.jpg"
 ];
 
-// Seleccionar una imagen aleatoria
+// Select a random image
 $imagen_random = $imagenes[array_rand($imagenes)];
 
-// Obtener notas del usuario
+// Get user notes
 try {
     $stmt = $conn->prepare("SELECT id, texto, fecha_creacion, fecha_actualizacion FROM notas WHERE usuario_id = :usuario_id AND estado = 'activo' ORDER BY fecha_actualizacion DESC, fecha_creacion DESC");
     $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
@@ -62,11 +67,10 @@ try {
     $notas = $stmt->fetchAll();
 } catch (PDOException $e) {
     $notas = [];
-    // En producción, deberíamos registrar este error
-    // error_log("Error al obtener notas: " . $e->getMessage());
+    
 }
 
-// Procesar la adición, edición o eliminación de notas
+// Process the addition, editing, or deletion of notes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'add') {
         $texto = limpiarDatos($_POST['nota_texto'] ?? '');
@@ -78,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $stmt->bindParam(':texto', $texto);
                 $stmt->execute();
 
-                // Redireccionar para evitar reenvío de formulario
+                // Redirect to prevent form resubmission
                 header('Location: dashboard.php');
                 exit;
             } catch (PDOException $e) {
-                // Manejo de error
+               
             }
         }
     } elseif ($_POST['action'] === 'edit' && isset($_POST['nota_id'])) {
@@ -91,35 +95,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         if (!empty($texto)) {
             try {
-                // Verificar que la nota pertenece al usuario
+                // Verify that the note belongs to the user
                 $stmt = $conn->prepare("UPDATE notas SET texto = :texto, fecha_actualizacion = CURRENT_TIMESTAMP WHERE id = :id AND usuario_id = :usuario_id");
                 $stmt->bindParam(':texto', $texto);
                 $stmt->bindParam(':id', $nota_id);
                 $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
                 $stmt->execute();
 
-                // Redireccionar
+                // Redirect
                 header('Location: dashboard.php');
                 exit;
             } catch (PDOException $e) {
-                // Manejo de error
+                
             }
         }
     } elseif ($_POST['action'] === 'delete' && isset($_POST['nota_id'])) {
         $nota_id = (int)$_POST['nota_id'];
 
         try {
-            // Verificar que la nota pertenece al usuario
+            // Verify that the note belongs to the user
             $stmt = $conn->prepare("UPDATE notas SET estado = 'eliminado' WHERE id = :id AND usuario_id = :usuario_id");
             $stmt->bindParam(':id', $nota_id);
             $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
             $stmt->execute();
 
-            // Redireccionar
+            // Redirect
             header('Location: dashboard.php');
             exit;
         } catch (PDOException $e) {
-            // Manejo de error
+           
         }
     }
 }
@@ -158,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         </div>
     </nav>
 
-    <!-- Menú lateral -->
+    <!-- Side menu -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menú</h3>
@@ -179,13 +183,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         </ul>
     </div>
 
-    <!-- Overlay para cuando el sidebar está abierto -->
+    <!-- Overlay for when the sidebar is open -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Contenido principal -->
+    <!-- Main content-->
     <main class="main-content">
         <div class="content-wrapper">
-            <!-- Panel izquierdo - Frase e imagen inspiradora -->
+            <!-- Left panel - Inspirational quote and image -->
             <div class="panel inspiration-panel">
                 <div class="panel-header">
                     <h2>Inspiración del día</h2>
@@ -201,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 </div>
             </div>
 
-            <!-- Panel derecho - Notas -->
+            <!--Right panel - Notes -->
             <div class="panel tasks-panel">
                 <div class="panel-header">
                     <h2>Mis Notas</h2>
@@ -230,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                         <?php endif; ?>
                     </div>
 
-                    <!-- Formulario para añadir notas (inicialmente oculto) -->
+                    <!-- Form to add notes (initially hidden) -->
                     <div class="add-task-form" id="add-task-form">
                         <form method="POST" action="dashboard.php">
                             <input type="hidden" name="action" value="add">
@@ -246,14 +250,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         </div>
     </main>
 
-    <!-- Formulario oculto para editar notas -->
+    <!-- Hidden form for editing notes -->
     <form id="edit-form" method="POST" action="dashboard.php" style="display: none;">
         <input type="hidden" name="action" value="edit">
         <input type="hidden" name="nota_id" id="edit-nota-id">
         <input type="hidden" name="nota_texto" id="edit-nota-texto">
     </form>
 
-    <!-- Formulario oculto para eliminar notas -->
+    <!-- Hidden form to delete notes -->
     <form id="delete-form" method="POST" action="dashboard.php" style="display: none;">
         <input type="hidden" name="action" value="delete">
         <input type="hidden" name="nota_id" id="delete-nota-id">
@@ -265,13 +269,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     <script src="js/dashboard.js"></script>
 
-    <!-- Scripts para el nav sin borde -->
+    <!-- Scripts for the borderless nav -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
 
-                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                // If we have scrolled more than 10px, we add the shadow class
                 if (window.scrollY > 10) {
                     navbar.classList.add('navbar-shadow');
                 } else {

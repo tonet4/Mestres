@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUADERN MESTRES - Agenda para Profesores</title>
-    <link rel="stylesheet" href="./estilo/estilo.css">
+    <link rel="stylesheet" href="./estilo/base_principal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navegación -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
@@ -20,13 +20,13 @@
             <a href="registro.php" class="btn btn-registro">Registro</a>
             <a href="login.php" class="btn btn-acceso">Acceso</a>
         </div>
-        <!-- Menú hamburguesa para móviles -->
+        <!-- Hamburger menu for mobile -->
         <div class="menu-toggle">
             <i class="fas fa-bars"></i>
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
+    <!-- Main Content -->
     <main>
         <section class="canva-section">
             <div class="canva-container">
@@ -72,7 +72,7 @@
         </section>
     </main>
 
-    <!-- Pie de página -->
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>
@@ -80,13 +80,13 @@
    
     <script src="js/main.js"></script>
 
-     <!-- Scripts para el nav sin borde -->
+     <!-- Scripts for the borderless nav -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             window.addEventListener('scroll', function () {
                 const navbar = document.querySelector('.navbar');
 
-                // Si hemos hecho scroll más de 10px, añadimos la clase de sombra
+                // If we have scrolled more than 10px, we add the shadow class
                 if (window.scrollY > 10) {
                     navbar.classList.add('navbar-shadow');
                 } else {

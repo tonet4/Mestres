@@ -1,20 +1,24 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
 
-// Obtener id de la hora
+// Get time id
 $hour_id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 $usuario_id = $_SESSION['user_id'];
 
-// Validar parámetros
+// Validate parameters
 if (!$hour_id) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Parámetros inválidos']);
@@ -22,7 +26,7 @@ if (!$hour_id) {
 }
 
 try {
-    // Obtener detalles de la hora
+    // Get time details
     $stmt = $conn->prepare("
         SELECT id, hora, semana_numero, anio, orden
         FROM horas_calendario

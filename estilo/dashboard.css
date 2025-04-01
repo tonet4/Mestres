@@ -1,5 +1,4 @@
-/* Estilos específicos para la página de dashboard */
-
+/* M A I N */
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -21,7 +20,7 @@
     max-width: 600px;
     margin: 0 auto;
     transition: transform 0.3s ease;
-    border: 2px solid var(--secondary-color); /* Añade un borde del mismo color que el inicio del degradado */
+    border: 2px solid var(--secondary-color);
 }
 
 .panel:hover {
@@ -47,7 +46,8 @@
     padding: 20px;
 }
 
-/* Panel de inspiración */
+/* I N S P I R A T I O N - B O A R D */
+
 .inspiration-panel {
     display: flex;
     flex-direction: column;
@@ -94,7 +94,8 @@
     color: black;
 }
 
-/* Panel de tareas/notas */
+/* T A S K & NOTES PANEL */
+
 .task-list {
     margin-bottom: 20px;
     max-height: 300px;
@@ -150,7 +151,6 @@
 }
 
 
-
 .edit-task:hover {
     color: var(--secondary-color);
 }
@@ -159,7 +159,7 @@
     color: #ff6b6b;
 }
 
-/* Formulario para añadir tareas */
+/* F O R M - T O - A D D - T A S K S */
 .add-task-form {
     display: none;
     margin-top: 20px;
@@ -203,7 +203,6 @@
 }
 
 
-
 .save-btn, .cancel-btn {
     padding: 8px 20px;
     border-radius: 25px;
@@ -242,7 +241,9 @@
     font-style: italic;
 }
 
-/* Responsive */
+
+/* R E S P O N S I V */
+
 @media (max-width: 992px) {
     .panel {
         flex: 100%;

@@ -1,38 +1,42 @@
 <?php
-// Incluir los archivos necesarios
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Include the necessary files
 require_once 'includes/auth.php';
 require_once 'includes/utils.php';
 require_once 'config.php';
 
-// Verificar que el usuario esté autenticado
+// Verify that the user is authenticated
 if (!is_logged_in()) {
     header('HTTP/1.1 401 Unauthorized');
     echo 'No autorizado';
     exit;
 }
 
-// Verificar que sea una petición POST
+// Verify that it is a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('HTTP/1.1 405 Method Not Allowed');
     echo 'Método no permitido';
     exit;
 }
 
-// Obtener datos
+// Get data
 $content = isset($_POST['content']) ? $_POST['content'] : '';
 $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
 $saturday = isset($_POST['saturday']) ? $_POST['saturday'] : '';
 $sunday = isset($_POST['sunday']) ? $_POST['sunday'] : '';
 $week_info = isset($_POST['week_info']) ? limpiarDatos($_POST['week_info']) : '';
 
-// Validar datos
+// Validate data
 if (empty($content)) {
     header('HTTP/1.1 400 Bad Request');
     echo 'No hay contenido para exportar';
     exit;
 }
 
-// Crear un archivo HTML temporal que luego podremos convertir en PDF
+// Create a temporary HTML file that we can then convert to PDF
 $html = '<!DOCTYPE html>
 <html>
 <head>
@@ -158,10 +162,10 @@ $html = '<!DOCTYPE html>
 </body>
 </html>';
 
-// Limpiar el HTML para eliminar elementos no deseados como botones de acción
+// Clean up HTML to remove unwanted elements like action buttons
 $html = preg_replace('/<button.*?<\/button>/s', '', $html);
 
-// Configuración de cabeceras para la descarga
+// Configuring headers for download
 $filename = 'calendario_' . date('Y-m-d') . '.html';
 header('Content-Description: File Transfer');
 header('Content-Type: text/html; charset=utf-8');
@@ -171,7 +175,7 @@ header('Cache-Control: must-revalidate');
 header('Pragma: public');
 header('Content-Length: ' . strlen($html));
 
-// Enviar el contenido
+// Send the content
 echo $html;
 exit;
 ?>
