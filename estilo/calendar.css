@@ -555,6 +555,7 @@
 }
 
 .modal-btn.save {
+    font-family: var(--font-main);
     background-color: var(--primary-color);
     color: white;
     border: none;

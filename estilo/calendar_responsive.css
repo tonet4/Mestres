@@ -1,0 +1,267 @@
+/**
+ * Media queries para hacer los calendarios responsivos
+ */
+
+/* Tablets (menos de 992px) */
+@media screen and (max-width: 991px) {
+    /* Calendario Anual */
+    .year-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Calendario Mensual */
+    .month-calendar {
+        overflow-x: auto;
+    }
+    
+    .weekdays div, .day {
+        min-width: 70px;
+    }
+    
+    .calendar-monthly-header, .calendar-annual-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .calendar-navigation {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .calendar-title h2 {
+        font-size: 1.5rem;
+    }
+    
+    .icon-filter {
+        overflow-x: auto;
+    }
+    
+    .icon-options {
+        width: 100%;
+        flex-wrap: nowrap;
+        padding-bottom: 10px;
+    }
+    
+    .icon-option {
+        flex-shrink: 0;
+    }
+    
+    /* Botones y controles */
+    .nav-btn, .action-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .bottom-panels {
+        flex-direction: column;
+    }
+    
+    .panel {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Móviles (menos de 768px) */
+@media screen and (max-width: 767px) {
+    /* Calendario Anual */
+    .year-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .month-card {
+        margin-bottom: 15px;
+    }
+    
+    /* Calendario Mensual */
+    .day {
+        min-height: 80px;
+        padding: 2px;
+        font-size: 0.9rem;
+    }
+    
+    .event-indicator {
+        padding: 1px 3px;
+        font-size: 0.7rem;
+    }
+    
+    /* Mantener las vistas de calendario en horizontal */
+    .calendar-views {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .calendar-view-btn {
+        width: auto;
+        margin-bottom: 0;
+        padding: 10px 15px;
+    }
+    
+    .calendar-views h2 {
+        font-size: 1.3rem;
+    }
+    
+    .iconos-calendario {
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Modal de eventos */
+    .modal-content {
+        padding: 15px;
+        width: 95%;
+        max-width: none;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group textarea {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .modal-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* Tooltip de eventos */
+    .event-tooltip {
+        width: 240px;
+        max-width: 95vw;
+    }
+}
+
+/* Móviles pequeños (menos de 576px) */
+@media screen and (max-width: 575px) {
+    /* Calendario Mensual */
+    .weekdays div {
+        font-size: 0.8rem;
+        padding: 10px 0;
+    }
+    
+    .day-number {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 0.8rem;
+    }
+    
+    .days-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+    
+    .day {
+        position: relative;
+        height: 60px;
+        min-height: 60px;
+        overflow: hidden;
+    }
+    
+    .nav-btn, .action-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .add-event-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .add-event-btn button {
+        width: 100%;
+    }
+    
+    /* Mantener las vistas de calendario en horizontal pero ajustar tamaño */
+    .calendar-views {
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 10px;
+    }
+    
+    .iconos-calendario {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .calendar-view-btn {
+        padding: 8px 12px;
+    }
+    
+    .calendar-view-btn h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* Barra lateral */
+    .sidebar {
+        width: 85%;
+    }
+    
+    /* Navbar */
+    .navbar {
+        padding: 8px;
+    }
+    
+    .nav-left h1 {
+        font-size: 1.2rem;
+    }
+    
+    .user-info {
+        font-size: 0.8rem;
+    }
+    
+    /* Eventos en lista */
+    .event-item {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .event-color {
+        width: 100%;
+        height: 4px;
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+    
+    .event-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .event-content {
+        width: 100%;
+    }
+    
+    .event-actions {
+        margin-top: 8px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* Orientación horizontal para móviles */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .day {
+        min-height: 50px;
+    }
+    
+    .calendar-views {
+        flex-direction: row;
+    }
+    
+    .calendar-view-btn {
+        width: auto;
+        margin-bottom: 0;
+    }
+}

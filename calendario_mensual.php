@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Antonio Esteban Lorenzo
+ * @author AntonioEsteban Lorenzo
  * 
  */
 
@@ -16,6 +16,36 @@ require_login();
 // Get user information
 $usuario_id = $_SESSION['user_id'];
 $usuario_nombre = $_SESSION['user_nombre'];
+
+// Get current month and year (or requested)
+$month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
+$year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+
+// Make sure month is between 1 and 12
+if ($month < 1) {
+    $month = 12;
+    $year--;
+} else if ($month > 12) {
+    $month = 1;
+    $year++;
+}
+
+// Get month name in Spanish
+$monthNames = [
+    1 => 'Enero',
+    2 => 'Febrero',
+    3 => 'Marzo',
+    4 => 'Abril',
+    5 => 'Mayo',
+    6 => 'Junio',
+    7 => 'Julio',
+    8 => 'Agosto',
+    9 => 'Septiembre',
+    10 => 'Octubre',
+    11 => 'Noviembre',
+    12 => 'Diciembre'
+];
+$monthName = $monthNames[$month];
 ?>
 
 <!DOCTYPE html>
@@ -24,13 +54,13 @@ $usuario_nombre = $_SESSION['user_nombre'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario - QUADERN MESTRES</title>
+    <title>Calendario Mensual - QUADERN MESTRES</title>
     <link rel="stylesheet" href="./estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="./estilo/calendar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./estilo/calendar_mensual.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./estilo/calendar_responsive.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!--JS library to take screenshots-->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -80,162 +110,100 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <main class="main-content">
         <!-- Calendar view selector -->
         <div class="calendar-views">
-            <a href="#" class="calendar-view-btn" id="yearly-view">
+            <a href="calendario_anual.php" class="calendar-view-btn" id="yearly-view">
                 <img class="iconos-calendario" src="./img/calendario.png" alt="anual">
                 <h2>Anual</h2>
             </a>
-            <a href="calendario_mensual.php" class="calendar-view-btn" id="monthly-view">
+            <a href="calendario_mensual.php" class="calendar-view-btn active" id="monthly-view">
                 <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
                 <h2>Mensual</h2>
             </a>
-            <a href="calendario_anual.php" class="calendar-view-btn active" id="weekly-view">
+            <a href="calendario.php" class="calendar-view-btn" id="weekly-view">
                 <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
                 <h2>Semanal</h2>
             </a>
         </div>
 
-        <!--calendar container -->
-        <div class="calendar-container">
-            <!-- Calendar header -->
-            <div class="calendar-header">
-                <div class="calendar-title" id="calendar-title">
-                    <!-- Filled with JavaScript -->
-                </div>
-                <div class="calendar-navigation">
-                    <button class="nav-btn" id="prev-week">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="nav-btn" id="today">
-                        <i class="fas fa-calendar-day"></i>
-                    </button>
-                    <button class="nav-btn" id="next-week">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="calendar-actions">
-                    <button class="action-btn" id="add-hour">
-                        <i class="fas fa-plus"></i> Añadir Hora
-                    </button>
-                    <button class="action-btn export" id="export-calendar">
-                        <i class="fas fa-file-export"></i> Exportar
-                    </button>
-                </div>
+        <!-- Calendar header -->
+        <div class="calendar-monthly-header">
+            <div class="calendar-title">
+                <h2><?php echo $monthName . ' ' . $year; ?></h2>
             </div>
-
-            <!-- Calendar table -->
-            <table class="calendar-table">
-                <thead>
-                    <tr id="week-day-headers">
-                        <th>Hora</th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miércoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                    </tr>
-                </thead>
-                <tbody id="calendar-table-body">
-                </tbody>
-            </table>
+            <div class="calendar-navigation">
+                <button class="nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn" id="current-month">
+                    <i class="fas fa-calendar"></i>
+                </button>
+                <button class="nav-btn" id="next-month">
+                     <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="add-event-btn">
+                <button id="add-event-btn" class="action-btn">
+                    <i class="fas fa-plus"></i> Añadir Evento
+                </button>
+            </div>
         </div>
 
-        <!-- Bottom panels -->
-        <div class="bottom-panels">
-            <!-- Weekly Notes Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Notas de la Semana</h3>
-                    <div class="add-btn" id="add-note-btn">
-                        <i class="fas fa-plus"></i>
-                    </div>
+
+        <!-- Icon Filter -->
+        <div class="icon-filter">
+            <h3>Filtrar por icono:</h3>
+            <div class="icon-options">
+                <button class="icon-option active" data-icon="all">
+                    <i class="fas fa-border-all"></i> Todos
+                </button>
+                <button class="icon-option" data-icon="star">
+                    <img src="./img/star.png" alt="favourite"> Favoritos
+                </button>
+                <button class="icon-option" data-icon="book">
+                    <img src="./img/book.png"> Académico
+                </button>
+                <button class="icon-option" data-icon="users">
+                    <img src="./img/users.png" alt="reunion"> Reunión
+                </button>
+                <button class="icon-option" data-icon="graduation-cap">
+                    <img src="./img/graduation-cap.png"> Evaluaciones
+                </button>
+                <button class="icon-option" data-icon="calendar">
+                    <img src="./img/calendar.png"> Eventos
+                </button>
+                <button class="icon-option" data-icon="flag">
+                    <img src="./img/flag.png" alt="festivos"> Festivos
+                </button>
+            </div>
+        </div>
+
+        <!-- Monthly Calendar Container -->
+        <div class="monthly-calendar-container">
+            <div class="month-calendar">
+                <div class="weekdays">
+                    <div>Lun</div>
+                    <div>Mar</div>
+                    <div>Mié</div>
+                    <div>Jue</div>
+                    <div>Vie</div>
+                    <div>Sáb</div>
+                    <div>Dom</div>
                 </div>
-                <div class="panel-content">
-                    <div id="notes-list" class="notes-list">
-                        <!-- Filled with JavaScript -->
-                    </div>
-                    <!-- Form to add/edit notes (initially hidden) -->
-                    <div id="add-note-form" class="add-note-form" style="display: none;">
-                        <textarea id="note-input" class="notes-editor" placeholder="Escribe aquí tu nota..."></textarea>
-                        <div class="form-buttons">
-                            <button id="save-note-btn" class="save-btn">Guardar</button>
-                            <button id="cancel-note-btn" class="cancel-btn">Cancelar</button>
-                        </div>
-                    </div>
+                <div class="days-grid" id="days-grid">
+                    <!-- Will be populated by JavaScript -->
                 </div>
             </div>
+        </div>
 
-            <!-- Saturday Event Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Sábado</h3>
-                    <button id="add-saturday-btn" class="add-btn"><i class="fas fa-plus"></i></button>
-                </div>
-                <div class="panel-content">
-                    <div id="saturday-list" class="notes-list">
-                        <!-- Filled with JavaScript -->
-                    </div>
-                    <!-- Form to add/edit events (initially hidden) -->
-                    <div id="add-saturday-form" class="add-note-form" style="display: none;">
-                        <textarea id="saturday-input" class="notes-editor" placeholder="Evento para el sábado..."></textarea>
-                        <div class="form-buttons">
-                            <button id="save-saturday-btn" class="save-btn">Guardar</button>
-                            <button id="cancel-saturday-btn" class="cancel-btn">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Sunday Events Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Domingo</h3>
-                    <button id="add-sunday-btn" class="add-btn"><i class="fas fa-plus"></i></button>
-                </div>
-                <div class="panel-content">
-                    <div id="sunday-list" class="notes-list">
-                        <!--Filled with JavaScript-->
-                    </div>
-                    <!-- Form to add/edit events (initially hidden)-->
-                    <div id="add-sunday-form" class="add-note-form" style="display: none;">
-                        <textarea id="sunday-input" class="notes-editor" placeholder="Evento para el domingo..."></textarea>
-                        <div class="form-buttons">
-                            <button id="save-sunday-btn" class="save-btn">Guardar</button>
-                            <button id="cancel-sunday-btn" class="cancel-btn">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Event List for Selected Day -->
+        <div class="day-events" id="day-events">
+            <h3 id="selected-date">Eventos para hoy</h3>
+            <div class="events-list" id="events-list">
+                <!-- Will be populated by JavaScript -->
             </div>
         </div>
     </main>
 
-    <!-- Modal to add/edit hours -->
-    <div id="hour-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 id="hour-modal-title" class="modal-title">Añadir Hora</h2>
-            <form id="hour-form">
-                <input type="hidden" id="hour-action" name="action" value="add">
-                <input type="hidden" id="hour-id" name="hour_id" value="">
-                <input type="hidden" id="reference-hour-id" name="reference_hour_id" value="">
-                <input type="hidden" id="hour-input" name="hour">
-
-                <div class="form-group">
-                    <label for="hour-from">Desde:</label>
-                    <input type="time" id="hour-from" name="hour_from" required>
-                </div>
-                <div class="form-group">
-                    <label for="hour-to">Hasta:</label>
-                    <input type="time" id="hour-to" name="hour_to" required>
-                </div>
-
-                <div class="modal-buttons">
-                    <button type="submit" class="modal-btn save">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!--Modal to add/edit events -->
+    <!-- Modal to add/edit events -->
     <div id="event-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -246,11 +214,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <input type="hidden" id="event-color" name="color" value="#3498db">
 
                 <div class="form-group">
-                    <label>Día: <span id="event-day"></span></label>
-                </div>
-
-                <div class="form-group">
-                    <label>Hora: <span id="event-hour"></span></label>
+                    <label for="event-date">Fecha:</label>
+                    <input type="date" id="event-date" name="event_date" required>
                 </div>
 
                 <div class="form-group">
@@ -261,6 +226,31 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <div class="form-group">
                     <label for="event-description">Descripción:</label>
                     <textarea id="event-description" name="description" placeholder="Descripción del evento"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Icono:</label>
+                    <div class="icon-selection">
+                        <div class="icon-option selected" data-icon="calendar">
+                            <img src="./img/calendar.png"> Eventos
+                        </div>
+                        <div class="icon-option" data-icon="star">
+                            <img src="./img/star.png" alt="favourite"> Favoritos
+                        </div>
+                        <div class="icon-option" data-icon="book">
+                            <img src="./img/book.png"> Académico
+                        </div>
+                        <div class="icon-option" data-icon="users">
+                            <img src="./img/users.png" alt="reunion"> Reunión
+                        </div>
+                        <div class="icon-option" data-icon="graduation-cap">
+                            <img src="./img/graduation-cap.png"> Evaluaciones
+                        </div>
+                        <div class="icon-option" data-icon="flag">
+                            <img src="./img/flag.png" alt="festivos"> Festivos
+                        </div>
+                    </div>
+                    <input type="hidden" id="event-icon" name="icon" value="calendar">
                 </div>
 
                 <div class="form-group">
@@ -290,13 +280,24 @@ $usuario_nombre = $_SESSION['user_nombre'];
         </div>
     </div>
 
+    <div id="custom-modal" class="modal custom-modal">
+        <div class="modal-content">
+            <h2 id="custom-modal-title">Título</h2>
+            <p id="custom-modal-message">Mensaje</p>
+            <div class="modal-buttons">
+                <button id="custom-modal-cancel" class="modal-btn cancel">Cancelar</button>
+                <button id="custom-modal-confirm" class="modal-btn confirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>
 
     <!-- Scripts -->
-    <script src="js/calendar.js?v=<?php echo time(); ?>"></script>
+    <script src="js/calendar_mensual.js?v=<?php echo time(); ?>"></script>
     <script>
         // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {

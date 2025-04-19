@@ -1,0 +1,488 @@
+/**
+ * Estilos para el calendario anual
+ */
+
+/* Contenedor principal del calendario anual */
+.annual-calendar-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del calendario anual */
+.calendar-annual-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.calendar-annual-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+/* Filtro de iconos */
+.icon-filter {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.icon-filter h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.icon-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.icon-option {
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.icon-option:hover {
+    background-color: #f5f5f5;
+}
+
+.icon-option.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.icon-option i {
+    margin-right: 5px;
+}
+
+/* Para las imágenes en los botones de filtro */
+.icon-option img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Para las imágenes pequeñas en los eventos */
+.event-icon-small {
+    width: 12px;
+    height: 12px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Para las imágenes en el tooltip */
+.event-tooltip-icon img {
+    width: 16px;
+    height: 16px;
+}
+/* Estilos para el tooltip de eventos en el calendario anual */
+.event-tooltip {
+    position: absolute;
+    z-index: 100;
+    width: 250px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    display: none;
+    font-size: 0.9rem;
+    pointer-events: none; /* Para que no interfiera con otros elementos */
+}
+
+.event-tooltip-header {
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+}
+
+.event-tooltip-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.event-tooltip-item:last-child {
+    border-bottom: none;
+}
+
+.event-tooltip-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    margin-top: 3px;
+}
+
+.event-tooltip-content {
+    flex: 1;
+}
+
+.event-tooltip-title {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.event-tooltip-description {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.event-tooltip-icon {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
+.event-tooltip-img {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.event-dot-img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Grid de meses para el año */
+.year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .year-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .year-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tarjeta de mes */
+.month-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.month-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.month-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.view-month-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.view-month-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Grid de días para cada mes */
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 10px;
+}
+
+.weekday-header {
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+    padding: 5px 0;
+    font-size: 0.8rem;
+}
+
+.day {
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.day:hover {
+    background-color: #f5f5f5;
+}
+
+.day.empty {
+    background-color: transparent;
+    cursor: default;
+}
+
+.day.today {
+    background-color: #e8f4fd;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.day.has-events {
+    font-weight: bold;
+}
+
+.day-number {
+    font-size: 0.9rem;
+    z-index: 1;
+}
+
+/* Indicadores de eventos */
+.event-dots {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.event-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3498db;
+}
+
+.more-events {
+    font-size: 0.6rem;
+    color: #888;
+}
+
+/* Modal para añadir/editar eventos */
+.modal {
+    overflow-y: auto;
+    max-height: 100vh;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-start; /* Cambiar de center a flex-start */
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh; /* Limitar altura máxima */
+    overflow-y: auto; /* Permitir scroll si el contenido es muy largo */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    margin: 20px auto; /* Añadir margen arriba */
+}
+
+/* Asegurar que la X sea visible */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.2s ease;
+    z-index: 1001; /* Asegurar que esté por encima de todo */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg);
+    color: var(--accent-color);
+}
+
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Selección de iconos */
+.icon-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.icon-selection .icon-option {
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.icon-selection .icon-option.selected {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* Selección de color */
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: #333;
+    transform: scale(1.1);
+}
+
+.color-picker-container {
+    margin-top: 15px;
+}
+
+.color-picker {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Botones del modal */
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+
+.modal-btn.delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.modal-btn.delete:hover {
+    background-color: #c0392b;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: #888;
+}
