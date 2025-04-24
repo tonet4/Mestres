@@ -1,22 +1,27 @@
 <?php
-// Mostrar errores para depuración
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+
+// Show errors for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Log de depuración
+// Debug log
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - Solicitud recibida' . PHP_EOL, FILE_APPEND);
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - GET: ' . json_encode($_GET) . PHP_EOL, FILE_APPEND);
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - POST: ' . json_encode($_POST) . PHP_EOL, FILE_APPEND);
 
 // Include the necessary files
 require_once '../includes/auth.php';
-require_once '../config.php';
+require_once 'config.php';
 
-// Log de estado de autenticación
+// Authentication status log
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - Autenticación: ' . (isset($_SESSION['user_id']) ? 'Sí' : 'No') . PHP_EOL, FILE_APPEND);
 
-// Respuesta por defecto
+// Default response
 $response = [
     'success' => false,
     'debug_info' => [
@@ -28,7 +33,7 @@ $response = [
     'message' => 'Procesando solicitud...'
 ];
 
-// Verificar autenticación
+// Verify authentication
 if (!isset($_SESSION['user_id'])) {
     $response['error'] = 'Usuario no autenticado';
     $response['message'] = 'Error de autenticación';
@@ -51,12 +56,12 @@ if (isset($_GET['action'])) {
     $action = $_POST['event_action'] === 'add' ? 'add_event' : 'update_event';
 }
 
-// Log de acción determinada
+//Specific action log
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - Acción determinada: ' . ($action ?? 'ninguna') . PHP_EOL, FILE_APPEND);
 
 $response['action'] = $action;
 
-// Solo como prueba, siempre intentar añadir un evento si hay datos
+// Just as a test, always try to add an event if there is data
 if ((isset($_POST['title']) || isset($_POST['event_title'])) && (isset($_POST['event_date']) || isset($_POST['fecha']))) {
     $title = isset($_POST['title']) ? $_POST['title'] : ($_POST['event_title'] ?? 'Sin título');
     $date = isset($_POST['event_date']) ? $_POST['event_date'] : ($_POST['fecha'] ?? date('Y-m-d'));
@@ -101,7 +106,7 @@ if ((isset($_POST['title']) || isset($_POST['event_title'])) && (isset($_POST['e
         file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - Error BD: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
     }
 } else {
-    // Si no hay datos para guardar un evento, manejamos otras acciones
+    // If there is no data to save an event, we handle other actions
     switch ($action) {
         case 'get_events_by_year':
             $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');

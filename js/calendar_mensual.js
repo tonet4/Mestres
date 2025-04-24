@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         daysGrid.innerHTML = '<div class="loading-spinner">Cargando...</div>';
         
         // Hacer petición AJAX para obtener eventos
-        fetch(`api/eventos_calendario.php?action=get_events_by_month&month=${currentMonth}&year=${currentYear}`)
+        fetch(`../api/eventos_calendario.php?action=get_events_by_month&month=${currentMonth}&year=${currentYear}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -237,12 +237,12 @@ document.querySelectorAll('.day.has-events').forEach(day => {
             
            // Mapeo de iconos a imágenes
             const iconImages = {
-                'star': './img/star.png',
-                'users': './img/users.png',
-                'flag': './img/flag.png',
-                'book': './img/book.png',
-                'graduation-cap': './img/graduation-cap.png',
-                'calendar': './img/calendar.png'
+                'star': '../img/star.png',
+                'users': '../img/users.png',
+                'flag': '../img/flag.png',
+                'book': '../img/book.png',
+                'graduation-cap': '../img/graduation-cap.png',
+                'calendar': '../img/calendar.png'
 
 
                 // Agregar más iconos cuando tengas las imágenes
@@ -366,7 +366,7 @@ document.querySelectorAll('.day.has-events').forEach(day => {
                 formData.append('action', 'delete_event');
                 formData.append('event_id', eventId);
                 
-                fetch('api/eventos_calendario.php', {
+                fetch('../api/eventos_calendario.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -468,12 +468,12 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         
         // Mapeo de iconos a imágenes
         const iconImages = {
-            'star': './img/star.png',
-            'users': './img/users.png',
-            'flag': './img/flag.png',
-            'book': './img/book.png',
-            'graduation-cap': './img/graduation-cap.png',
-            'calendar': './img/calendar.png'
+            'star': '../img/star.png',
+            'users': '../img/users.png',
+            'flag': '../img/flag.png',
+            'book': '../img/book.png',
+            'graduation-cap': '../img/graduation-cap.png',
+            'calendar': '../img/calendar.png'
         };
         
         let html = '<div class="event-indicators">';
@@ -540,7 +540,7 @@ document.querySelectorAll('.day.has-events').forEach(day => {
                 <div class="event-item" data-id="${event.id}">
                     <div class="event-color" style="background-color: ${event.color};"></div>
                     <div class="event-icon">
-                         <img src="./img/${event.icono || 'calendar'}.png" alt="${event.icono}" class="event-tooltip-img">
+                         <img src="../img/${event.icono || 'calendar'}.png" alt="${event.icono}" class="event-tooltip-img">
                     </div>
                     <div class="event-content">
                         <h4 class="event-title">${event.titulo}</h4>
@@ -600,8 +600,7 @@ document.querySelectorAll('.day.has-events').forEach(day => {
             newYear++;
         }
         
-        window.location.href = `calendario_mensual.php?month=${newMonth}&year=${newYear}`;
-    }
+        window.location.href = `../views/calendario_mensual.php?month=${newMonth}&year=${newYear}`;    }
     
     /**
      * Abre el modal para añadir evento
@@ -706,7 +705,7 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         const action = formData.get('action');
         
         // URL del endpoint
-        const url = 'api/eventos_calendario.php';
+        const url = '../api/eventos_calendario.php';
         
         // Enviar petición
         fetch(url, {
@@ -792,7 +791,7 @@ function completeEventDeletion(id) {
     formData.append('action', 'delete_event');
     formData.append('event_id', id);
     
-    fetch('api/eventos_calendario.php', {
+    fetch('../api/eventos_calendario.php', {
         method: 'POST',
         body: formData
     })

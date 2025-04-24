@@ -1,36 +1,61 @@
 <?php
-// Función para validar el registro de un nuevo usuario
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Function to validate the registration of a new user
 function registrar_usuario($nombre, $apellidos, $email, $password, $confirm_password) {
-    // Array para almacenar errores
+    // Array to store errors
     $errores = [];
     
-    // Validar que todos los campos estén completos
+    // Validate that all fields are complete
     if(empty($nombre) || empty($apellidos) || empty($email) || empty($password) || empty($confirm_password)) {
         $errores[] = "Todos los campos son obligatorios";
     }
     
-    // Validar que las contraseñas coincidan
+    // Validate that the passwords match
     if($password !== $confirm_password) {
         $errores[] = "Las contraseñas no coinciden";
     }
     
-    // Validar longitud y complejidad de la contraseña
+    // Validate password length and complexity
     if(strlen($password) < 8) {
         $errores[] = "La contraseña debe tener al menos 8 caracteres";
     }
+
+    // Verify that the password contains at least one capital letter
+    if(!preg_match('/[A-Z]/', $password)) {
+        $errores[] = "La contraseña debe contener al menos una letra mayúscula";
+    }
+
+    //Verify that the password contains at least one lowercase letter
+    if(!preg_match('/[a-z]/', $password)) {
+        $errores[] = "La contraseña debe contener al menos una letra minúscula";
+    }
+
+    // Verify that the password contains at least one number
+    if(!preg_match('/[0-9]/', $password)) {
+        $errores[] = "La contraseña debe contener al menos un número";
+    }
+
+    // Verify that the password contains at least one special character
+    if(!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        $errores[] = "La contraseña debe contener al menos un carácter especial (!@#$%^&*(),.?\":{}|<>)";
+    }
+
     
-    // Validar formato de email
+    // Validate email format
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores[] = "El formato del correo electrónico no es válido";
     }
     
-    // Si no hay errores, proceder con el registro
+    // If there are no errors, proceed with registration.
     if(empty($errores)) {
         try {
-            // Incluir la conexión a la base de datos
-            require_once dirname(__FILE__) . '/../config.php';
+            // Include the connection to the database
+            require_once dirname(__FILE__) . '/../api/config.php';
             
-            // Verificar si el email ya existe
+            // Check if the email already exists
             $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
@@ -38,10 +63,10 @@ function registrar_usuario($nombre, $apellidos, $email, $password, $confirm_pass
             if($stmt->rowCount() > 0) {
                 $errores[] = "Este correo electrónico ya está registrado";
             } else {
-                // Hashear la contraseña
+                // Hash the password
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
                 
-                // Insertar nuevo usuario
+                // Insert new user
                 $stmt = $conn->prepare("INSERT INTO usuarios (nombre, apellidos, email, password) VALUES (:nombre, :apellidos, :email, :password)");
                 $stmt->bindParam(':nombre', $nombre);
                 $stmt->bindParam(':apellidos', $apellidos);
@@ -59,7 +84,7 @@ function registrar_usuario($nombre, $apellidos, $email, $password, $confirm_pass
         }
     }
     
-    // Si hay errores, devolverlos
+    //If there are errors, return them
     if(!empty($errores)) {
         return ['success' => false, 'message' => implode('<br>', $errores)];
     }

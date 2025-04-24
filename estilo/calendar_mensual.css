@@ -1,8 +1,13 @@
 /**
- * Estilos para el calendario mensual
+ * @author Antonio Esteban Lorenzo
+ * 
  */
 
-/* Contenedor principal del calendario mensual */
+/**
+ * ********M O N T H L Y - C A L E N D A R**********
+ */
+
+/* Main container */
 .monthly-calendar-container {
     margin-top: 20px;
     padding: 20px;
@@ -11,7 +16,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Encabezado del calendario mensual */
+/* Monthly calendar header */
 .calendar-monthly-header {
     display: flex;
     justify-content: space-between;
@@ -27,7 +32,7 @@
     color: #333;
 }
 
-/* Filtro de iconos */
+/* Icon filter */
 .icon-filter {
     margin: 20px 0;
     padding: 15px;
@@ -75,7 +80,7 @@
     margin-right: 5px;
 }
 
-/* Para las imágenes en los botones de filtro */
+/*For images in filter buttons*/
 .icon-option img {
     width: 16px;
     height: 16px;
@@ -83,7 +88,7 @@
     vertical-align: middle;
 }
 
-/* Para las imágenes pequeñas en los eventos */
+/*For small images at events */
 .event-icon-small {
     width: 12px;
     height: 12px;
@@ -91,7 +96,7 @@
     margin: 0 auto;
 }
 
-/* Para las imágenes en el tooltip */
+/*For images in the tooltip */
 .event-tooltip-icon img {
     width: 20px;
     height: 20px;
@@ -107,7 +112,7 @@
     vertical-align: middle;
 }
 
-/* Calendario mensual */
+/* Month calendar */
 .month-calendar {
     width: 100%;
     margin-bottom: 20px;
@@ -178,7 +183,7 @@
     font-weight: bold;
 }
 
-/* Indicadores de eventos */
+/* Event indicators*/
 .event-indicators {
     display: flex;
     flex-wrap: wrap;
@@ -205,7 +210,7 @@
     font-size: 0.7rem;
 }
 
-/* Lista de eventos para el día seleccionado */
+/* List of events for the selected day*/
 .day-events {
     margin-top: 30px;
     padding: 20px;
@@ -303,7 +308,7 @@
     color: #333;
 }
 
-/* Modal para añadir/editar eventos */
+/* Modal to add/edit events */
 .modal {
     overflow-y: auto;
     max-height: 100vh;
@@ -316,7 +321,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: center;
-    align-items: flex-start; /* Cambiar de center a flex-start */
+    align-items: flex-start;
     padding: 20px;
 }
 
@@ -325,15 +330,15 @@
     background-color: #fff;
     width: 100%;
     max-width: 500px;
-    max-height: 90vh; /* Limitar altura máxima */
-    overflow-y: auto; /* Permitir scroll si el contenido es muy largo */
+    max-height: 90vh; 
+    overflow-y: auto; 
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    margin: 20px auto; /* Añadir margen arriba */
+    margin: 20px auto;
 }
 
-/* Asegurar que la X sea visible */
+
 .close-modal {
     position: absolute;
     top: 15px;
@@ -342,7 +347,7 @@
     cursor: pointer;
     color: var(--text-color);
     transition: color 0.2s ease;
-    z-index: 1001; /* Asegurar que esté por encima de todo */
+    z-index: 1001; 
     width: 30px;
     height: 30px;
     display: flex;
@@ -389,7 +394,7 @@
     min-height: 100px;
 }
 
-/* Selección de iconos */
+/* Icon selection */
 .icon-selection {
     display: flex;
     flex-wrap: wrap;
@@ -408,7 +413,7 @@
     border-color: #3498db;
 }
 
-/* Selección de color */
+/* Color selection */
 .color-options {
     display: flex;
     flex-wrap: wrap;
@@ -446,7 +451,7 @@
     cursor: pointer;
 }
 
-/* Botones del modal */
+/* Modal buttons */
 .modal-buttons {
     display: flex;
     justify-content: flex-end;
@@ -483,7 +488,7 @@
 }
 
 
-/* Estilos para el tooltip de eventos */
+/* Styles for the event tooltip */
 .event-tooltip {
     position: absolute;
     z-index: 100;
@@ -494,7 +499,7 @@
     padding: 12px;
     display: none;
     font-size: 0.9rem;
-    pointer-events: none; /* Para que no interfiera con otros elementos */
+    pointer-events: none;
 }
 
 .event-tooltip-header {
@@ -544,7 +549,7 @@
     text-align: center;
 }
 
-/* Estilos para modales personalizados */
+/* Styles for custom modals */
 .custom-modal {
     display: none;
     position: fixed;

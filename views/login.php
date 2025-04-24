@@ -12,7 +12,7 @@ if(isset($_SESSION['user_id'])) {
 }
 
 // Include the login processor
-require_once 'includes/procesar_login.php';
+require_once '../includes/procesar_login.php';
 
 // Variables for messages
 $error = '';
@@ -41,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/base_principal.css">
-    <link rel="stylesheet" href="./estilo/forms.css">
+    <link rel="stylesheet" href="../estilo/base_principal.css">
+    <link rel="stylesheet" href="../estilo/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo">
-                <a href="index.html"><img src="img/logo2.png" alt="Logo Quadern Mestres"></a>
+                <a href="index.html"><img src="../img/logo2.png" alt="Logo Quadern Mestres"></a>
             </div>
             <h1 onclick="window.location.href='index.html'">QUADERN MESTRES</h1>
         </div>
@@ -106,6 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </footer>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

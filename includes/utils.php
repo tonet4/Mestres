@@ -1,7 +1,11 @@
 <?php
 /**
- * Función para limpiar datos de entrada
- * Evita inyecciones XSS y otros problemas de seguridad
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+/**
+ * Function to sanitize input data
+* Prevents XSS injections and other security issues
  */
 function limpiarDatos($datos) {
     $datos = trim($datos);
@@ -11,7 +15,7 @@ function limpiarDatos($datos) {
 }
 
 /**
- * Función para formatear fechas
+ * Function to format dates
  */
 function formatearFecha($fecha) {
     $timestamp = strtotime($fecha);
@@ -19,7 +23,7 @@ function formatearFecha($fecha) {
 }
 
 /**
- * Función para generar un resumen de texto
+ * Function to generate a text summary
  */
 function resumirTexto($texto, $longitud = 100) {
     if (strlen($texto) > $longitud) {

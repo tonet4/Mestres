@@ -1,14 +1,14 @@
 <?php
-
 /**
- * @author AntonioEsteban Lorenzo
+ * @author Antonio Esteban Lorenzo
  * 
  */
 
 // Include the necessary files
-require_once 'includes/auth.php';
-require_once 'includes/utils.php';
-require_once 'config.php';
+// Include the necessary files
+require_once '../includes/auth.php';
+require_once '../includes/utils.php';
+require_once '../api/config.php';
 
 // Verify that the user is authenticated
 require_login();
@@ -17,35 +17,8 @@ require_login();
 $usuario_id = $_SESSION['user_id'];
 $usuario_nombre = $_SESSION['user_nombre'];
 
-// Get current month and year (or requested)
-$month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
+// Get current year (or requested year)
 $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
-
-// Make sure month is between 1 and 12
-if ($month < 1) {
-    $month = 12;
-    $year--;
-} else if ($month > 12) {
-    $month = 1;
-    $year++;
-}
-
-// Get month name in Spanish
-$monthNames = [
-    1 => 'Enero',
-    2 => 'Febrero',
-    3 => 'Marzo',
-    4 => 'Abril',
-    5 => 'Mayo',
-    6 => 'Junio',
-    7 => 'Julio',
-    8 => 'Agosto',
-    9 => 'Septiembre',
-    10 => 'Octubre',
-    11 => 'Noviembre',
-    12 => 'Diciembre'
-];
-$monthName = $monthNames[$month];
 ?>
 
 <!DOCTYPE html>
@@ -54,11 +27,11 @@ $monthName = $monthNames[$month];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario Mensual - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="./estilo/calendar.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="./estilo/calendar_mensual.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="./estilo/calendar_responsive.css?v=<?php echo time(); ?>">
+    <title>Calendario Anual - QUADERN MESTRES</title>
+    <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../estilo/calendar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../estilo/calendar_anual.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../estilo/calendar_responsive.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -76,8 +49,8 @@ $monthName = $monthNames[$month];
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($usuario_nombre); ?></span>
             </div>
-            <div class="logout-btn" onclick="location.href='logout.php'">
-                <img src="./img/salida.png"></img>
+            <div class="logout-btn" onclick="location.href='../api/logout.php'">
+                <img src="../img/salida.png"></img>
             </div>
         </div>
     </nav>
@@ -99,8 +72,7 @@ $monthName = $monthNames[$month];
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
-            <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-        </ul>
+            <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>        </ul>
     </div>
 
     <!-- Overlay for when the sidebar is open -->
@@ -110,33 +82,33 @@ $monthName = $monthNames[$month];
     <main class="main-content">
         <!-- Calendar view selector -->
         <div class="calendar-views">
-            <a href="calendario_anual.php" class="calendar-view-btn" id="yearly-view">
-                <img class="iconos-calendario" src="./img/calendario.png" alt="anual">
+            <a href="calendario_anual.php" class="calendar-view-btn active" id="yearly-view">
+                <img class="iconos-calendario" src="../img/calendario.png" alt="anual">
                 <h2>Anual</h2>
             </a>
-            <a href="calendario_mensual.php" class="calendar-view-btn active" id="monthly-view">
-                <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
+            <a href="calendario_mensual.php" class="calendar-view-btn" id="monthly-view">
+                <img class="iconos-calendario" src="../img/calendarioo.png" alt="mensual">
                 <h2>Mensual</h2>
             </a>
             <a href="calendario.php" class="calendar-view-btn" id="weekly-view">
-                <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
+                <img class="iconos-calendario" src="../img/7-dias.png" alt="dias">
                 <h2>Semanal</h2>
             </a>
         </div>
 
         <!-- Calendar header -->
-        <div class="calendar-monthly-header">
+        <div class="calendar-annual-header">
             <div class="calendar-title">
-                <h2><?php echo $monthName . ' ' . $year; ?></h2>
+                <h2>Calendario Anual <?php echo $year; ?></h2>
             </div>
             <div class="calendar-navigation">
-                <button class="nav-btn" id="prev-month">
+                <button class="nav-btn" id="prev-year">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="nav-btn" id="current-month">
-                    <i class="fas fa-calendar"></i>
+                <button class="nav-btn" id="current-year">
+                    <i class="fas fa-calendar"></i> 
                 </button>
-                <button class="nav-btn" id="next-month">
+                <button class="nav-btn" id="next-year">
                      <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
@@ -147,7 +119,6 @@ $monthName = $monthNames[$month];
             </div>
         </div>
 
-
         <!-- Icon Filter -->
         <div class="icon-filter">
             <h3>Filtrar por icono:</h3>
@@ -156,50 +127,29 @@ $monthName = $monthNames[$month];
                     <i class="fas fa-border-all"></i> Todos
                 </button>
                 <button class="icon-option" data-icon="star">
-                    <img src="./img/star.png" alt="favourite"> Favoritos
+                    <img src="../img/star.png"> Favoritos
                 </button>
                 <button class="icon-option" data-icon="book">
-                    <img src="./img/book.png"> Académico
+                    <img src="../img/book.png"> Académico
                 </button>
                 <button class="icon-option" data-icon="users">
-                    <img src="./img/users.png" alt="reunion"> Reunión
+                    <img src="../img/users.png" alt="reunion"> Reunión
                 </button>
                 <button class="icon-option" data-icon="graduation-cap">
-                    <img src="./img/graduation-cap.png"> Evaluaciones
+                    <img src="../img/graduation-cap.png"> Evaluaciones
                 </button>
                 <button class="icon-option" data-icon="calendar">
-                    <img src="./img/calendar.png"> Eventos
+                    <img src="../img/calendar.png"> Eventos
                 </button>
                 <button class="icon-option" data-icon="flag">
-                    <img src="./img/flag.png" alt="festivos"> Festivos
+                    <img src="../img/flag.png" alt="festivos"> Festivos
                 </button>
             </div>
         </div>
 
-        <!-- Monthly Calendar Container -->
-        <div class="monthly-calendar-container">
-            <div class="month-calendar">
-                <div class="weekdays">
-                    <div>Lun</div>
-                    <div>Mar</div>
-                    <div>Mié</div>
-                    <div>Jue</div>
-                    <div>Vie</div>
-                    <div>Sáb</div>
-                    <div>Dom</div>
-                </div>
-                <div class="days-grid" id="days-grid">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Event List for Selected Day -->
-        <div class="day-events" id="day-events">
-            <h3 id="selected-date">Eventos para hoy</h3>
-            <div class="events-list" id="events-list">
-                <!-- Will be populated by JavaScript -->
-            </div>
+        <!-- Annual Calendar Container -->
+        <div class="annual-calendar-container">
+            <!-- Will be populated by JavaScript -->
         </div>
     </main>
 
@@ -232,22 +182,22 @@ $monthName = $monthNames[$month];
                     <label>Icono:</label>
                     <div class="icon-selection">
                         <div class="icon-option selected" data-icon="calendar">
-                            <img src="./img/calendar.png"> Eventos
+                            <img src="../img/calendar.png"> Evento
                         </div>
                         <div class="icon-option" data-icon="star">
-                            <img src="./img/star.png" alt="favourite"> Favoritos
+                            <img src="../img/star.png"> Favoritos</img>
                         </div>
                         <div class="icon-option" data-icon="book">
-                            <img src="./img/book.png"> Académico
+                            <img src="../img/book.png"> Académico
                         </div>
                         <div class="icon-option" data-icon="users">
-                            <img src="./img/users.png" alt="reunion"> Reunión
+                            <img src="../img/users.png" alt="reunion"> Reunión
                         </div>
                         <div class="icon-option" data-icon="graduation-cap">
-                            <img src="./img/graduation-cap.png"> Evaluaciones
+                            <img src="../img/graduation-cap.png"> Evaluación
                         </div>
                         <div class="icon-option" data-icon="flag">
-                            <img src="./img/flag.png" alt="festivos"> Festivos
+                            <img src="../img/flag.png" alt="festivos"> Festivos
                         </div>
                     </div>
                     <input type="hidden" id="event-icon" name="icon" value="calendar">
@@ -280,24 +230,13 @@ $monthName = $monthNames[$month];
         </div>
     </div>
 
-    <div id="custom-modal" class="modal custom-modal">
-        <div class="modal-content">
-            <h2 id="custom-modal-title">Título</h2>
-            <p id="custom-modal-message">Mensaje</p>
-            <div class="modal-buttons">
-                <button id="custom-modal-cancel" class="modal-btn cancel">Cancelar</button>
-                <button id="custom-modal-confirm" class="modal-btn confirm">Confirmar</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>
 
     <!-- Scripts -->
-    <script src="js/calendar_mensual.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/calendar_anual.js?v=<?php echo time(); ?>"></script>
     <script>
         // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {

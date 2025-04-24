@@ -6,9 +6,9 @@
  */
 
 // Include the necessary files
-require_once 'includes/auth.php';
-require_once 'includes/utils.php';
-require_once 'config.php';
+require_once '../includes/auth.php';
+require_once '../includes/utils.php';
+require_once '../api/config.php';
 
 // Verify that the user is authenticated
 require_login();
@@ -25,8 +25,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="./estilo/calendar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../estilo/calendar.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!--JS library to take screenshots-->
@@ -46,8 +46,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($usuario_nombre); ?></span>
             </div>
-            <div class="logout-btn" onclick="location.href='logout.php'">
-                <img src="./img/salida.png"></img>
+            <div class="logout-btn" onclick="location.href='../api/logout.php'">
+                <img src="../img/salida.png"></img>
             </div>
         </div>
     </nav>
@@ -69,7 +69,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
-            <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
 
@@ -80,16 +80,16 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <main class="main-content">
         <!-- Calendar view selector -->
         <div class="calendar-views">
-            <a href="#" class="calendar-view-btn" id="yearly-view">
-                <img class="iconos-calendario" src="./img/calendario.png" alt="anual">
+            <a href="calendario_anual.php" class="calendar-view-btn" id="yearly-view">
+                <img class="iconos-calendario" src="../img/calendario.png" alt="anual">
                 <h2>Anual</h2>
             </a>
             <a href="calendario_mensual.php" class="calendar-view-btn" id="monthly-view">
-                <img class="iconos-calendario" src="./img/calendarioo.png" alt="mensual">
+                <img class="iconos-calendario" src="../img/calendarioo.png" alt="mensual">
                 <h2>Mensual</h2>
             </a>
-            <a href="calendario_anual.php" class="calendar-view-btn active" id="weekly-view">
-                <img class="iconos-calendario" src="./img/7-dias.png" alt="dias">
+            <a href="#" class="calendar-view-btn active" id="weekly-view">
+                <img class="iconos-calendario" src="../img/7-dias.png" alt="dias">
                 <h2>Semanal</h2>
             </a>
         </div>
@@ -296,7 +296,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
     </footer>
 
     <!-- Scripts -->
-    <script src="js/calendar.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/calendar.js?v=<?php echo time(); ?>"></script>
     <script>
         // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {

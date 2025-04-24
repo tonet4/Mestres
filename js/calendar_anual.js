@@ -1,13 +1,13 @@
 /**
- * JavaScript para el calendario anual
+ * JavaScript for the annual calendar
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Variables globales
+    // Global variables
     let currentYear = new Date().getFullYear();
     let selectedIconFilter = 'all';
     let events = [];
     
-    // Elementos DOM
+    // DOM elements
     const calendarContainer = document.querySelector('.annual-calendar-container');
     const prevYearBtn = document.getElementById('prev-year');
     const nextYearBtn = document.getElementById('next-year');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addEventBtn = document.getElementById('add-event-btn');
     const iconFilterBtns = document.querySelectorAll('.icon-option');
     
-    // Modal para eventos
+    // Modal for events
     const eventModal = document.getElementById('event-modal');
     const closeModal = eventModal.querySelector('.close-modal');
     const eventForm = document.getElementById('event-form');
@@ -32,31 +32,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const customColorPicker = document.getElementById('custom-color-picker');
     const iconOptions = document.querySelectorAll('.icon-selection .icon-option');
     
-    // Nombres de los meses en español
+    // Names of the months in Spanish
     const monthNames = [
         'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
         'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
     ];
     
-    // Inicializar calendario
+    // Initialize calendar
     initCalendar();
     
-    // ===== FUNCIONES =====
+    // ===== F U N C T I O N S =====
     
     /**
-     * Inicializa el calendario
+     * Initialize the calendar
      */
     function initCalendar() {
-        // Obtener año actual o de la URL
+        //Get current year or from URL
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('year')) {
             currentYear = parseInt(urlParams.get('year'));
         }
         
-        // Actualizar título del documento
+        // Update document title
         document.title = `Calendario Anual ${currentYear} - QUADERN MESTRES`;
         
-        // Cargar eventos del año
+        // Load events of the year
         loadEvents();
         
         // Event listeners
@@ -64,45 +64,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Configura los event listeners
+     * Configure event listeners
      */
     function setupEventListeners() {
-        // Navegación entre años
+        // Navigation between years
         prevYearBtn.addEventListener('click', () => navigateYear(currentYear - 1));
         nextYearBtn.addEventListener('click', () => navigateYear(currentYear + 1));
         currentYearBtn.addEventListener('click', () => navigateYear(new Date().getFullYear()));
         
-        // Botón para añadir evento
+        //Button to add event
         addEventBtn.addEventListener('click', () => openAddEventModal());
         
-        // Filtro de iconos
+        // Icon filter
         iconFilterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 iconFilterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedIconFilter = btn.dataset.icon;
-                renderCalendar(); // Re-renderizar con el filtro aplicado
+                renderCalendar(); 
             });
         });
         
-        // Modal de eventos
+        // event modal
         closeModal.addEventListener('click', closeEventModal);
         eventForm.addEventListener('submit', handleEventFormSubmit);
         deleteEventBtn.addEventListener('click', handleEventDelete);
         
-        // Selección de color
+        // Color selection
         colorOptions.forEach(option => {
             option.addEventListener('click', selectColor);
         });
         
         customColorPicker.addEventListener('input', () => {
-            // Deseleccionar todas las opciones de color predefinidas
+            // Deselect all predefined color options
             colorOptions.forEach(opt => opt.classList.remove('selected'));
-            // Establecer el color personalizado
+            // Set custom color
             eventColor.value = customColorPicker.value;
         });
         
-        // Selección de icono
+        // Icon selection
         iconOptions.forEach(option => {
             option.addEventListener('click', () => {
                 iconOptions.forEach(opt => opt.classList.remove('selected'));
@@ -113,14 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Carga los eventos del año actual
+     * Loads the events of the current year
      */
     function loadEvents() {
-        // Mostrar indicador de carga
+        // Show charging indicator
         calendarContainer.innerHTML = '<div class="loading-spinner">Cargando...</div>';
         
-        // Hacer petición AJAX para obtener eventos
-        fetch(`api/eventos_calendario.php?action=get_events_by_year&year=${currentYear}`)
+        // Make AJAX requests to get events
+        fetch(`../api/eventos_calendario.php?action=get_events_by_year&year=${currentYear}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -136,20 +136,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Renderiza el calendario anual
+     * Renders the annual calendar
      */
     function renderCalendar() {
-        // Crear grid de meses
+        // Create grid of months
         let html = '<div class="year-grid">';
         
-        // Crear cada mes
+        // Create every month
         for (let month = 0; month < 12; month++) {
             html += `
                 <div class="month-card">
                     <div class="month-header">
                         <h3>${monthNames[month]}</h3>
-                        <a href="calendario_mensual.php?month=${month + 1}&year=${currentYear}" class="view-month-btn">
-                            <i class="fas fa-eye"></i>
+                        <a href="../views/calendario_mensual.php?month=${month + 1}&year=${currentYear}" class="view-month-btn">                            <i class="fas fa-eye"></i>
                         </a>
                     </div>
                     <div class="month-days">
@@ -162,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         html += '</div>';
         calendarContainer.innerHTML = html;
         
-        // Agregar event listener a los días para hacer clic
+        // Add event listener to days to click
         document.querySelectorAll('.day').forEach(day => {
             day.addEventListener('click', event => {
                 const dateStr = event.currentTarget.dataset.date;
@@ -172,15 +171,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Configurar tooltips para los días con eventos
+        // Configure tooltips for days with events
         setupTooltips();
     }
     
     /**
-     * Configura los tooltips para los días con eventos
+     * Configure tooltips for days with events
      */
     function setupTooltips() {
-        // Crear el elemento del tooltip si no existe
+        // Create the tooltip element if it does not exist
         if (!document.getElementById('event-tooltip')) {
             const tooltip = document.createElement('div');
             tooltip.id = 'event-tooltip';
@@ -207,21 +206,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     const eventsData = JSON.parse(this.dataset.events);
                     
                     if (eventsData && eventsData.length > 0) {
-                        // Extraer el día directamente del número mostrado
+                        // Extract the day directly from the displayed number
                         const dayNumber = this.querySelector('.day-number').textContent;
                         const month = parseInt(this.dataset.date.split('-')[1]) - 1;
                         
-                        // Mapeo de iconos a imágenes
+                        // Mapping icons to images
                         const iconImages = {
-                            'star': './img/star.png',
-                            'users': './img/users.png',
-                            'flag': './img/flag.png',
-                            'book': './img/book.png',
-                            'graduation-cap': './img/graduation-cap.png',
-                            'calendar': './img/calendar.png'
+                            'star': '../img/star.png',
+                            'users': '../img/users.png',
+                            'flag': '../img/flag.png',
+                            'book': '../img/book.png',
+                            'graduation-cap': '../img/graduation-cap.png',
+                            'calendar': '../img/calendar.png'
                         };
                         
-                        // Generar contenido del tooltip
+                        // Generate tooltip content
                         let tooltipContent = `
                             <div class="event-tooltip-header">
                                 Eventos para el ${dayNumber} de ${monthNames[month]}
@@ -229,13 +228,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
                         
                         eventsData.forEach(event => {
-                            // Determinar si usar imagen o icono
+                            //Determine whether to use an image or icon
                             let iconHTML = '';
                             if (iconImages[event.icono]) {
-                                // Si existe una imagen para este icono
+                                // If an image exists for this icon
                                 iconHTML = `<img src="${iconImages[event.icono]}" alt="${event.icono}" class="event-tooltip-img">`;
                             } else {
-                                // Usar Font Awesome como respaldo
+                                // Using Font Awesome as a backup
                                 iconHTML = `<i class="fas fa-${event.icono || 'calendar'}"></i>`;
                             }
                             
@@ -255,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         tooltip.innerHTML = tooltipContent;
                         
-                        // Posicionar el tooltip
+                        // Position the tooltip
                         const rect = this.getBoundingClientRect();
                         const scrollTop = window.scrollY || document.documentElement.scrollTop;
                         const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
@@ -263,13 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltip.style.left = `${rect.left + scrollLeft}px`;
                         tooltip.style.top = `${rect.bottom + scrollTop + 5}px`;
                         
-                        // Verificar si el tooltip se sale de la pantalla por abajo
+                        // Check if the tooltip goes off the screen at the bottom
                         const tooltipRect = tooltip.getBoundingClientRect();
                         if (tooltipRect.bottom > window.innerHeight) {
                             tooltip.style.top = `${rect.top + scrollTop - tooltipRect.height - 5}px`;
                         }
                         
-                        // Verificar si el tooltip se sale de la pantalla por la derecha
+                        // Check if the tooltip goes off the screen to the right
                         if (tooltipRect.right > window.innerWidth) {
                             tooltip.style.left = `${rect.right + scrollLeft - tooltipRect.width}px`;
                         }
@@ -288,43 +287,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Genera el HTML para los días de un mes
+     * Generates HTML for the days of a month
      */
     function generateDaysForMonth(month, year) {
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const daysInMonth = lastDay.getDate();
         
-        // Obtener el día de la semana del primer día (0 = Domingo, 1 = Lunes, ...)
+        // Get the day of the week of the first day (0 = Sunday, 1 = Monday, ...)
         let firstDayOfWeek = firstDay.getDay();
-        // Ajustar para que la semana comience en lunes (0 = Lunes, 6 = Domingo)
+        // Set the week to start on Monday (0 = Monday, 6 = Sunday)
         firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
         
         let html = '<div class="days-grid">';
         
-        // Encabezados de días de la semana abreviados
+        // Abbreviated weekday headings
         const weekdaysShort = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
         for (let i = 0; i < 7; i++) {
             html += `<div class="weekday-header">${weekdaysShort[i]}</div>`;
         }
         
-        // Espacios en blanco para días anteriores al primer día del mes
+        //Blank spaces for days before the first day of the month
         for (let i = 0; i < firstDayOfWeek; i++) {
             html += '<div class="day empty"></div>';
         }
         
-        // Días del mes
+        // Days of the month
         for (let day = 1; day <= daysInMonth; day++) {
-            // Formatear la fecha manualmente sin crear un objeto Date para evitar problemas de zona horaria
+            // Format the date manually without creating a Date object to avoid time zone issues
             const monthStr = String(month + 1).padStart(2, '0');
             const dayStr = String(day).padStart(2, '0');
             const dateStr = `${year}-${monthStr}-${dayStr}`;
             
-            // Filtrar eventos para este día
+            //Filter events for this day
             const dayEvents = events.filter(event => {
                 const eventDateParts = event.fecha.split('-');
                 const eventYear = parseInt(eventDateParts[0]);
-                const eventMonth = parseInt(eventDateParts[1]) - 1; // Convertir a base 0
+                const eventMonth = parseInt(eventDateParts[1]) - 1; 
                 const eventDay = parseInt(eventDateParts[2]);
                 
                 return eventDay === day && 
@@ -333,22 +332,22 @@ document.addEventListener('DOMContentLoaded', function() {
                        (selectedIconFilter === 'all' || event.icono === selectedIconFilter);
             });
             
-            // Clase para el día actual
+            // Class for the current day
             const today = new Date();
             const isToday = day === today.getDate() && 
                           month === today.getMonth() && 
                           year === today.getFullYear();
             const hasEvents = dayEvents.length > 0;
             
-            // Console log para depuración
+            // Console log for debugging
             if (hasEvents) {
                 console.log(`Día ${day} tiene ${dayEvents.length} eventos:`, dayEvents);
             }
             
-            // Crear atributo de datos para eventos
+            // Create data attribute for events
             const eventsAttr = hasEvents ? ` data-events='${JSON.stringify(dayEvents)}'` : '';
             
-            // Crear HTML para el día
+            // Create HTML for the day
             html += `
                 <div class="day ${isToday ? 'today' : ''} ${hasEvents ? 'has-events' : ''}" 
                      data-date="${dateStr}"${eventsAttr}>
@@ -363,29 +362,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Genera puntos para representar eventos
+     * Generates points to represent events
      */
     function generateEventDots(events) {
         if (events.length === 0) return '';
         
-        // Mapeo de iconos a imágenes
+        // Mapping icons to images
         const iconImages = {
-            'star': './img/star.png',
-            'users': './img/users.png',
-            'flag': './img/flag.png',
-            'book': './img/book.png',
-            'graduation-cap': './img/graduation-cap.png',
-            'calendar': './img/calendar.png'
+            'star': '../img/star.png',
+            'users': '../img/users.png',
+            'flag': '../img/flag.png',
+            'book': '../img/book.png',
+            'graduation-cap': '../img/graduation-cap.png',
+            'calendar': '../img/calendar.png'
         };
         
-        // Limitar a mostrar máximo 3 eventos con puntos
+        // Limit to display maximum 3 events with points
         const maxDots = Math.min(events.length, 3);
         let html = '<div class="event-dots">';
         
         for (let i = 0; i < maxDots; i++) {
             const event = events[i];
             
-            // Determinar si usar imagen o icono de Font Awesome
+            // Determine whether to use a Font Awesome image or icon
             let iconHTML = '';
             if (iconImages[event.icono]) {
                 iconHTML = `<img src="${iconImages[event.icono]}" alt="${event.icono}" class="event-dot-img">`;
@@ -398,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </span>`;
         }
         
-        // Si hay más eventos de los que mostramos, añadir indicador
+        // If there are more events than we show, add indicator
         if (events.length > maxDots) {
             html += `<span class="more-events">+${events.length - maxDots}</span>`;
         }
@@ -408,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Comprueba si una fecha es el día actual
+     * Checks if a date is the current day
      */
     function isCurrentDay(date) {
         const today = new Date();
@@ -418,14 +417,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Navega a un año específico
+     * Navigate to a specific year
      */
     function navigateYear(year) {
-        window.location.href = `calendario_anual.php?year=${year}`;
+        window.location.href = `../views/calendario_anual.php?year=${year}`;
     }
     
     /**
-     * Abre el modal para añadir evento
+     * Open the modal to add an event
      */
     function openAddEventModal(dateStr = null) {
         // Resetear el formulario
@@ -435,12 +434,12 @@ document.addEventListener('DOMContentLoaded', function() {
         eventModalTitle.textContent = 'Añadir Evento';
         deleteEventBtn.style.display = 'none';
         
-        // Establecer fecha si se proporciona
+        // Set date if provided
         if (dateStr) {
-            // Usar directamente la fecha sin crear un objeto Date
+            // Use the date directly without creating a Date object
             eventDate.value = dateStr;
         } else {
-            // Para la fecha actual, formatear manualmente
+            // For the current date, format manually
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -448,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventDate.value = `${year}-${month}-${day}`;
         }
         
-        // Resetear selección de color e icono
+        //Reset color and icon selection
         colorOptions.forEach(option => {
             option.classList.remove('selected');
             if (option.dataset.color === '#3498db') {
@@ -466,19 +465,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         eventIcon.value = 'calendar';
         
-        // Mostrar modal
+        // Show modal
         eventModal.style.display = 'flex';
     }
     
     /**
-     * Abre el modal para editar un evento existente
+     * Opens the modal to edit an existing event
      */
     function openEditEventModal(eventId) {
-        // Buscar el evento en el array de eventos
+        // Find the event in the events array
         const event = events.find(e => e.id == eventId);
         if (!event) return;
         
-        // Configurar el formulario con los datos del evento
+        // Configure the form with the event data
         eventForm.reset();
         document.getElementById('event-action').value = 'update';
         document.getElementById('event-id').value = event.id;
@@ -488,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('event-icon').value = event.icono || 'calendar';
         document.getElementById('event-color').value = event.color || '#3498db';
         
-        // Actualizar color seleccionado
+        // Update selected color
         colorOptions.forEach(option => {
             option.classList.remove('selected');
             if (option.dataset.color === event.color) {
@@ -497,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         customColorPicker.value = event.color;
         
-        // Actualizar icono seleccionado
+        //Update selected icon
         iconOptions.forEach(option => {
             option.classList.remove('selected');
             if (option.dataset.icon === event.icono) {
@@ -505,34 +504,33 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Actualizar título del modal y mostrar botón de eliminar
+        // Update modal title and display delete button
         eventModalTitle.textContent = 'Editar Evento';
         deleteEventBtn.style.display = 'block';
-        
-        // Mostrar modal
+        // Show modal
         eventModal.style.display = 'flex';
     }
     
     /**
-     * Cierra el modal de eventos
+     * Close the events modal
      */
     function closeEventModal() {
         eventModal.style.display = 'none';
     }
     
     /**
-     * Maneja el envío del formulario de eventos
+     * Handles the submission of the event form
      */
     function handleEventFormSubmit(e) {
         e.preventDefault();
         
-        // Recoger datos del formulario
+        // Collect data from the form
         const formData = new FormData(eventForm);
         
-        // Acción (add/update)
+        // Action (add/update)
         const action = formData.get('action');
         
-        // Asegurarnos de que la acción esté correctamente incluida
+        // Make sure the action is correctly included
         if (action === 'add') {
             formData.set('action', 'add_event');
         } else if (action === 'update') {
@@ -542,9 +540,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Enviando acción:', formData.get('action'));
         
         // URL del endpoint
-        const url = 'api/eventos_calendario.php';
-        
-        // Enviar petición
+        const url = '../api/eventos_calendario.php';
+
+        // Send request
         fetch(url, {
             method: 'POST',
             body: formData
@@ -554,18 +552,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 closeEventModal();
                 
-                // Actualizar lista de eventos
+                // Update event list
                 if (action === 'add') {
                     events.push(data.data);
                 } else {
-                    // Actualizar evento en el array
+                    // Update event in array
                     const index = events.findIndex(e => e.id == data.data.id);
                     if (index !== -1) {
                         events[index] = data.data;
                     }
                 }
                 
-                // Re-renderizar calendario
+                // Re-render calendar
                 renderCalendar();
             } else {
                 showError('Error: ' + (data.error || 'Error desconocido'));
@@ -577,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Maneja la eliminación de un evento
+     *Handles the deletion of an event
      */
     function handleEventDelete() {
         if (!confirm('¿Estás seguro de que deseas eliminar este evento?')) {
@@ -591,7 +589,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('action', 'delete_event');
         formData.append('event_id', id);
         
-        fetch('api/eventos_calendario.php', {
+        fetch('../api/eventos_calendario.php', {
             method: 'POST',
             body: formData
         })
@@ -600,13 +598,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 closeEventModal();
                 
-                // Eliminar evento del array
+                // Delete event from array
                 const index = events.findIndex(e => e.id == id);
                 if (index !== -1) {
                     events.splice(index, 1);
                 }
                 
-                // Re-renderizar calendario
+                // Re-render calendar
                 renderCalendar();
             } else {
                 showError('Error al eliminar: ' + (data.error || 'Error desconocido'));
@@ -618,22 +616,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Selecciona un color predefinido
+     * Select a preset color
      */
     function selectColor(e) {
         const color = e.target.dataset.color;
         
-        // Actualizar selección visual
+        // Update visual selection
         colorOptions.forEach(option => option.classList.remove('selected'));
         e.target.classList.add('selected');
         
-        // Actualizar color en el picker y en el input hidden
+        // Update color in the picker and hidden input
         customColorPicker.value = color;
         eventColor.value = color;
     }
     
     /**
-     * Muestra un mensaje de error
+     *Displays an error message
      */
     function showError(message) {
         alert(message);

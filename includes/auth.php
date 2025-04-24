@@ -1,42 +1,45 @@
 <?php
-// Iniciar la sesión si no está iniciada
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ */
+// Log in if you are not logged in
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Función para verificar si el usuario está autenticado
+// Function to check if the user is authenticated
 function is_logged_in() {
     return isset($_SESSION['user_id']) && isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 }
 
-// Función para verificar si el usuario es administrador
+// Function to check if the user is an administrator
 function is_admin() {
     return is_logged_in() && isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'administrador';
 }
 
-// Función para redirigir si no está autenticado
+// Function to redirect if not authenticated
 function require_login() {
     if (!is_logged_in()) {
-        header("Location: login.php");
+        header("Location: ../views/login.php");
         exit;
     }
 }
 
-// Función para redirigir si no es administrador
+// Function to redirect if you are not an administrator
 function require_admin() {
     require_login();
     if (!is_admin()) {
-        header("Location: dashboard.php");
+        header("Location: ../views/dashboard.php");
         exit;
     }
 }
 
-// Verificar si existe una cookie de "recordar sesión" y el usuario no está logueado
+// Check if a "remember session" cookie exists and the user is not logged in
 if(!is_logged_in() && isset($_COOKIE['remember_user'])) {
-    // En una implementación real, deberíamos verificar el token en la base de datos
-    // Para simplificar, solo verificamos si existe el usuario
+   
     try {
-        require_once dirname(__FILE__) . '/../config.php';
+        require_once dirname(__FILE__) . '/../api/config.php';
         
         $user_id = $_COOKIE['remember_user'];
         
@@ -61,6 +64,6 @@ if(!is_logged_in() && isset($_COOKIE['remember_user'])) {
             $stmt->execute();
         }
     } catch(PDOException $e) {
-        // Error al conectar con la base de datos, no hacemos nada
+       
     }
 }

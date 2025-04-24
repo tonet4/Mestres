@@ -5,9 +5,9 @@
  */
 
 // Include necessary files
-require_once 'includes/auth.php';
-require_once 'includes/utils.php';
-require_once 'config.php'; // Database configuration file
+require_once '../includes/auth.php';
+require_once '../includes/utils.php';
+require_once '../api/config.php';
 
 // Verify that the user is authenticated
 require_login();
@@ -49,11 +49,11 @@ $frase_random = $frases[array_rand($frases)];
 
 // Array of inspiring images
 $imagenes = [
-    "img/inspira1.avif",
-    "img/inspira2.webp",
-    "img/inspira3.webp",
-    "img/inspira4.jpg",
-    "img/inspira6.jpg"
+    "../img/inspira1.avif",
+    "../img/inspira2.webp",
+    "../img/inspira3.webp",
+    "../img/inspira4.jpg",
+    "../img/inspira6.jpg"
 ];
 
 // Select a random image
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $stmt->execute();
 
                 // Redirect to prevent form resubmission
-                header('Location: dashboard.php');
+                header("Location: dashboard.php");
                 exit;
             } catch (PDOException $e) {
                
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $stmt->execute();
 
                 // Redirect
-                header('Location: dashboard.php');
+                header("Location: dashboard.php");
                 exit;
             } catch (PDOException $e) {
                 
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt->execute();
 
             // Redirect
-            header('Location: dashboard.php');
+            header("Location: dashboard.php");
             exit;
         } catch (PDOException $e) {
            
@@ -135,8 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/base.css">
-    <link rel="stylesheet" href="./estilo/dashboard.css">
+    <link rel="stylesheet" href="../estilo/base.css">
+    <link rel="stylesheet" href="../estilo/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <i class="fas fa-bars"></i>
             </div>
             <div class="logo">
-                <img src="img/logo2.png" alt="Logo Quadern Mestres">
+                <img src="../img/logo2.png" alt="Logo Quadern Mestres">
             </div>
             <h1>QUADERN de Mestres</h1>
         </div>
@@ -156,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <div class="user-info">
                 <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($_SESSION['user_nombre']); ?></span>
             </div>
-            <div class="logout-btn" onclick="location.href='logout.php'">
-                <img src="./img/salida.png"></img>
+            <div class="logout-btn" onclick="location.href='../api/logout.php'">
+                <img src="../img/salida.png"></img>
             </div>
         </div>
     </nav>
@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
-            <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
 
@@ -223,10 +223,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                                     <div class="task-text"><?php echo htmlspecialchars($nota['texto']); ?></div>
                                     <div class="task-actions">
                                         <button class="edit-task" data-id="<?php echo $nota['id']; ?>">
-                                        <img src="./img/notas.png" alt="editar" class="delete-icon">
+                                        <img src="../img/notas.png" alt="editar" class="delete-icon">
                                         </button>
                                         <button class="delete-task" data-id="<?php echo $nota['id']; ?>">
-                                            <img src="./img/basura.png" alt="Eliminar" class="delete-icon">
+                                            <img src="../img/basura.png" alt="Eliminar" class="delete-icon">
                                         </button>
                                     </div>
                                 </div>
@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
     </footer>
 
-    <script src="js/dashboard.js"></script>
+    <script src="../js/dashboard.js"></script>
 
     <!-- Scripts for the borderless nav -->
     <script>

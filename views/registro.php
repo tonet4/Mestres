@@ -12,7 +12,7 @@ if(isset($_SESSION['user_id'])) {
 }
 
 //Include the record processor
-require_once 'includes/procesar_registro.php';
+require_once '../includes/procesar_registro.php';
 
 // Variables for messages
 $error = '';
@@ -49,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - QUADERN MESTRES</title>
-    <link rel="stylesheet" href="./estilo/base_principal.css">
-    <link rel="stylesheet" href="./estilo/forms.css">
+    <link rel="stylesheet" href="../estilo/base_principal.css">
+    <link rel="stylesheet" href="../estilo/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -136,6 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </footer>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
