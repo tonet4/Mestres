@@ -95,7 +95,7 @@ $monthName = $monthNames[$month];
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li class="active"><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
             <li><a href="#"><i class="fas fa-users"></i> Alumnado</a></li>
-            <li><a href="#"><i class="fas fa-comments"></i> Reuniones</a></li>
+            <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="#"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>

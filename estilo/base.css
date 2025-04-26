@@ -238,6 +238,7 @@ p{
     overflow-y: auto;
 }
 
+
 .sidebar.active {
     left: 0;
 }
@@ -248,12 +249,27 @@ p{
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: var(--text-color) !important;
+    font-family: "fuente1" !important;
+}
+
+.sidebar-header h3{
+    font-size: 1.75rem;
+
+}
+.sidebar-menu li.active a {
+    background: linear-gradient(to right, rgba(166, 216, 240, 0.2), transparent) !important;
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+    border-left-color: var(--primary-color) !important;
 }
 
 .close-sidebar {
     cursor: pointer;
     font-size: 1.2rem;
-    color: var(--accent-color);
+    color: var(--text-color);
+    transition: transform 0.3s ease !important;
 }
 
 .sidebar-menu {
