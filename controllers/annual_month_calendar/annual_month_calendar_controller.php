@@ -15,8 +15,8 @@ file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - GET: ' . json_encode(
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - POST: ' . json_encode($_POST) . PHP_EOL, FILE_APPEND);
 
 // Include the necessary files
-require_once '../includes/auth.php';
-require_once 'config.php';
+require_once '../../includes/auth.php';
+require_once '../../api/config.php';
 
 // Authentication status log
 file_put_contents('api_log.txt', date('Y-m-d H:i:s') . ' - Autenticación: ' . (isset($_SESSION['user_id']) ? 'Sí' : 'No') . PHP_EOL, FILE_APPEND);

@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
           this.loading = true;
           console.log("Cargando reuniones...");
 
-          return fetch("../controllers/reuniones/get_reuniones.php")
+          return fetch("../controllers/meetings/get_reuniones.php")
             .then((response) => {
               // Verificar si la respuesta es exitosa
               if (!response.ok) {
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
           formData.append("contenido", this.formData.contenido);
 
           // Send request to server
-          fetch("../controllers/reuniones/save_reunion.php", {
+          fetch("../controllers/meetings/save_reunion.php", {
             method: "POST",
             body: formData,
           })
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
           formData.append("id", this.selectedReunion.id);
 
           // Send request to server
-          fetch("../controllers/reuniones/delete_reunion.php", {
+          fetch("../controllers/meetings/delete_reunion.php", {
             method: "POST",
             body: formData,
           })

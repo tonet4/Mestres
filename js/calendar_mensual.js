@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         daysGrid.innerHTML = '<div class="loading-spinner">Cargando...</div>';
         
         // Hacer petición AJAX para obtener eventos
-        fetch(`../api/eventos_calendario.php?action=get_events_by_month&month=${currentMonth}&year=${currentYear}`)
+        fetch(`../controllers/annual_month_calendar/annual_month_calendar_controller.php?action=get_events_by_month&month=${currentMonth}&year=${currentYear}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         formData.append('action', 'delete_event');
                         formData.append('event_id', eventId);
                         
-                        fetch('../api/eventos_calendario.php', {
+                        fetch('../controllers/annual_month_calendar/annual_month_calendar_controller.php', {
                             method: 'POST',
                             body: formData
                         })
@@ -944,7 +944,7 @@ function handleEventFormSubmit(e) {
             reunionFormData.append('hora', formData.get('event_time'));
         }
         
-        fetch('../controllers/reuniones/save_reunion.php', {
+        fetch('../controllers/meetings/save_reunion.php', {
             method: 'POST',
             body: reunionFormData
         })
@@ -971,7 +971,7 @@ function handleEventFormSubmit(e) {
     } else {
         // Código para eventos normales (no es reunión)
         const action = formData.get('action');
-        const url = '../api/eventos_calendario.php';
+        const url = '../controllers/annual_month_calendar/annual_month_calendar_controller.php';
         
         fetch(url, {
             method: 'POST',
@@ -1077,7 +1077,7 @@ function handleEventFormSubmit(e) {
                 reunionFormData.append('id', reunionId);
                 reunionFormData.append('action', 'delete');
                 
-                fetch('../controllers/reuniones/delete_reunion.php', {
+                fetch('../controllers/meetings/delete_reunion.php', {
                     method: 'POST',
                     body: reunionFormData
                 })
@@ -1109,7 +1109,7 @@ function handleEventFormSubmit(e) {
         formData.append('action', 'delete_event');
         formData.append('event_id', id);
         
-        fetch('../api/eventos_calendario.php', {
+        fetch('../controllers/annual_month_calendar/annual_month_calendar_controller.php', {
             method: 'POST',
             body: formData
         })

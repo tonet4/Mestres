@@ -4,8 +4,8 @@
  * 
  */
 // Include the necessary files
-require_once '../includes/auth.php';
-require_once '../api/config.php';
+require_once '../../includes/auth.php';
+require_once '../../api/config.php';
 
 // Verify that the user is authenticated
 if (!is_logged_in()) {

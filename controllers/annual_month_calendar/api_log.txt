@@ -1,0 +1,216 @@
+2025-05-04 08:10:18 - Solicitud recibida
+2025-05-04 08:10:18 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 08:10:18 - POST: []
+2025-05-04 08:10:29 - Solicitud recibida
+2025-05-04 08:10:29 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:10:29 - POST: []
+2025-05-04 08:12:38 - Solicitud recibida
+2025-05-04 08:12:38 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:12:38 - POST: []
+2025-05-04 08:12:38 - Autenticación: Sí
+2025-05-04 08:12:38 - Acción determinada: get_events_by_month
+2025-05-04 08:12:38 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:12:39 - Solicitud recibida
+2025-05-04 08:12:39 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 08:12:39 - POST: []
+2025-05-04 08:12:39 - Autenticación: Sí
+2025-05-04 08:12:39 - Acción determinada: get_events_by_year
+2025-05-04 08:12:39 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":10,"usuario_id":2,"fecha":"2025-04-18","titulo":"Viernes Santo","descripcion":"Fiesta de Pascua","icono":"flag","color":"#f1c40f"},{"id":13,"usuario_id":2,"fecha":"2025-04-18","titulo":"ddddd","descripcion":"dddd","icono":"star","color":"#1abc9c"},{"id":14,"usuario_id":2,"fecha":"2025-04-18","titulo":"aaaaaaaaaaaaaaaaaa","descripcion":"eeeeeeeeee","icono":"book","color":"#e67e22"},{"id":15,"usuario_id":2,"fecha":"2025-04-18","titulo":"qqqqqqqqqq","descripcion":"qqqqqqqqqqqqqqqqq","icono":"graduation-cap","color":"#3498db"},{"id":16,"usuario_id":2,"fecha":"2025-04-18","titulo":"qqqqqqqqqqqqq","descripcion":"qqqqqqqqqqqqqqqq","icono":"calendar","color":"#e74c3c"},{"id":18,"usuario_id":2,"fecha":"2025-04-18","titulo":"aaaaaaaaaaaaaaaaaa","descripcion":"eeeeeeeeee\r\n-\u00f1\u00f1ok","icono":"book","color":"#e67e22"},{"id":19,"usuario_id":2,"fecha":"2025-04-18","titulo":"aaaaaaaaaaaaaaaaaa","descripcion":"eeeeeeeeee\r\njjjjjjjjjjjjjjj","icono":"book","color":"#e67e22"},{"id":17,"usuario_id":2,"fecha":"2025-04-20","titulo":"Cumple de Triana","descripcion":"Nos lo vamos a pasar genial","icono":"flag","color":"#1abc9c"},{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:12:49 - Solicitud recibida
+2025-05-04 08:12:49 - GET: []
+2025-05-04 08:12:49 - POST: {"action":"add_event","event_id":"","color":"#1abc9c","event_date":"2025-05-15","title":"pruebame","description":"","icon":"star"}
+2025-05-04 08:12:49 - Autenticación: Sí
+2025-05-04 08:12:49 - Acción determinada: add_event
+2025-05-04 08:12:49 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add_event","event_id":"","color":"#1abc9c","event_date":"2025-05-15","title":"pruebame","description":"","icon":"star"},"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add_event","data":{"id":"50","usuario_id":"2","fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"}}
+
+2025-05-04 08:12:53 - Solicitud recibida
+2025-05-04 08:12:53 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:12:53 - POST: []
+2025-05-04 08:12:53 - Autenticación: Sí
+2025-05-04 08:12:53 - Acción determinada: get_events_by_month
+2025-05-04 08:12:53 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:16:09 - Solicitud recibida
+2025-05-04 08:16:09 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:16:09 - POST: []
+2025-05-04 08:16:09 - Autenticación: Sí
+2025-05-04 08:16:09 - Acción determinada: get_events_by_month
+2025-05-04 08:16:09 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:16:42 - Solicitud recibida
+2025-05-04 08:16:42 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:16:42 - POST: []
+2025-05-04 08:16:42 - Autenticación: Sí
+2025-05-04 08:16:42 - Acción determinada: get_events_by_month
+2025-05-04 08:16:42 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":51,"usuario_id":2,"fecha":"2025-05-04","titulo":"Comida","descripcion":"[REUNION_ID:38] Hora: 15:00 - Celebraci\u00f3n d\u00eda de la madre","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:16:54 - Solicitud recibida
+2025-05-04 08:16:54 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:16:54 - POST: []
+2025-05-04 08:16:54 - Autenticación: Sí
+2025-05-04 08:16:54 - Acción determinada: get_events_by_month
+2025-05-04 08:16:54 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":51,"usuario_id":2,"fecha":"2025-05-04","titulo":"Comida","descripcion":"[REUNION_ID:38] Hora: 15:00 - Celebraci\u00f3n d\u00eda de la madre","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:17:21 - Solicitud recibida
+2025-05-04 08:17:21 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:17:21 - POST: []
+2025-05-04 08:17:21 - Autenticación: Sí
+2025-05-04 08:17:21 - Acción determinada: get_events_by_month
+2025-05-04 08:17:21 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":51,"usuario_id":2,"fecha":"2025-05-04","titulo":"Comida","descripcion":"[REUNION_ID:38] Hora: 15:00 - Celebraci\u00f3n d\u00eda de la madre","icono":"users","color":"#9b59b6"},{"id":52,"usuario_id":2,"fecha":"2025-05-04","titulo":"Irme a correr","descripcion":"[REUNION_ID:39] Siempre que no haga viento","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:17:42 - Solicitud recibida
+2025-05-04 08:17:42 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:17:42 - POST: []
+2025-05-04 08:17:42 - Autenticación: Sí
+2025-05-04 08:17:42 - Acción determinada: get_events_by_month
+2025-05-04 08:17:42 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":51,"usuario_id":2,"fecha":"2025-05-04","titulo":"Comida","descripcion":"[REUNION_ID:38] Hora: 15:00 - Celebraci\u00f3n d\u00eda de la madre","icono":"users","color":"#9b59b6"},{"id":52,"usuario_id":2,"fecha":"2025-05-04","titulo":"Irme a correr","descripcion":"[REUNION_ID:39] Hora: 17:00 - Siempre que no haga viento","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:38:24 - Solicitud recibida
+2025-05-04 08:38:24 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:38:24 - POST: []
+2025-05-04 08:38:24 - Autenticación: Sí
+2025-05-04 08:38:24 - Acción determinada: get_events_by_month
+2025-05-04 08:38:24 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":46,"usuario_id":2,"fecha":"2025-05-02","titulo":"Prueba22","descripcion":"[REUNION_ID:36] Hora: 12:00 - Estoy realizando una prueba","icono":"users","color":"#9b59b6"},{"id":51,"usuario_id":2,"fecha":"2025-05-04","titulo":"Comida","descripcion":"[REUNION_ID:38] Hora: 15:00 - Celebraci\u00f3n d\u00eda de la madre","icono":"users","color":"#9b59b6"},{"id":52,"usuario_id":2,"fecha":"2025-05-04","titulo":"Irme a correr","descripcion":"[REUNION_ID:39] Hora: 17:00 - Siempre que no haga viento","icono":"users","color":"#9b59b6"},{"id":48,"usuario_id":2,"fecha":"2025-05-12","titulo":"Examen","descripcion":"De Mates","icono":"graduation-cap","color":"#e74c3c"},{"id":4,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#34495e"},{"id":8,"usuario_id":2,"fecha":"2025-05-15","titulo":"AAAA","descripcion":"","icono":"star","color":"#e74c3c"},{"id":49,"usuario_id":2,"fecha":"2025-05-15","titulo":"Ocaa","descripcion":"qqqq","icono":"flag","color":"#8ba6c1"},{"id":50,"usuario_id":2,"fecha":"2025-05-15","titulo":"pruebame","descripcion":"","icono":"star","color":"#1abc9c"},{"id":47,"usuario_id":2,"fecha":"2025-05-31","titulo":"Acabamos las pr\u00e1cticas","descripcion":"[REUNION_ID:37] Hora: 14:00 - Celebraci\u00f3n por todo lo alto","icono":"users","color":"#9b59b6"}]}
+
+2025-05-04 08:54:40 - Solicitud recibida
+2025-05-04 08:54:40 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:54:40 - POST: []
+2025-05-04 08:54:40 - Autenticación: Sí
+2025-05-04 08:54:40 - Acción determinada: get_events_by_month
+2025-05-04 08:54:40 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-04 08:55:09 - Solicitud recibida
+2025-05-04 08:55:09 - GET: []
+2025-05-04 08:55:09 - POST: {"action":"add","event_id":"","color":"#9b59b6","event_date":"2025-05-11","title":"Cumplea\u00f1os","description":"Soraya","icon":"star","event-type":"normal"}
+2025-05-04 08:55:09 - Autenticación: Sí
+2025-05-04 08:55:09 - Acción determinada: add
+2025-05-04 08:55:09 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add","event_id":"","color":"#9b59b6","event_date":"2025-05-11","title":"Cumplea\u00f1os","description":"Soraya","icon":"star","event-type":"normal"},"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add","data":{"id":"53","usuario_id":"6","fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}}
+
+2025-05-04 08:55:50 - Solicitud recibida
+2025-05-04 08:55:50 - GET: []
+2025-05-04 08:55:50 - POST: {"action":"add","event_id":"","color":"#2ecc71","event_date":"2025-05-05","title":"Adjudicaciones","description":"Echar solicitud de centros","icon":"calendar","event-type":"normal"}
+2025-05-04 08:55:50 - Autenticación: Sí
+2025-05-04 08:55:50 - Acción determinada: add
+2025-05-04 08:55:50 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add","event_id":"","color":"#2ecc71","event_date":"2025-05-05","title":"Adjudicaciones","description":"Echar solicitud de centros","icon":"calendar","event-type":"normal"},"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add","data":{"id":"54","usuario_id":"6","fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"}}
+
+2025-05-04 08:56:04 - Solicitud recibida
+2025-05-04 08:56:04 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 08:56:04 - POST: []
+2025-05-04 08:56:04 - Autenticación: Sí
+2025-05-04 08:56:04 - Acción determinada: get_events_by_year
+2025-05-04 08:56:04 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 08:56:19 - Solicitud recibida
+2025-05-04 08:56:19 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 08:56:19 - POST: []
+2025-05-04 08:56:19 - Autenticación: Sí
+2025-05-04 08:56:19 - Acción determinada: get_events_by_month
+2025-05-04 08:56:19 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 08:56:20 - Solicitud recibida
+2025-05-04 08:56:20 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 08:56:20 - POST: []
+2025-05-04 08:56:20 - Autenticación: Sí
+2025-05-04 08:56:20 - Acción determinada: get_events_by_year
+2025-05-04 08:56:20 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 08:56:47 - Solicitud recibida
+2025-05-04 08:56:47 - GET: []
+2025-05-04 08:56:47 - POST: {"action":"add_event","event_id":"","color":"#2ecc71","event_date":"2025-05-06","title":"ADjudicaciones","description":"Ver las adjudicaciones, a ver si m toca algo","icon":"calendar"}
+2025-05-04 08:56:47 - Autenticación: Sí
+2025-05-04 08:56:47 - Acción determinada: add_event
+2025-05-04 08:56:47 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add_event","event_id":"","color":"#2ecc71","event_date":"2025-05-06","title":"ADjudicaciones","description":"Ver las adjudicaciones, a ver si m toca algo","icon":"calendar"},"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add_event","data":{"id":"55","usuario_id":"6","fecha":"2025-05-06","titulo":"ADjudicaciones","descripcion":"Ver las adjudicaciones, a ver si m toca algo","icono":"calendar","color":"#2ecc71"}}
+
+2025-05-04 09:00:43 - Solicitud recibida
+2025-05-04 09:00:43 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 09:00:43 - POST: []
+2025-05-04 09:00:43 - Autenticación: Sí
+2025-05-04 09:00:43 - Acción determinada: get_events_by_year
+2025-05-04 09:00:43 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":57,"usuario_id":6,"fecha":"2025-05-05","titulo":"Reuni\u00f3n gabinete Yassine","descripcion":"[REUNION_ID:41] Hora: 15:15 - Hablar sobre evoluci\u00f3n del alumno, tratar objetivos de este trimestre y tipos de apoyo.\r\nReunion: h","icono":"users","color":"#9b59b6"},{"id":55,"usuario_id":6,"fecha":"2025-05-06","titulo":"ADjudicaciones","descripcion":"Ver las adjudicaciones, a ver si m toca algo","icono":"calendar","color":"#2ecc71"},{"id":56,"usuario_id":6,"fecha":"2025-05-06","titulo":"Opos","descripcion":"[REUNION_ID:40] Hora: 17:30 - Clase de oposiciones","icono":"users","color":"#9b59b6"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 09:00:53 - Solicitud recibida
+2025-05-04 09:00:53 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 09:00:53 - POST: []
+2025-05-04 09:00:53 - Autenticación: Sí
+2025-05-04 09:00:53 - Acción determinada: get_events_by_month
+2025-05-04 09:00:53 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":57,"usuario_id":6,"fecha":"2025-05-05","titulo":"Reuni\u00f3n gabinete Yassine","descripcion":"[REUNION_ID:41] Hora: 15:15 - Hablar sobre evoluci\u00f3n del alumno, tratar objetivos de este trimestre y tipos de apoyo.\r\nReunion: h","icono":"users","color":"#9b59b6"},{"id":55,"usuario_id":6,"fecha":"2025-05-06","titulo":"ADjudicaciones","descripcion":"Ver las adjudicaciones, a ver si m toca algo","icono":"calendar","color":"#2ecc71"},{"id":56,"usuario_id":6,"fecha":"2025-05-06","titulo":"Opos","descripcion":"[REUNION_ID:40] Hora: 17:30 - Clase de oposiciones","icono":"users","color":"#9b59b6"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 09:01:20 - Solicitud recibida
+2025-05-04 09:01:20 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 09:01:20 - POST: []
+2025-05-04 09:01:20 - Autenticación: Sí
+2025-05-04 09:01:20 - Acción determinada: get_events_by_month
+2025-05-04 09:01:20 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"6","usuario_id":6,"user_nombre":"Soraya","usuario_nombre":"Soraya","user_apellidos":"Fernandez","user_email":"sorayafernandezortega@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":54,"usuario_id":6,"fecha":"2025-05-05","titulo":"Adjudicaciones","descripcion":"Echar solicitud de centros","icono":"calendar","color":"#2ecc71"},{"id":57,"usuario_id":6,"fecha":"2025-05-05","titulo":"Reuni\u00f3n gabinete Yassine","descripcion":"[REUNION_ID:41] Hora: 15:15 - Hablar sobre evoluci\u00f3n del alumno, tratar objetivos de este trimestre y tipos de apoyo.\r\nReunion: h","icono":"users","color":"#9b59b6"},{"id":55,"usuario_id":6,"fecha":"2025-05-06","titulo":"ADjudicaciones","descripcion":"Ver las adjudicaciones, a ver si m toca algo","icono":"calendar","color":"#2ecc71"},{"id":56,"usuario_id":6,"fecha":"2025-05-06","titulo":"Opos","descripcion":"[REUNION_ID:40] Hora: 17:30 - Clase de oposiciones","icono":"users","color":"#9b59b6"},{"id":53,"usuario_id":6,"fecha":"2025-05-11","titulo":"Cumplea\u00f1os","descripcion":"Soraya","icono":"star","color":"#9b59b6"}]}
+
+2025-05-04 14:22:20 - Solicitud recibida
+2025-05-04 14:22:20 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 14:22:20 - POST: []
+2025-05-04 14:22:20 - Autenticación: Sí
+2025-05-04 14:22:20 - Acción determinada: get_events_by_month
+2025-05-04 14:22:20 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-04 14:22:27 - Solicitud recibida
+2025-05-04 14:22:27 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 14:22:27 - POST: []
+2025-05-04 14:22:27 - Autenticación: Sí
+2025-05-04 14:22:27 - Acción determinada: get_events_by_year
+2025-05-04 14:22:27 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[]}
+
+2025-05-04 14:22:37 - Solicitud recibida
+2025-05-04 14:22:37 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 14:22:37 - POST: []
+2025-05-04 14:22:37 - Autenticación: Sí
+2025-05-04 14:22:37 - Acción determinada: get_events_by_month
+2025-05-04 14:22:37 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-04 14:27:04 - Solicitud recibida
+2025-05-04 14:27:04 - GET: []
+2025-05-04 14:27:04 - POST: {"action":"add","event_id":"","color":"#3498db","event_date":"2025-05-07","title":"8 de la ma\u00f1ana anal\u00edtica ","description":"","icon":"calendar","event-type":"normal"}
+2025-05-04 14:27:04 - Autenticación: Sí
+2025-05-04 14:27:04 - Acción determinada: add
+2025-05-04 14:27:04 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add","event_id":"","color":"#3498db","event_date":"2025-05-07","title":"8 de la ma\u00f1ana anal\u00edtica ","description":"","icon":"calendar","event-type":"normal"},"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add","data":{"id":"58","usuario_id":"7","fecha":"2025-05-07","titulo":"8 de la ma\u00f1ana anal\u00edtica ","descripcion":"","icono":"calendar","color":"#3498db"}}
+
+2025-05-04 14:27:30 - Solicitud recibida
+2025-05-04 14:27:30 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-04 14:27:30 - POST: []
+2025-05-04 14:27:30 - Autenticación: Sí
+2025-05-04 14:27:30 - Acción determinada: get_events_by_year
+2025-05-04 14:27:30 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":58,"usuario_id":7,"fecha":"2025-05-07","titulo":"8 de la ma\u00f1ana anal\u00edtica ","descripcion":"","icono":"calendar","color":"#3498db"}]}
+
+2025-05-04 14:30:58 - Solicitud recibida
+2025-05-04 14:30:58 - GET: []
+2025-05-04 14:30:58 - POST: {"action":"add_event","event_id":"","color":"#3498db","event_date":"2025-06-24","title":"d\u00eda de Sanjuan festividad en Massanassa","description":"","icon":"calendar"}
+2025-05-04 14:30:58 - Autenticación: Sí
+2025-05-04 14:30:58 - Acción determinada: add_event
+2025-05-04 14:30:58 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add_event","event_id":"","color":"#3498db","event_date":"2025-06-24","title":"d\u00eda de Sanjuan festividad en Massanassa","description":"","icon":"calendar"},"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add_event","data":{"id":"59","usuario_id":"7","fecha":"2025-06-24","titulo":"d\u00eda de Sanjuan festividad en Massanassa","descripcion":"","icono":"calendar","color":"#3498db"}}
+
+2025-05-04 14:37:51 - Solicitud recibida
+2025-05-04 14:37:51 - GET: []
+2025-05-04 14:37:51 - POST: {"action":"add_event","event_id":"","color":"#f1c40f","event_date":"2025-09-07","title":"Fiesta de San Roc ","description":"","icon":"flag"}
+2025-05-04 14:37:51 - Autenticación: Sí
+2025-05-04 14:37:51 - Acción determinada: add_event
+2025-05-04 14:37:51 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add_event","event_id":"","color":"#f1c40f","event_date":"2025-09-07","title":"Fiesta de San Roc ","description":"","icon":"flag"},"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add_event","data":{"id":"60","usuario_id":"7","fecha":"2025-09-07","titulo":"Fiesta de San Roc ","descripcion":"","icono":"flag","color":"#f1c40f"}}
+
+2025-05-04 14:39:30 - Solicitud recibida
+2025-05-04 14:39:30 - GET: []
+2025-05-04 14:39:30 - POST: {"action":"add_event","event_id":"","color":"#2ecc71","event_date":"2025-08-17","title":"Vacaciones en el Perell\u00f3","description":"","icon":"flag"}
+2025-05-04 14:39:30 - Autenticación: Sí
+2025-05-04 14:39:30 - Acción determinada: add_event
+2025-05-04 14:39:30 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add_event","event_id":"","color":"#2ecc71","event_date":"2025-08-17","title":"Vacaciones en el Perell\u00f3","description":"","icon":"flag"},"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add_event","data":{"id":"61","usuario_id":"7","fecha":"2025-08-17","titulo":"Vacaciones en el Perell\u00f3","descripcion":"","icono":"flag","color":"#2ecc71"}}
+
+2025-05-04 14:39:41 - Solicitud recibida
+2025-05-04 14:39:41 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 14:39:41 - POST: []
+2025-05-04 14:39:41 - Autenticación: Sí
+2025-05-04 14:39:41 - Acción determinada: get_events_by_month
+2025-05-04 14:39:41 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":58,"usuario_id":7,"fecha":"2025-05-07","titulo":"8 de la ma\u00f1ana anal\u00edtica ","descripcion":"","icono":"calendar","color":"#3498db"}]}
+
+2025-05-04 17:08:24 - Solicitud recibida
+2025-05-04 17:08:24 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-04 17:08:24 - POST: []
+2025-05-04 17:08:24 - Autenticación: Sí
+2025-05-04 17:08:24 - Acción determinada: get_events_by_month
+2025-05-04 17:08:24 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"7","usuario_id":7,"user_nombre":"Jesus","usuario_nombre":"Jesus","user_apellidos":"Esteban Zaragoza","user_email":"jesus@gmal.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":58,"usuario_id":7,"fecha":"2025-05-07","titulo":"8 de la ma\u00f1ana anal\u00edtica ","descripcion":"","icono":"calendar","color":"#3498db"}]}
+

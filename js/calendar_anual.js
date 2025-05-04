@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Make AJAX requests to get events
     fetch(
-      `../api/eventos_calendario.php?action=get_events_by_year&year=${currentYear}`
+      `../controllers/annual_month_calendar/annual_month_calendar_controller.php?action=get_events_by_year&year=${currentYear}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -600,7 +600,7 @@ function handleEventFormSubmit(e) {
         }
         
         // Usar el endpoint de reuniones
-        fetch('../controllers/reuniones/save_reunion.php', {
+        fetch('../controllers/meetings/save_reunion.php', {
             method: 'POST',
             body: reunionFormData
         })
@@ -635,7 +635,7 @@ function handleEventFormSubmit(e) {
         console.log('Enviando acción:', formData.get('action'));
         
         // URL del endpoint
-        const url = '../api/eventos_calendario.php';
+        const url = '../controllers/annual_month_calendar/annual_month_calendar_controller.php';
 
         // Send request
         fetch(url, {
@@ -698,7 +698,7 @@ function handleEventFormSubmit(e) {
     formData.append("action", "delete_event");
     formData.append("event_id", id);
 
-    fetch("../api/eventos_calendario.php", {
+    fetch("../controllers/annual_month_calendar/annual_month_calendar_controller.php", {
       method: "POST",
       body: formData,
     })

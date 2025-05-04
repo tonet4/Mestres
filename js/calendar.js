@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para cargar las horas desde el servidor
     function loadHours() {
-        fetch(`../controllers/get_hours.php?week=${currentWeek}&year=${currentYear}`)
+        fetch(`../controllers/weekly_calendar/get_hours.php?week=${currentWeek}&year=${currentYear}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para cargar los eventos desde el servidor
     function loadEvents() {
-        fetch(`../controllers/get_events.php?week=${currentWeek}&year=${currentYear}`)
+        fetch(`../controllers/weekly_calendar/get_events.php?week=${currentWeek}&year=${currentYear}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para cargar las notas y eventos de fin de semana
     function loadWeekContent() {
-        fetch(`../controllers/get_week_content.php?week=${currentWeek}&year=${currentYear}`)            .then(response => response.json())
+        fetch(`../controllers/weekly_calendar/get_week_content.php?week=${currentWeek}&year=${currentYear}`)            .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     // Procesar notas como array de objetos
@@ -627,7 +627,7 @@ function copyPreviousWeek() {
     formData.append('current_year', currentYear);
     
     // Enviar petición al servidor
-    fetch('../controllers/copy_previous_week.php', {
+    fetch('../controllers/weekly_calendar/copy_previous_week.php', {
         method: 'POST',
         body: formData
     })
@@ -673,7 +673,7 @@ function copyPreviousWeek() {
             document.getElementById('hour-id').value = referenceHourId;
             
             // Cargar datos de la hora a editar (sin cambios)
-            fetch(`../controllers/get_hour.php?id=${referenceHourId}`)
+            fetch(`../controllers/weekly_calendar/get_hour.php?id=${referenceHourId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -730,7 +730,7 @@ function copyPreviousWeek() {
             deleteEventBtn.style.display = 'block';
             
             // Cargar datos del evento a editar
-            fetch(`../controllers/get_event.php?id=${eventId}`)
+            fetch(`../controllers/weekly_calendar/get_event.php?id=${eventId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -783,7 +783,7 @@ function copyPreviousWeek() {
     
     // Función para guardar una hora
     function saveHour(formData) {
-        fetch('../controllers/save_hour.php', {
+        fetch('../controllers/weekly_calendar/save_hour.php', {
             method: 'POST',
             body: formData
         })
@@ -810,7 +810,7 @@ function copyPreviousWeek() {
         formData.append('week', currentWeek);
         formData.append('year', currentYear);
         
-        fetch('../controllers/delete_hour.php', {
+        fetch('../controllers/weekly_calendar/delete_hour.php', {
             method: 'POST',
             body: formData
         })
@@ -831,7 +831,7 @@ function copyPreviousWeek() {
     
     // Función para guardar un evento
     function saveEvent(formData) {
-        fetch('../controllers/save_event.php', {
+        fetch('../controllers/weekly_calendar/save_event.php', {
             method: 'POST',
             body: formData
         })
@@ -856,7 +856,7 @@ function copyPreviousWeek() {
         const formData = new FormData();
         formData.append('event_id', eventId);
         
-        fetch('../controllers/delete_event.php', {
+        fetch('../controllers/weekly_calendar/delete_event.php', {
             method: 'POST',
             body: formData
         })
@@ -945,7 +945,7 @@ function copyPreviousWeek() {
         formData.append('year', currentYear);
         formData.append('content', notesJson);
         
-        fetch('../controllers/save_notes.php', {
+        fetch('../controllers/weekly_calendar/save_notes.php', {
             method: 'POST',
             body: formData
         })
@@ -975,7 +975,7 @@ function copyPreviousWeek() {
         formData.append('day', day);
         formData.append('content', eventsJson);
         
-        fetch('../controllers/save_weekend.php', {
+        fetch('../controllers/weekly_calendar/save_weekend.php', {
             method: 'POST',
             body: formData
         })
