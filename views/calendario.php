@@ -116,6 +116,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <button class="action-btn" id="add-hour">
                         <i class="fas fa-plus"></i> Añadir Hora
                     </button>
+                    <button class="action-btn copy" id="copy-previous-week">
+                        <i class="fas fa-copy"></i> Copiar Semana Anterior
+                    </button>
                     <button class="action-btn export" id="export-calendar">
                         <i class="fas fa-file-export"></i> Exportar
                     </button>
@@ -217,6 +220,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <input type="hidden" id="hour-action" name="action" value="add">
                 <input type="hidden" id="hour-id" name="hour_id" value="">
                 <input type="hidden" id="reference-hour-id" name="reference_hour_id" value="">
+                <input type="hidden" id="position" name="position" value="after">
                 <input type="hidden" id="hour-input" name="hour">
 
                 <div class="form-group">

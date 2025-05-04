@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loading: true,
         editMode: false,
         expandedReunion: null,
+        highlightReunionId: null,
         formData: {
           id: 0,
           titulo: "",
@@ -66,6 +67,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Set default date to today for new reuniones
         this.formData.fecha = new Date().toISOString().slice(0, 10);
+        
+        // Comprobar si hay un ID de reunión para resaltar en la URL
+        const params = new URLSearchParams(window.location.search);
+        const highlightId = params.get('highlight');
+        
+        if (highlightId) {
+          // Guardar referencia para usar después de cargar las reuniones
+          this.highlightReunionId = parseInt(highlightId);
+        }
       },
       computed: {
         reunionesFiltradas() {
@@ -81,16 +91,20 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       methods: {
         /**
-         * Load all reuniones from the server
+         * Clear search
          */
         clearSearch() {
           this.searchTerm = "";
         },
+        
+        /**
+         * Load all reuniones from the server
+         */
         loadReuniones() {
           this.loading = true;
           console.log("Cargando reuniones...");
 
-          fetch("../controllers/reuniones/get_reuniones.php")
+          return fetch("../controllers/reuniones/get_reuniones.php")
             .then((response) => {
               // Verificar si la respuesta es exitosa
               if (!response.ok) {
@@ -120,6 +134,31 @@ document.addEventListener("DOMContentLoaded", function () {
                   return reunion;
                 });
                 console.log("Reuniones cargadas:", this.reuniones);
+                
+                // Si hay un ID para resaltar, expandir esa reunión
+                if (this.highlightReunionId) {
+                  this.$nextTick(() => {
+                    const reunionIndex = this.reuniones.findIndex(r => r.id === this.highlightReunionId);
+                    if (reunionIndex !== -1) {
+                      // Expandir la reunión
+                      this.reuniones[reunionIndex].expanded = true;
+                      
+                      // Hacer scroll a la reunión y resaltarla
+                      setTimeout(() => {
+                        const element = document.querySelector(`.reunion-card[data-id="${this.highlightReunionId}"]`);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          element.classList.add('highlight-reunion');
+                          
+                          // Quitar el resaltado después de 3 segundos
+                          setTimeout(() => {
+                            element.classList.remove('highlight-reunion');
+                          }, 3000);
+                        }
+                      }, 500);
+                    }
+                  });
+                }
               } else {
                 this.showAlert("Error", data.message, "error");
               }

@@ -35,7 +35,19 @@ if ($id <= 0) {
 }
 
 try {
-    // Delete the meeting, ensuring it belongs to the current user
+    // NUEVA FUNCIONALIDAD: Eliminar eventos asociados del calendario mensual
+    $stmt = $conn->prepare("
+        DELETE FROM eventos_calendario_anual
+        WHERE usuario_id = :usuario_id 
+        AND descripcion LIKE :descripcion
+    ");
+    
+    $descripcion_pattern = "%[REUNION_ID:" . $id . "]%";
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->bindParam(':descripcion', $descripcion_pattern);
+    $stmt->execute();
+    
+    // Delete the meeting
     $stmt = $conn->prepare("
         DELETE FROM reuniones
         WHERE id = :id AND usuario_id = :usuario_id

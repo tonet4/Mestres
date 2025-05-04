@@ -42,6 +42,43 @@ document.addEventListener('DOMContentLoaded', function() {
         'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
     ];
     
+    // Estilo para la insignia de reunión
+    const style = document.createElement('style');
+    style.textContent = `
+    .reunion-badge {
+        background-color: #3498db;
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: 5px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .event-tooltip-item[data-reunion="true"] {
+        cursor: pointer;
+    }
+
+    .event-tooltip-item[data-reunion="true"]:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    .tooltip-view-btn {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 3px 6px;
+        cursor: pointer;
+    }
+
+    .tooltip-view-btn:hover {
+        background-color: #2ecc71;
+    }
+    `;
+    document.head.appendChild(style);
+    
     // Inicializar calendario
     initCalendar();
     
@@ -98,6 +135,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 iconOptions.forEach(opt => opt.classList.remove('selected'));
                 option.classList.add('selected');
                 eventIcon.value = option.dataset.icon;
+                
+                // Si se selecciona el icono de reunión (users), marcar como reunión
+                if (option.dataset.icon === 'users') {
+                    // Si existe un elemento oculto para el tipo de evento, actualizarlo
+                    const reunionTypeInput = document.createElement('input');
+                    reunionTypeInput.type = 'hidden';
+                    reunionTypeInput.name = 'event-type';
+                    reunionTypeInput.value = 'reunion';
+                    reunionTypeInput.id = 'event-type-hidden';
+                    
+                    // Reemplazar el input existente o añadir uno nuevo
+                    const existingInput = document.getElementById('event-type-hidden');
+                    if (existingInput) {
+                        existingInput.value = 'reunion';
+                    } else {
+                        eventForm.appendChild(reunionTypeInput);
+                    }
+                } else {
+                    // Si existe un elemento oculto para el tipo de evento, actualizarlo a normal
+                    const existingInput = document.getElementById('event-type-hidden');
+                    if (existingInput) {
+                        existingInput.value = 'normal';
+                    }
+                }
             });
         });
     }
@@ -132,6 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCalendarTitle() {
         document.querySelector('.calendar-title h2').textContent = `${monthNames[currentMonth - 1]} ${currentYear}`;
     }
+    
     function setupTooltips() {
         const tooltip = document.getElementById('event-tooltip');
         document.querySelectorAll('.day.has-events').forEach(day => {
@@ -167,27 +229,27 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Días del mes
         for (let day = 1; day <= daysInMonth; day++) {
-          const date = new Date(currentYear, currentMonth - 1, day);
-          const dateStr = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const date = new Date(currentYear, currentMonth - 1, day);
+            const dateStr = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-          // Filtrar eventos para este día
-          const dayEvents = events.filter((event) => {
-            const eventDate = new Date(event.fecha);
-            return (
-              eventDate.getDate() === day &&
-              eventDate.getMonth() === currentMonth - 1 &&
-              eventDate.getFullYear() === currentYear &&
-              (selectedIconFilter === "all" ||
-                event.icono === selectedIconFilter)
-            );
-          });
+            // Filtrar eventos para este día
+            const dayEvents = events.filter((event) => {
+                const eventDate = new Date(event.fecha);
+                return (
+                    eventDate.getDate() === day &&
+                    eventDate.getMonth() === currentMonth - 1 &&
+                    eventDate.getFullYear() === currentYear &&
+                    (selectedIconFilter === "all" ||
+                        event.icono === selectedIconFilter)
+                );
+            });
 
-          // Clases para el día
-          const isToday = isCurrentDay(date);
-          const isSelected = dateStr === selectedDate;
-          const hasEvents = dayEvents.length > 0;
+            // Clases para el día
+            const isToday = isCurrentDay(date);
+            const isSelected = dateStr === selectedDate;
+            const hasEvents = dayEvents.length > 0;
 
-          // Crear HTML para el día
+            // Crear HTML para el día
             html += `
             <div class="day ${isToday ? "today" : ""} ${isSelected ? "selected" : ""} ${
                     hasEvents ? "has-events" : ""
@@ -198,7 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${generateEventIndicators(dayEvents)}
             </div>
             `;
-            setupTooltips();
         }
         
         daysGrid.innerHTML = html;
@@ -214,243 +275,321 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedDate = this.dataset.date;
                 // Cargar eventos para la fecha seleccionada
                 loadEventsForSelectedDate();
-    
             });
         });
 
         // Después de renderizar el calendario, añadir estos event listeners
-const tooltip = document.getElementById('event-tooltip');
+        const tooltip = document.getElementById('event-tooltip');
 
-document.querySelectorAll('.day.has-events').forEach(day => {
-    day.addEventListener('mouseenter', function(e) {
-        const eventsData = JSON.parse(this.dataset.events || '[]');
-        if (eventsData && eventsData.length > 0) {
-            // Extraer el día directamente del número mostrado en el día
-            const dayNumber = this.querySelector('.day-number').textContent;
-            
-            // Generar contenido del tooltip
-            let tooltipContent = `
-                <div class="event-tooltip-header">
-                    Eventos para el ${dayNumber} de ${monthNames[currentMonth - 1]}
-                </div>
-            `;
-            
-           // Mapeo de iconos a imágenes
-            const iconImages = {
-                'star': '../img/star.png',
-                'users': '../img/users.png',
-                'flag': '../img/flag.png',
-                'book': '../img/book.png',
-                'graduation-cap': '../img/graduation-cap.png',
-                'calendar': '../img/calendar.png'
-
-
-                // Agregar más iconos cuando tengas las imágenes
-                // Si no tienes una imagen específica, el código usará la ruta predeterminada
-            };
-
-            eventsData.forEach(event => {
-                // Determinar si usar imagen o icono
-                let iconHTML = '';
-                if (iconImages[event.icono]) {
-                    iconHTML = `<img src="${iconImages[event.icono]}" alt="${event.icono}" class="event-tooltip-img">`;
-                } else {
-                    iconHTML = `<i class="fas fa-${event.icono || 'calendar'}"></i>`;
-                }
-                
-                tooltipContent += `
-                    <div class="event-tooltip-item" data-event-id="${event.id}">
-                        <div class="event-tooltip-color" style="background-color: ${event.color}"></div>
-                        <div class="event-tooltip-icon">
-                            ${iconHTML}
+        document.querySelectorAll('.day.has-events').forEach(day => {
+            day.addEventListener('mouseenter', function(e) {
+                const eventsData = JSON.parse(this.dataset.events || '[]');
+                if (eventsData && eventsData.length > 0) {
+                    // Extraer el día directamente del número mostrado en el día
+                    const dayNumber = this.querySelector('.day-number').textContent;
+                    
+                    // Generar contenido del tooltip
+                    let tooltipContent = `
+                        <div class="event-tooltip-header">
+                            Eventos para el ${dayNumber} de ${monthNames[currentMonth - 1]}
                         </div>
-                        <div class="event-tooltip-content">
-                            <div class="event-tooltip-title">${event.titulo}</div>
-                            ${event.descripcion ? `<div class="event-tooltip-description">${event.descripcion}</div>` : ''}
-                        </div>
-                        <div class="event-tooltip-actions">
-                            <button class="tooltip-edit-btn" data-event-id="${event.id}">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="tooltip-delete-btn" data-event-id="${event.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
+                    `;
+                    
+                    // Mapeo de iconos a imágenes
+                    const iconImages = {
+                        'star': '../img/star.png',
+                        'users': '../img/users.png',
+                        'flag': '../img/flag.png',
+                        'book': '../img/book.png',
+                        'graduation-cap': '../img/graduation-cap.png',
+                        'calendar': '../img/calendar.png'
+                        // Agregar más iconos cuando tengas las imágenes
+                    };
 
-            setTimeout(() => {
-                // Botones de editar
-                document.querySelectorAll('.tooltip-edit-btn').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const eventId = this.dataset.eventId;
-                        openEditEventModal(eventId);
-                        tooltip.style.display = 'none';
-                    });
-                });
-                
-                // Botones de eliminar
-                document.querySelectorAll('.tooltip-delete-btn').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const eventId = this.dataset.eventId;
-                        showDeleteConfirmModal(eventId);
-                        tooltip.style.display = 'none';
-                    });
-                });
-            }, 10);
-
-            function showError(message) {
-                const modalTitle = document.getElementById('custom-modal-title');
-                const modalMessage = document.getElementById('custom-modal-message');
-                const modalCancel = document.getElementById('custom-modal-cancel');
-                const modalConfirm = document.getElementById('custom-modal-confirm');
-                const customModal = document.getElementById('custom-modal');
-                
-                modalTitle.textContent = 'Error';
-                modalMessage.textContent = message;
-                
-                // Ocultar botón cancelar, solo mostrar Aceptar
-                modalCancel.style.display = 'none';
-                modalConfirm.textContent = 'Aceptar';
-                modalConfirm.className = 'modal-btn confirm';
-                
-                // Event listener para cerrar el modal
-                modalConfirm.onclick = function() {
-                    customModal.style.display = 'none';
-                };
-                
-                // Mostrar el modal
-                customModal.style.display = 'flex';
-            }
-            
-            /**
-             * Muestra un modal de confirmación para eliminar un evento
-             */
-            function showDeleteConfirmModal(eventId) {
-                const modalTitle = document.getElementById('custom-modal-title');
-                const modalMessage = document.getElementById('custom-modal-message');
-                const modalCancel = document.getElementById('custom-modal-cancel');
-                const modalConfirm = document.getElementById('custom-modal-confirm');
-                const customModal = document.getElementById('custom-modal');
-                
-                modalTitle.textContent = 'Confirmar eliminación';
-                modalMessage.textContent = '¿Estás seguro de que deseas eliminar este evento?';
-                
-                // Mostrar ambos botones
-                modalCancel.style.display = 'block';
-                modalConfirm.textContent = 'Eliminar';
-                modalConfirm.className = 'modal-btn delete';
-                
-                // Event listeners
-                modalCancel.onclick = function() {
-                    customModal.style.display = 'none';
-                };
-                
-                modalConfirm.onclick = function() {
-                    customModal.style.display = 'none';
-                    deleteEvent(eventId);
-                };
-                
-                // Mostrar el modal
-                customModal.style.display = 'flex';
-            }
-            
-            /**
-             * Elimina un evento mediante una petición al servidor
-             */
-            function deleteEvent(eventId) {
-                const formData = new FormData();
-                formData.append('action', 'delete_event');
-                formData.append('event_id', eventId);
-                
-                fetch('../api/eventos_calendario.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Eliminar evento del array
-                        const index = events.findIndex(e => e.id == eventId);
-                        if (index !== -1) {
-                            events.splice(index, 1);
+                    eventsData.forEach(event => {
+                        // Determinar si es una reunión
+                        const isReunion = event.icono === 'users' || (event.descripcion && event.descripcion.includes('[REUNION_ID:'));
+                        
+                        // Si es una reunión, extraer el ID
+                        let reunionId = null;
+                        if (isReunion && event.descripcion) {
+                            const match = event.descripcion.match(/\[REUNION_ID:(\d+)\]/);
+                            if (match && match[1]) {
+                                reunionId = match[1];
+                            }
                         }
                         
-                        // Re-renderizar calendario
-                        renderCalendar();
+                        // Obtener la información visual para el tooltip
+                        let iconHTML = '';
+                        if (iconImages[event.icono]) {
+                            iconHTML = `<img src="${iconImages[event.icono]}" alt="${event.icono}" class="event-tooltip-img">`;
+                        } else {
+                            iconHTML = `<i class="fas fa-${event.icono || 'calendar'}"></i>`;
+                        }
                         
-                        // Mostrar mensaje de éxito
-                        showSuccessMessage('Evento eliminado correctamente');
-                    } else {
-                        showError('Error al eliminar: ' + (data.error || 'Error desconocido'));
+                        // Crear la descripción visible (sin mostrar el ID de reunión)
+                        let visibleDescription = event.descripcion || '';
+                        if (isReunion && visibleDescription.includes('[REUNION_ID:')) {
+                            visibleDescription = visibleDescription.replace(/(\[REUNION_ID:\d+\])|(\n\[REUNION_ID:\d+\])/g, '').trim();
+                        }
+                        
+                        // Agregar etiqueta de reunión si corresponde
+                        const reunionLabel = isReunion ? '<span class="reunion-badge">Reunión</span>' : '';
+                        
+                        tooltipContent += `
+                            <div class="event-tooltip-item" data-event-id="${event.id}" ${isReunion ? 'data-reunion="true"' : ''} ${reunionId ? `data-reunion-id="${reunionId}"` : ''}>
+                                <div class="event-tooltip-color" style="background-color: ${event.color}"></div>
+                                <div class="event-tooltip-icon">
+                                    ${iconHTML}
+                                </div>
+                                <div class="event-tooltip-content">
+                                    <div class="event-tooltip-title">${event.titulo} ${reunionLabel}</div>
+                                    ${visibleDescription ? `<div class="event-tooltip-description">${visibleDescription}</div>` : ''}
+                                </div>
+                                <div class="event-tooltip-actions">
+                                    ${isReunion && reunionId ? 
+                                        `<button class="tooltip-view-btn" data-reunion-id="${reunionId}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>` : 
+                                        `<button class="tooltip-edit-btn" data-event-id="${event.id}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>`
+                                    }
+                                    <button class="tooltip-delete-btn" data-event-id="${event.id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    setTimeout(() => {
+                        // Botones de editar
+                        document.querySelectorAll('.tooltip-edit-btn').forEach(btn => {
+                            btn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                const eventId = this.dataset.eventId;
+                                openEditEventModal(eventId);
+                                tooltip.style.display = 'none';
+                            });
+                        });
+                        
+                        // Botones de ver reunión
+                        document.querySelectorAll('.tooltip-view-btn').forEach(btn => {
+                            btn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                const reunionId = this.dataset.reunionId;
+                                if (reunionId) {
+                                    window.location.href = 'reuniones.php?highlight=' + reunionId;
+                                }
+                                tooltip.style.display = 'none';
+                            });
+                        });
+                        
+                        // Botones de eliminar
+                        document.querySelectorAll('.tooltip-delete-btn').forEach(btn => {
+                            btn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                const eventId = this.dataset.eventId;
+                                showDeleteConfirmModal(eventId);
+                                tooltip.style.display = 'none';
+                            });
+                        });
+                        
+                        // Eventos de reunión (clic en el elemento completo)
+                        document.querySelectorAll('.event-tooltip-item[data-reunion="true"]').forEach(item => {
+                            item.addEventListener('click', function(e) {
+                                // Solo activar si no se hizo clic en un botón
+                                if (!e.target.closest('button')) {
+                                    const reunionId = this.dataset.reunionId;
+                                    if (reunionId) {
+                                        window.location.href = 'reuniones.php?highlight=' + reunionId;
+                                    }
+                                    tooltip.style.display = 'none';
+                                }
+                            });
+                        });
+                    }, 10);
+
+                    function showError(message) {
+                        const modalTitle = document.getElementById('custom-modal-title');
+                        const modalMessage = document.getElementById('custom-modal-message');
+                        const modalCancel = document.getElementById('custom-modal-cancel');
+                        const modalConfirm = document.getElementById('custom-modal-confirm');
+                        const customModal = document.getElementById('custom-modal');
+                        
+                        modalTitle.textContent = 'Error';
+                        modalMessage.textContent = message;
+                        
+                        // Ocultar botón cancelar, solo mostrar Aceptar
+                        modalCancel.style.display = 'none';
+                        modalConfirm.textContent = 'Aceptar';
+                        modalConfirm.className = 'modal-btn confirm';
+                        
+                        // Event listener para cerrar el modal
+                        modalConfirm.onclick = function() {
+                            customModal.style.display = 'none';
+                        };
+                        
+                        // Mostrar el modal
+                        customModal.style.display = 'flex';
                     }
-                })
-                .catch(error => {
-                    showError('Error de conexión: ' + error.message);
-                });
-            }
-            
-            /**
-             * Muestra un mensaje de éxito en un modal personalizado
-             */
-            function showSuccessMessage(message) {
-                const modalTitle = document.getElementById('custom-modal-title');
-                const modalMessage = document.getElementById('custom-modal-message');
-                const modalCancel = document.getElementById('custom-modal-cancel');
-                const modalConfirm = document.getElementById('custom-modal-confirm');
-                const customModal = document.getElementById('custom-modal');
-                
-                modalTitle.textContent = 'Éxito';
-                modalMessage.textContent = message;
-                
-                // Ocultar botón cancelar, solo mostrar Aceptar
-                modalCancel.style.display = 'none';
-                modalConfirm.textContent = 'Aceptar';
-                modalConfirm.className = 'modal-btn confirm';
-                
-                // Event listener para cerrar el modal
-                modalConfirm.onclick = function() {
-                    customModal.style.display = 'none';
-                };
-                
-                // Mostrar el modal
-                customModal.style.display = 'flex';
-            }
-            
-            tooltip.innerHTML = tooltipContent;
-            
-            // Posicionar el tooltip
-            const rect = this.getBoundingClientRect();
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-            
-            tooltip.style.left = `${rect.left + scrollLeft}px`;
-            tooltip.style.top = `${rect.bottom + scrollTop + 5}px`;
-            
-            // Verificar si el tooltip se sale de la pantalla por abajo
-            const tooltipRect = tooltip.getBoundingClientRect();
-            if (tooltipRect.bottom > window.innerHeight) {
-                tooltip.style.top = `${rect.top + scrollTop - tooltipRect.height - 5}px`;
-            }
-            
-            // Verificar si el tooltip se sale de la pantalla por la derecha
-            if (tooltipRect.right > window.innerWidth) {
-                tooltip.style.left = `${rect.right + scrollLeft - tooltipRect.width}px`;
-            }
-            
-            tooltip.style.display = 'block';
-        }
-    });
-    
-    day.addEventListener('mouseleave', function() {
-        tooltip.style.display = 'none';
-    });
-});
+                    
+                    /**
+                     * Muestra un modal de confirmación para eliminar un evento
+                     */
+                    function showDeleteConfirmModal(eventId) {
+                        const modalTitle = document.getElementById('custom-modal-title');
+                        const modalMessage = document.getElementById('custom-modal-message');
+                        const modalCancel = document.getElementById('custom-modal-cancel');
+                        const modalConfirm = document.getElementById('custom-modal-confirm');
+                        const customModal = document.getElementById('custom-modal');
+                        
+                        modalTitle.textContent = 'Confirmar eliminación';
+                        modalMessage.textContent = '¿Estás seguro de que deseas eliminar este evento?';
+                        
+                        // Mostrar ambos botones
+                        modalCancel.style.display = 'block';
+                        modalConfirm.textContent = 'Eliminar';
+                        modalConfirm.className = 'modal-btn delete';
+                        
+                        // Event listeners
+                        modalCancel.onclick = function() {
+                            customModal.style.display = 'none';
+                        };
+                        
+                        modalConfirm.onclick = function() {
+                            customModal.style.display = 'none';
+                            deleteEvent(eventId);
+                        };
+                        
+                        // Mostrar el modal
+                        customModal.style.display = 'flex';
+                    }
+                    
+                    /**
+                     * Elimina un evento mediante una petición al servidor
+                     */
+                    function deleteEvent(eventId) {
+                        const formData = new FormData();
+                        formData.append('action', 'delete_event');
+                        formData.append('event_id', eventId);
+                        
+                        fetch('../api/eventos_calendario.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Eliminar evento del array
+                                const index = events.findIndex(e => e.id == eventId);
+                                if (index !== -1) {
+                                    events.splice(index, 1);
+                                }
+                                
+                                // Re-renderizar calendario
+                                renderCalendar();
+                                
+                                // Mostrar mensaje de éxito
+                                showSuccessMessage('Evento eliminado correctamente');
+                            } else {
+                                showError('Error al eliminar: ' + (data.error || 'Error desconocido'));
+                            }
+                        })
+                        .catch(error => {
+                            showError('Error de conexión: ' + error.message);
+                        });
+                    }
 
-
+                    /**
+                     * Maneja el clic en un evento del calendario
+                     * Verifica si es una reunión y redirige a la vista correspondiente
+                     */
+                    function handleEventClick(event) {
+                        // Verificar si es una reunión de dos maneras:
+                        // 1. Si tiene el patrón REUNION_ID en la descripción
+                        // 2. Si tiene el icono de "users"
+                        const isReunionByDescription = event.descripcion && event.descripcion.includes('[REUNION_ID:');
+                        const isReunionByIcon = event.icono === 'users';
+                        
+                        if (isReunionByDescription) {
+                            // Extraer el ID de la reunión usando una expresión regular
+                            const match = event.descripcion.match(/\[REUNION_ID:(\d+)\]/);
+                            if (match && match[1]) {
+                                const reunionId = match[1];
+                                // Redirigir a la vista de reuniones con el ID
+                                window.location.href = 'reuniones.php?highlight=' + reunionId;
+                                return;
+                            }
+                        } else if (isReunionByIcon) {
+                            // Si tiene el icono de reunión pero no el ID específico en la descripción
+                            // podemos intentar encontrar la reunión por título y fecha
+                            // Pero por ahora simplemente redirigimos a la vista de reuniones
+                            window.location.href = 'reuniones.php';
+                            return;
+                        }
+                        
+                        // Si no es una reunión, maneja el evento normalmente
+                        openEditEventModal(event.id);
+                    }
+                    
+                    /**
+                     * Muestra un mensaje de éxito en un modal personalizado
+                     */
+                    function showSuccessMessage(message) {
+                        const modalTitle = document.getElementById('custom-modal-title');
+                        const modalMessage = document.getElementById('custom-modal-message');
+                        const modalCancel = document.getElementById('custom-modal-cancel');
+                        const modalConfirm = document.getElementById('custom-modal-confirm');
+                        const customModal = document.getElementById('custom-modal');
+                        
+                        modalTitle.textContent = 'Éxito';
+                        modalMessage.textContent = message;
+                        
+                        // Ocultar botón cancelar, solo mostrar Aceptar
+                        modalCancel.style.display = 'none';
+                        modalConfirm.textContent = 'Aceptar';
+                        modalConfirm.className = 'modal-btn confirm';
+                        
+                        // Event listener para cerrar el modal
+                        modalConfirm.onclick = function() {
+                            customModal.style.display = 'none';
+                        };
+                        
+                        // Mostrar el modal
+                        customModal.style.display = 'flex';
+                    }
+                    
+                    tooltip.innerHTML = tooltipContent;
+                    
+                    // Posicionar el tooltip
+                    const rect = this.getBoundingClientRect();
+                    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+                    
+                    tooltip.style.left = `${rect.left + scrollLeft}px`;
+                    tooltip.style.top = `${rect.bottom + scrollTop + 5}px`;
+                    
+                    // Verificar si el tooltip se sale de la pantalla por abajo
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    if (tooltipRect.bottom > window.innerHeight) {
+                        tooltip.style.top = `${rect.top + scrollTop - tooltipRect.height - 5}px`;
+                    }
+                    
+                    // Verificar si el tooltip se sale de la pantalla por la derecha
+                    if (tooltipRect.right > window.innerWidth) {
+                        tooltip.style.left = `${rect.right + scrollLeft - tooltipRect.width}px`;
+                    }
+                    
+                    tooltip.style.display = 'block';
+                }
+            });
+            
+            day.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+            });
+        });
 
         if (!document.getElementById('event-tooltip')) {
             const tooltip = document.createElement('div');
@@ -536,20 +675,46 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         
         let html = '';
         dayEvents.forEach(event => {
+            // Determinar si es una reunión
+            const isReunion = event.icono === 'users' || (event.descripcion && event.descripcion.includes('[REUNION_ID:'));
+            
+            // Si es una reunión, extraer el ID
+            let reunionId = null;
+            if (isReunion && event.descripcion) {
+                const match = event.descripcion.match(/\[REUNION_ID:(\d+)\]/);
+                if (match && match[1]) {
+                    reunionId = match[1];
+                }
+            }
+            
+            // Crear la descripción visible (sin mostrar el ID de reunión)
+            let visibleDescription = event.descripcion || '';
+            if (isReunion && visibleDescription.includes('[REUNION_ID:')) {
+                visibleDescription = visibleDescription.replace(/(\[REUNION_ID:\d+\])|(\n\[REUNION_ID:\d+\])/g, '').trim();
+            }
+            
+            // Agregar etiqueta de reunión si corresponde
+            const reunionLabel = isReunion ? '<span class="reunion-badge">Reunión</span>' : '';
+            
             html += `
-                <div class="event-item" data-id="${event.id}">
+                <div class="event-item ${isReunion ? 'reunion-event' : ''}" data-id="${event.id}" ${reunionId ? `data-reunion-id="${reunionId}"` : ''}>
                     <div class="event-color" style="background-color: ${event.color};"></div>
                     <div class="event-icon">
                          <img src="../img/${event.icono || 'calendar'}.png" alt="${event.icono}" class="event-tooltip-img">
                     </div>
                     <div class="event-content">
-                        <h4 class="event-title">${event.titulo}</h4>
-                        ${event.descripcion ? `<p class="event-description">${event.descripcion}</p>` : ''}
+                        <h4 class="event-title">${event.titulo} ${reunionLabel}</h4>
+                        ${visibleDescription ? `<p class="event-description">${visibleDescription}</p>` : ''}
                     </div>
                     <div class="event-actions">
-                        <button class="edit-event-btn" data-id="${event.id}">
-                            <i class="fas fa-edit"></i>
-                        </button>
+                        ${isReunion && reunionId ? 
+                            `<button class="view-reunion-btn" data-reunion-id="${reunionId}">
+                                <i class="fas fa-eye"></i>
+                            </button>` : 
+                            `<button class="edit-event-btn" data-id="${event.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>`
+                        }
                     </div>
                 </div>
             `;
@@ -559,18 +724,41 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         
         // Agregar event listeners a los botones de edición
         document.querySelectorAll('.edit-event-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
                 openEditEventModal(this.dataset.id);
+            });
+        });
+        
+        // Agregar event listeners a los botones de ver reunión
+        document.querySelectorAll('.view-reunion-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const reunionId = this.dataset.reunionId;
+                if (reunionId) {
+                    window.location.href = 'reuniones.php?highlight=' + reunionId;
+                }
             });
         });
         
         // Agregar event listeners a los eventos para editar
         document.querySelectorAll('.event-item').forEach(item => {
             item.addEventListener('click', function(e) {
-                // Evitar que se active si se hace clic en el botón de editar
-                if (e.target.closest('.edit-event-btn')) return;
+                // Evitar que se active si se hace clic en el botón
+                if (e.target.closest('button')) return;
                 
-                openEditEventModal(this.dataset.id);
+                // Si es una reunión, redirigir a la vista de reuniones
+                if (this.classList.contains('reunion-event')) {
+                    const reunionId = this.dataset.reunionId;
+                    if (reunionId) {
+                        window.location.href = 'reuniones.php?highlight=' + reunionId;
+                    } else {
+                        window.location.href = 'reuniones.php';
+                    }
+                } else {
+                    // Si es un evento normal, abrir el modal de edición
+                    openEditEventModal(this.dataset.id);
+                }
             });
         });
     }
@@ -600,7 +788,8 @@ document.querySelectorAll('.day.has-events').forEach(day => {
             newYear++;
         }
         
-        window.location.href = `../views/calendario_mensual.php?month=${newMonth}&year=${newYear}`;    }
+        window.location.href = `../views/calendario_mensual.php?month=${newMonth}&year=${newYear}`;
+    }
     
     /**
      * Abre el modal para añadir evento
@@ -638,6 +827,19 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         });
         eventIcon.value = 'calendar';
         
+        // Agregar un campo oculto para el tipo de evento (normal por defecto)
+        let typeInput = document.getElementById('event-type-hidden');
+        if (!typeInput) {
+            typeInput = document.createElement('input');
+            typeInput.type = 'hidden';
+            typeInput.name = 'event-type';
+            typeInput.value = 'normal';
+            typeInput.id = 'event-type-hidden';
+            eventForm.appendChild(typeInput);
+        } else {
+            typeInput.value = 'normal';
+        }
+        
         // Mostrar modal
         eventModal.style.display = 'flex';
     }
@@ -656,7 +858,14 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         document.getElementById('event-id').value = event.id;
         document.getElementById('event-date').value = event.fecha;
         document.getElementById('event-title').value = event.titulo;
-        document.getElementById('event-description').value = event.descripcion || '';
+        
+        // Manejar la descripción (quitar el ID de reunión si existe)
+        let visibleDescription = event.descripcion || '';
+        if (visibleDescription.includes('[REUNION_ID:')) {
+            visibleDescription = visibleDescription.replace(/\[REUNION_ID:\d+\]/g, '').trim();
+        }
+        document.getElementById('event-description').value = visibleDescription;
+        
         document.getElementById('event-icon').value = event.icono || 'calendar';
         document.getElementById('event-color').value = event.color || '#3498db';
         
@@ -677,6 +886,20 @@ document.querySelectorAll('.day.has-events').forEach(day => {
             }
         });
         
+        // Determinar si es una reunión
+        const isReunion = event.icono === 'users' || (event.descripcion && event.descripcion.includes('[REUNION_ID:'));
+        
+        // Actualizar el tipo de evento oculto
+        let typeInput = document.getElementById('event-type-hidden');
+        if (!typeInput) {
+            typeInput = document.createElement('input');
+            typeInput.type = 'hidden';
+            typeInput.name = 'event-type';
+            typeInput.id = 'event-type-hidden';
+            eventForm.appendChild(typeInput);
+        }
+        typeInput.value = isReunion ? 'reunion' : 'normal';
+        
         // Actualizar título del modal y mostrar botón de eliminar
         eventModalTitle.textContent = 'Editar Evento';
         deleteEventBtn.style.display = 'block';
@@ -693,21 +916,63 @@ document.querySelectorAll('.day.has-events').forEach(day => {
     }
     
     /**
-     * Maneja el envío del formulario de eventos
-     */
-    function handleEventFormSubmit(e) {
-        e.preventDefault();
+ * Maneja el envío del formulario de eventos
+ */
+function handleEventFormSubmit(e) {
+    e.preventDefault();
+    
+    // Recoger datos del formulario
+    const formData = new FormData(eventForm);
+    
+    // Verificar el tipo de evento - reunion o normal
+    const eventType = formData.get('event-type') || 'normal';
+    const isIconUsers = formData.get('icon') === 'users';
+    
+    // Si es una reunión o si el icono seleccionado es "users"
+    if (eventType === 'reunion' || isIconUsers) {
+        // Asegurarse de que el icono sea "users"
+        formData.set('icon', 'users');
         
-        // Recoger datos del formulario
-        const formData = new FormData(eventForm);
+        // Crear reunión en lugar de evento normal
+        const reunionFormData = new FormData();
+        reunionFormData.append('titulo', formData.get('title'));
+        reunionFormData.append('fecha', formData.get('event_date'));
+        reunionFormData.append('contenido', formData.get('description') || '');
         
-        // Acción (add/update)
+        // Si hay un tiempo específico, añadirlo
+        if (formData.get('event_time')) {
+            reunionFormData.append('hora', formData.get('event_time'));
+        }
+        
+        fetch('../controllers/reuniones/save_reunion.php', {
+            method: 'POST',
+            body: reunionFormData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeEventModal();
+                
+                // No necesitamos crear otro evento en el calendario ya que 
+                // save_reunion.php ya lo hace automáticamente
+                
+                // Recargar el calendario para mostrar el nuevo evento
+                loadEvents();
+                
+                // Mostrar mensaje de éxito
+                showSuccessMessage('Reunión ' + (formData.get('action') === 'add' ? 'creada' : 'actualizada') + ' correctamente');
+            } else {
+                showError('Error al crear reunión: ' + (data.error || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            showError('Error: ' + error.message);
+        });
+    } else {
+        // Código para eventos normales (no es reunión)
         const action = formData.get('action');
-        
-        // URL del endpoint
         const url = '../api/eventos_calendario.php';
         
-        // Enviar petición
         fetch(url, {
             method: 'POST',
             body: formData
@@ -731,6 +996,9 @@ document.querySelectorAll('.day.has-events').forEach(day => {
                 // Re-renderizar calendario y eventos
                 renderCalendar();
                 loadEventsForSelectedDate();
+                
+                // Mostrar mensaje de éxito
+                showSuccessMessage('Evento ' + (action === 'add' ? 'creado' : 'actualizado') + ' correctamente');
             } else {
                 showError('Error: ' + (data.error || 'Error desconocido'));
             }
@@ -739,6 +1007,7 @@ document.querySelectorAll('.day.has-events').forEach(day => {
             showError('Error de conexión: ' + error.message);
         });
     }
+}
     
     /**
      * Maneja la eliminación de un evento
@@ -754,7 +1023,9 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         showDeleteConfirmModal(id);
     }
     
-    // Nueva función para mostrar el modal de confirmación
+    /**
+     * Muestra un modal de confirmación para eliminar un evento
+     */
     function showDeleteConfirmModal(eventId) {
         const modalTitle = document.getElementById('custom-modal-title');
         const modalMessage = document.getElementById('custom-modal-message');
@@ -784,45 +1055,87 @@ document.querySelectorAll('.day.has-events').forEach(day => {
         customModal.style.display = 'flex';
     }
     
-    // Nueva función para completar la eliminación del evento
-    // Nueva función para completar la eliminación del evento
-function completeEventDeletion(id) {
-    const formData = new FormData();
-    formData.append('action', 'delete_event');
-    formData.append('event_id', id);
-    
-    fetch('../api/eventos_calendario.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Eliminar evento del array
-            const index = events.findIndex(e => e.id == id);
-            if (index !== -1) {
-                events.splice(index, 1);
+    /**
+     * Completa la eliminación del evento
+     */
+    function completeEventDeletion(id) {
+        // Verificar si es una reunión primero
+        const event = events.find(e => e.id == id);
+        if (event && (event.icono === 'users' || (event.descripcion && event.descripcion.includes('[REUNION_ID:')))) {
+            // Es una reunión, extraer el ID
+            let reunionId = null;
+            if (event.descripcion) {
+                const match = event.descripcion.match(/\[REUNION_ID:(\d+)\]/);
+                if (match && match[1]) {
+                    reunionId = match[1];
+                }
             }
             
-            // Re-renderizar calendario y eventos
-            renderCalendar();
-            
-            // Si existe la función loadEventsForSelectedDate (en vista mensual)
-            if (typeof loadEventsForSelectedDate === 'function') {
-                loadEventsForSelectedDate();
+            // Si tenemos el ID de la reunión, eliminarla primero
+            if (reunionId) {
+                const reunionFormData = new FormData();
+                reunionFormData.append('id', reunionId);
+                reunionFormData.append('action', 'delete');
+                
+                fetch('../controllers/reuniones/delete_reunion.php', {
+                    method: 'POST',
+                    body: reunionFormData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Independientemente del resultado, también eliminamos el evento del calendario
+                    deleteCalendarEvent(id);
+                })
+                .catch(error => {
+                    console.error('Error al eliminar reunión:', error);
+                    // Aún así, intentamos eliminar el evento del calendario
+                    deleteCalendarEvent(id);
+                });
+            } else {
+                // No tenemos ID de reunión, solo eliminamos el evento del calendario
+                deleteCalendarEvent(id);
             }
-            
-            // No mostrar ningún mensaje de éxito
         } else {
-            // Para errores, usar console.error en lugar de alert
-            console.error('Error al eliminar:', data.error || 'Error desconocido');
+            // Es un evento normal, simplemente lo eliminamos
+            deleteCalendarEvent(id);
         }
-    })
-    .catch(error => {
-        // Para errores de conexión, usar console.error en lugar de alert
-        console.error('Error de conexión:', error.message);
-    });
-}
+    }
+    
+    /**
+     * Elimina un evento del calendario
+     */
+    function deleteCalendarEvent(id) {
+        const formData = new FormData();
+        formData.append('action', 'delete_event');
+        formData.append('event_id', id);
+        
+        fetch('../api/eventos_calendario.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Eliminar evento del array
+                const index = events.findIndex(e => e.id == id);
+                if (index !== -1) {
+                    events.splice(index, 1);
+                }
+                
+                // Re-renderizar calendario y eventos
+                renderCalendar();
+                loadEventsForSelectedDate();
+                
+                // Mostrar mensaje de éxito
+                showSuccessMessage('Evento eliminado correctamente');
+            } else {
+                showError('Error al eliminar: ' + (data.error || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            showError('Error de conexión: ' + error.message);
+        });
+    }
     
     /**
      * Selecciona un color predefinido
@@ -843,10 +1156,59 @@ function completeEventDeletion(id) {
      * Muestra un mensaje de error
      */
     function showError(message) {
-        console.error(message);
+        const modalTitle = document.getElementById('custom-modal-title');
+        const modalMessage = document.getElementById('custom-modal-message');
+        const modalCancel = document.getElementById('custom-modal-cancel');
+        const modalConfirm = document.getElementById('custom-modal-confirm');
+        const customModal = document.getElementById('custom-modal');
+        
+        modalTitle.textContent = 'Error';
+        modalMessage.textContent = message;
+        
+        // Ocultar botón cancelar, solo mostrar Aceptar
+        modalCancel.style.display = 'none';
+        modalConfirm.textContent = 'Aceptar';
+        modalConfirm.className = 'modal-btn confirm';
+        
+        // Event listener para cerrar el modal
+        modalConfirm.onclick = function() {
+            customModal.style.display = 'none';
+        };
+        
+        // Mostrar el modal
+        customModal.style.display = 'flex';
     }
-     //Inicializa el calendario
     
+    /**
+     * Muestra un mensaje de éxito
+     */
+    function showSuccessMessage(message) {
+        const modalTitle = document.getElementById('custom-modal-title');
+        const modalMessage = document.getElementById('custom-modal-message');
+        const modalCancel = document.getElementById('custom-modal-cancel');
+        const modalConfirm = document.getElementById('custom-modal-confirm');
+        const customModal = document.getElementById('custom-modal');
+        
+        modalTitle.textContent = 'Éxito';
+        modalMessage.textContent = message;
+        
+        // Ocultar botón cancelar, solo mostrar Aceptar
+        modalCancel.style.display = 'none';
+        modalConfirm.textContent = 'Aceptar';
+        modalConfirm.className = 'modal-btn confirm';
+        
+        // Event listener para cerrar el modal
+        modalConfirm.onclick = function() {
+            customModal.style.display = 'none';
+        };
+        
+        // Mostrar el modal
+        customModal.style.display = 'flex';
+    }
+    
+    /**
+     * Inicializa el calendario
+     */
     function initCalendar() {
         // Obtener mes y año de la URL
         const urlParams = new URLSearchParams(window.location.search);

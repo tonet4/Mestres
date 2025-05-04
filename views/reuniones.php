@@ -145,7 +145,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <!-- Reuniones grid -->
             <div v-else class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div v-for="(reunion, index) in reunionesFiltradas" :key="reunion.id" class="col">
-                <div class="card reunion-card" :class="{'expanded': reunion.expanded}">                        <div class="card-header" @click="reunion.expanded = !reunion.expanded">
+                <div class="card reunion-card" :class="{'expanded': reunion.expanded}" :data-id="reunion.id">                        <div class="card-header" @click="reunion.expanded = !reunion.expanded">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="header-content">
                                     <div class="fecha-badge mb-2">

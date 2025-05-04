@@ -473,15 +473,39 @@ document.addEventListener('DOMContentLoaded', function() {
             const hourActions = document.createElement('div');
             hourActions.className = 'hour-actions';
             
+            // Nuevo botón para añadir hora antes
+            const addBeforeBtn = document.createElement('button');
+            addBeforeBtn.className = 'hour-action-btn add-before';
+            addBeforeBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            addBeforeBtn.title = 'Añadir hora antes';
+            addBeforeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openHourModal('add-before', hour.id);
+            });
+
+            // Event listener para copiar semana anterior
+const copyPreviousWeekBtn = document.getElementById('copy-previous-week');
+if (copyPreviousWeekBtn) {
+    copyPreviousWeekBtn.addEventListener('click', function() {
+        showConfirmModal(
+            'Copiar Semana Anterior', 
+            'Esto copiará las horas de la semana anterior a la semana actual. Si ya hay horas definidas en la semana actual, serán reemplazadas. ¿Deseas continuar?', 
+            copyPreviousWeek
+        );
+    });
+}
+            
+            // Botón existente para añadir hora después
             const addBtn = document.createElement('button');
             addBtn.className = 'hour-action-btn add';
             addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-            addBtn.title = 'Añadir fila';
+            addBtn.title = 'Añadir hora después';
             addBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 openHourModal('add', hour.id);
             });
             
+            // Botón para eliminar hora
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'hour-action-btn delete';
             deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
@@ -493,6 +517,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
             
+            // Añadir botones al contenedor de acciones
+            hourActions.appendChild(addBeforeBtn); // Nuevo botón
             hourActions.appendChild(addBtn);
             hourActions.appendChild(deleteBtn);
             hourContent.appendChild(hourActions);
@@ -500,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             row.appendChild(hourCell);
             
-            // Celdas para cada día de la semana
+            // Celdas para cada día de la semana (sin cambios)
             for (let day = 1; day <= 5; day++) {
                 const dayCell = document.createElement('td');
                 const cellContent = document.createElement('div');
@@ -509,7 +535,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 cellContent.dataset.hourId = hour.id;
                 cellContent.addEventListener('click', function() {
                     openEventModal('add', null, day, hour.id);
-                    //console.log(day)
                 });
                 
                 dayCell.appendChild(cellContent);
@@ -575,22 +600,79 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Función para copiar horas de la semana anterior
+function copyPreviousWeek() {
+    // Calcular la semana anterior
+    let prevWeek = currentWeek - 1;
+    let prevYear = currentYear;
     
-    // Función para abrir el modal de horas
+    // Si estamos en la primera semana del año, ir al año anterior
+    if (prevWeek < 1) {
+        prevWeek = 52; // Última semana del año anterior
+        prevYear--;
+    }
+    
+    // Mostrar indicador de carga
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'loading-indicator';
+    loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Copiando horario...';
+    document.body.appendChild(loadingIndicator);
+    
+    // Crear FormData para enviar al servidor
+    const formData = new FormData();
+    formData.append('prev_week', prevWeek);
+    formData.append('prev_year', prevYear);
+    formData.append('current_week', currentWeek);
+    formData.append('current_year', currentYear);
+    
+    // Enviar petición al servidor
+    fetch('../controllers/copy_previous_week.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Eliminar indicador de carga
+        document.body.removeChild(loadingIndicator);
+        
+        if (data.success) {
+            // Recargar horas
+            loadHours();
+            showModal('Éxito', 'Horario copiado correctamente de la semana anterior.');
+        } else {
+            showModal('Error', data.message || 'Error al copiar el horario de la semana anterior.');
+        }
+    })
+    .catch(error => {
+        // Eliminar indicador de carga
+        document.body.removeChild(loadingIndicator);
+        
+        console.error('Error copiando semana anterior:', error);
+        showModal('Error', 'Error al copiar el horario. Por favor, inténtalo de nuevo.');
+    });
+}
+    
     function openHourModal(action, referenceHourId = null) {
         // Limpiar el formulario
         hourForm.reset();
         
         if (action === 'add') {
-            document.getElementById('hour-modal-title').textContent = 'Añadir Hora';
+            document.getElementById('hour-modal-title').textContent = 'Añadir Hora Después';
             document.getElementById('hour-action').value = 'add';
             document.getElementById('reference-hour-id').value = referenceHourId || '';
+            document.getElementById('position').value = 'after'; // Establecer posición "después"
+        } else if (action === 'add-before') {
+            document.getElementById('hour-modal-title').textContent = 'Añadir Hora Antes';
+            document.getElementById('hour-action').value = 'add';
+            document.getElementById('reference-hour-id').value = referenceHourId || '';
+            document.getElementById('position').value = 'before'; // Establecer posición "antes"
         } else if (action === 'edit') {
             document.getElementById('hour-modal-title').textContent = 'Editar Hora';
             document.getElementById('hour-action').value = 'edit';
             document.getElementById('hour-id').value = referenceHourId;
             
-            // Cargar datos de la hora a editar
+            // Cargar datos de la hora a editar (sin cambios)
             fetch(`../controllers/get_hour.php?id=${referenceHourId}`)
                 .then(response => response.json())
                 .then(data => {
@@ -1074,6 +1156,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Modal personalizado
     function showModal(title, message) {
+         // Eliminar cualquier modal existente primero
+    const existingModals = document.querySelectorAll('.custom-modal');
+    existingModals.forEach(modal => {
+        if (modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
+    });
         const modalContainer = document.createElement('div');
         modalContainer.className = 'modal custom-modal';
         modalContainer.style.display = 'block';
@@ -1113,6 +1202,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Modal de confirmación para reemplazar confirms
     function showConfirmModal(title, message, onConfirm) {
+        // Eliminar cualquier modal existente primero
+        const existingModals = document.querySelectorAll('.custom-modal');
+        existingModals.forEach(modal => {
+        if (modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
+    });
         const modalContainer = document.createElement('div');
         modalContainer.className = 'modal custom-modal';
         modalContainer.style.display = 'block';

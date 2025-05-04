@@ -29,6 +29,7 @@ $week = isset($_POST['week']) ? (int)$_POST['week'] : null;
 $year = isset($_POST['year']) ? (int)$_POST['year'] : null;
 $hour_id = isset($_POST['hour_id']) ? (int)$_POST['hour_id'] : null;
 $reference_hour_id = isset($_POST['reference_hour_id']) ? (int)$_POST['reference_hour_id'] : null;
+$position = isset($_POST['position']) ? limpiarDatos($_POST['position']) : 'after'; // Nuevo parámetro
 $usuario_id = $_SESSION['user_id'];
 
 // Validate data
@@ -43,8 +44,8 @@ try {
     $conn->beginTransaction();
     
     if ($action === 'add') {
-        // If there is a reference time, get your order
-        $orden = 1; //Default value
+        // Default order value
+        $orden = 1;
         
         if ($reference_hour_id) {
             $stmt = $conn->prepare("
@@ -59,17 +60,23 @@ try {
             $stmt->execute();
             
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                // Increment order to insert after reference time
-                $orden = $row['orden'] + 1;
+                // Determine order based on position parameter
+                if ($position === 'after') {
+                    // After: increment order to insert after reference time
+                    $orden = $row['orden'] + 1;
+                } else {
+                    // Before: use the same order as reference time
+                    $orden = $row['orden'];
+                }
                 
-                // Update orders for the following hours
+                // Check if we already have a record with this order
                 $stmt = $conn->prepare("
-                    UPDATE horas_calendario
-                    SET orden = orden + 1
+                    SELECT COUNT(*) as count
+                    FROM horas_calendario
                     WHERE usuario_id = :usuario_id 
                     AND semana_numero = :semana 
                     AND anio = :anio 
-                    AND orden >= :orden
+                    AND orden = :orden
                 ");
                 
                 $stmt->bindParam(':usuario_id', $usuario_id);
@@ -77,6 +84,28 @@ try {
                 $stmt->bindParam(':anio', $year);
                 $stmt->bindParam(':orden', $orden);
                 $stmt->execute();
+                
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                // Only update orders if necessary
+                if ($result['count'] > 0) {
+                    // Update orders for the following hours to make space
+                    $stmt = $conn->prepare("
+                        UPDATE horas_calendario
+                        SET orden = orden + 1
+                        WHERE usuario_id = :usuario_id 
+                        AND semana_numero = :semana 
+                        AND anio = :anio 
+                        AND orden >= :orden
+                        ORDER BY orden DESC
+                    ");
+                    
+                    $stmt->bindParam(':usuario_id', $usuario_id);
+                    $stmt->bindParam(':semana', $week);
+                    $stmt->bindParam(':anio', $year);
+                    $stmt->bindParam(':orden', $orden);
+                    $stmt->execute();
+                }
             } else {
                 // If the reference time was not found, get the latest order
                 $stmt = $conn->prepare("
@@ -95,7 +124,7 @@ try {
                 }
             }
         } else {
-            //If there is no reference time, get the latest order
+            // If there is no reference time, get the latest order
             $stmt = $conn->prepare("
                 SELECT MAX(orden) as max_orden
                 FROM horas_calendario

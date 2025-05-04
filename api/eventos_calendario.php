@@ -170,18 +170,42 @@ if ((isset($_POST['title']) || isset($_POST['event_title'])) && (isset($_POST['e
                     }
                     
                     try {
-                        // Verify that the event belongs to the user
+                        // Begin transaction
+                        $conn->beginTransaction();
+                        
+                        // First, get the event details to check if it's a reunion event
                         $stmt = $conn->prepare("
-                            SELECT id FROM eventos_calendario_anual 
+                            SELECT id, descripcion FROM eventos_calendario_anual 
                             WHERE id = :id AND usuario_id = :usuario_id");
                         
                         $stmt->bindParam(':id', $event_id, PDO::PARAM_INT);
                         $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
                         $stmt->execute();
                         
-                        if ($stmt->rowCount() == 0) {
+                        $evento = $stmt->fetch(PDO::FETCH_ASSOC);
+                        
+                        if (!$evento) {
                             $response['error'] = 'Evento no encontrado o no autorizado';
+                            $conn->rollBack();
                             break;
+                        }
+                        
+                        // Check if it's a reunion event by looking for [REUNION_ID:xx] in description
+                        if ($evento['descripcion'] && preg_match('/\[REUNION_ID:(\d+)\]/', $evento['descripcion'], $matches)) {
+                            $reunion_id = (int)$matches[1];
+                            
+                            // Delete the associated reunion
+                            $stmt = $conn->prepare("
+                                DELETE FROM reuniones
+                                WHERE id = :id AND usuario_id = :usuario_id");
+                            
+                            $stmt->bindParam(':id', $reunion_id, PDO::PARAM_INT);
+                            $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+                            $stmt->execute();
+                            
+                            // Add reunion info to response
+                            $response['deleted_reunion'] = true;
+                            $response['reunion_id'] = $reunion_id;
                         }
                         
                         // Delete the event
@@ -191,12 +215,16 @@ if ((isset($_POST['title']) || isset($_POST['event_title'])) && (isset($_POST['e
                         
                         $stmt->bindParam(':id', $event_id, PDO::PARAM_INT);
                         $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
-                        
                         $stmt->execute();
+                        
+                        // Commit the transaction
+                        $conn->commit();
                         
                         $response['success'] = true;
                         $response['data'] = ['id' => $event_id];
                     } catch (PDOException $e) {
+                        // Rollback transaction in case of error
+                        $conn->rollBack();
                         $response['error'] = 'Error al eliminar evento: ' . $e->getMessage();
                     }
                     break;
