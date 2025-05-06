@@ -50,6 +50,94 @@ document.addEventListener("DOMContentLoaded", function () {
     "Diciembre",
   ];
 
+  /**
+   * Muestra un mensaje de error en un modal personalizado
+   */
+  function showError(message) {
+    const modalTitle = document.getElementById('custom-modal-title');
+    const modalMessage = document.getElementById('custom-modal-message');
+    const modalCancel = document.getElementById('custom-modal-cancel');
+    const modalConfirm = document.getElementById('custom-modal-confirm');
+    const customModal = document.getElementById('custom-modal');
+    
+    modalTitle.textContent = 'Error';
+    modalMessage.textContent = message;
+    
+    // Ocultar botón cancelar, solo mostrar Aceptar
+    modalCancel.style.display = 'none';
+    modalConfirm.textContent = 'Aceptar';
+    modalConfirm.className = 'modal-btn confirm';
+    
+    // Event listener para cerrar el modal
+    modalConfirm.onclick = function() {
+      customModal.style.display = 'none';
+    };
+    
+    // Mostrar el modal
+    customModal.style.display = 'flex';
+  }
+
+  /**
+   * Muestra un mensaje de éxito en un modal personalizado
+   */
+  function showSuccessMessage(message) {
+    const modalTitle = document.getElementById('custom-modal-title');
+    const modalMessage = document.getElementById('custom-modal-message');
+    const modalCancel = document.getElementById('custom-modal-cancel');
+    const modalConfirm = document.getElementById('custom-modal-confirm');
+    const customModal = document.getElementById('custom-modal');
+    
+    modalTitle.textContent = 'Éxito';
+    modalMessage.textContent = message;
+    
+    // Ocultar botón cancelar, solo mostrar Aceptar
+    modalCancel.style.display = 'none';
+    modalConfirm.textContent = 'Aceptar';
+    modalConfirm.className = 'modal-btn confirm';
+    
+    // Event listener para cerrar el modal
+    modalConfirm.onclick = function() {
+      customModal.style.display = 'none';
+    };
+    
+    // Mostrar el modal
+    customModal.style.display = 'flex';
+  }
+
+  /**
+   * Muestra un mensaje de confirmación en un modal personalizado
+   */
+  function showConfirmModal(message, confirmCallback) {
+    const modalTitle = document.getElementById('custom-modal-title');
+    const modalMessage = document.getElementById('custom-modal-message');
+    const modalCancel = document.getElementById('custom-modal-cancel');
+    const modalConfirm = document.getElementById('custom-modal-confirm');
+    const customModal = document.getElementById('custom-modal');
+    
+    modalTitle.textContent = 'Confirmar';
+    modalMessage.textContent = message;
+    
+    // Mostrar ambos botones
+    modalCancel.style.display = 'block';
+    modalConfirm.textContent = 'Eliminar';
+    modalConfirm.className = 'modal-btn delete';
+    
+    // Event listeners
+    modalCancel.onclick = function() {
+      customModal.style.display = 'none';
+    };
+    
+    modalConfirm.onclick = function() {
+      customModal.style.display = 'none';
+      if (typeof confirmCallback === 'function') {
+        confirmCallback();
+      }
+    };
+    
+    // Mostrar el modal
+    customModal.style.display = 'flex';
+  }
+
   // Initialize calendar
   initCalendar();
 
@@ -196,9 +284,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setupTooltips();
   }
 
-  /**
-   * Configure tooltips for days with events
-   */
   /**
    * Configure tooltips for days with events
    */
@@ -574,10 +659,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function closeEventModal() {
     eventModal.style.display = "none";
   }
-/**
- * Handles the submission of the event form
- */
-function handleEventFormSubmit(e) {
+
+  /**
+   * Handles the submission of the event form
+   */
+  function handleEventFormSubmit(e) {
     e.preventDefault();
     
     // Collect data from the form
@@ -588,87 +674,94 @@ function handleEventFormSubmit(e) {
     
     // Si es una reunión, usar el endpoint de reuniones
     if (isReunion) {
-        // Crear los datos para la reunión
-        const reunionFormData = new FormData();
-        reunionFormData.append('titulo', formData.get('title'));
-        reunionFormData.append('fecha', formData.get('event_date'));
-        reunionFormData.append('contenido', formData.get('description') || '');
-        
-        // Si hay un campo de hora, añadirlo también
-        if (formData.get('hora')) {
-            reunionFormData.append('hora', formData.get('hora'));
+      // Crear los datos para la reunión
+      const reunionFormData = new FormData();
+      reunionFormData.append('titulo', formData.get('title'));
+      reunionFormData.append('fecha', formData.get('event_date'));
+      reunionFormData.append('contenido', formData.get('description') || '');
+      
+      // Si hay un campo de hora, añadirlo también
+      if (formData.get('hora')) {
+        reunionFormData.append('hora', formData.get('hora'));
+      }
+      
+      // Usar el endpoint de reuniones
+      fetch('../controllers/meetings/save_reunion.php', {
+        method: 'POST',
+        body: reunionFormData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closeEventModal();
+          
+          // Recargar eventos sin duplicar
+          loadEvents();
+          
+          // Mostrar mensaje de éxito usando modal en lugar de alert
+          showSuccessMessage('Reunión ' + (formData.get('action') === 'add' ? 'creada' : 'actualizada') + ' correctamente');
+        } else {
+          // Mostrar error usando modal en lugar de alert
+          showError('Error: ' + (data.error || 'Error desconocido'));
         }
-        
-        // Usar el endpoint de reuniones
-        fetch('../controllers/meetings/save_reunion.php', {
-            method: 'POST',
-            body: reunionFormData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                closeEventModal();
-                
-                // Recargar eventos sin duplicar
-                loadEvents();
-                
-                // Mostrar mensaje de éxito
-                alert('Reunión ' + (formData.get('action') === 'add' ? 'creada' : 'actualizada') + ' correctamente');
-            } else {
-                alert('Error: ' + (data.error || 'Error desconocido'));
-            }
-        })
-        .catch(error => {
-            alert('Error de conexión: ' + error.message);
-        });
+      })
+      .catch(error => {
+        // Mostrar error usando modal en lugar de alert
+        showError('Error de conexión: ' + error.message);
+      });
     } else {
-        // Si es un evento normal (no reunión), usar el endpoint de eventos
-        const action = formData.get('action');
-        
-        // Make sure the action is correctly included
-        if (action === 'add') {
-            formData.set('action', 'add_event');
-        } else if (action === 'update') {
-            formData.set('action', 'update_event');
-        }
-        
-        console.log('Enviando acción:', formData.get('action'));
-        
-        // URL del endpoint
-        const url = '../controllers/annual_month_calendar/annual_month_calendar_controller.php';
+      // Si es un evento normal (no reunión), usar el endpoint de eventos
+      const action = formData.get('action');
+      
+      // Make sure the action is correctly included
+      if (action === 'add') {
+        formData.set('action', 'add_event');
+      } else if (action === 'update') {
+        formData.set('action', 'update_event');
+      }
+      
+      console.log('Enviando acción:', formData.get('action'));
+      
+      // URL del endpoint
+      const url = '../controllers/annual_month_calendar/annual_month_calendar_controller.php';
 
-        // Send request
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                closeEventModal();
-                
-                // Update event list
-                if (action === 'add') {
-                    events.push(data.data);
-                } else {
-                    // Update event in array
-                    const index = events.findIndex(e => e.id == data.data.id);
-                    if (index !== -1) {
-                        events[index] = data.data;
-                    }
-                }
-                
-                // Re-render calendar
-                renderCalendar();
-            } else {
-                alert('Error: ' + (data.error || 'Error desconocido'));
+      // Send request
+      fetch(url, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closeEventModal();
+          
+          // Update event list
+          if (action === 'add') {
+            events.push(data.data);
+          } else {
+            // Update event in array
+            const index = events.findIndex(e => e.id == data.data.id);
+            if (index !== -1) {
+              events[index] = data.data;
             }
-        })
-        .catch(error => {
-            alert('Error de conexión: ' + error.message);
-        });
+          }
+          
+          // Re-render calendar
+          renderCalendar();
+          
+          // Mostrar mensaje de éxito usando modal en lugar de alert
+          showSuccessMessage('Evento ' + (action === 'add' ? 'creado' : 'actualizado') + ' correctamente');
+        } else {
+          // Mostrar error usando modal en lugar de alert
+          showError('Error: ' + (data.error || 'Error desconocido'));
+        }
+      })
+      .catch(error => {
+        // Mostrar error usando modal en lugar de alert
+        showError('Error de conexión: ' + error.message);
+      });
     }
-}
+  }
 
   /**
    * Limpia la descripción de un evento eliminando referencias técnicas
@@ -684,46 +777,46 @@ function handleEventFormSubmit(e) {
   }
 
   /**
-   *Handles the deletion of an event
+   * Handles the deletion of an event
    */
   function handleEventDelete() {
-    if (!confirm("¿Estás seguro de que deseas eliminar este evento?")) {
-      return;
-    }
+    // Reemplazar confirm con modal personalizado
+    showConfirmModal('¿Estás seguro de que deseas eliminar este evento?', function() {
+      const id = document.getElementById('event-id').value;
+      if (!id) return;
 
-    const id = document.getElementById("event-id").value;
-    if (!id) return;
+      const formData = new FormData();
+      formData.append('action', 'delete_event');
+      formData.append('event_id', id);
 
-    const formData = new FormData();
-    formData.append("action", "delete_event");
-    formData.append("event_id", id);
-
-    fetch("../controllers/annual_month_calendar/annual_month_calendar_controller.php", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
+      fetch('../controllers/annual_month_calendar/annual_month_calendar_controller.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
         if (data.success) {
           closeEventModal();
 
           // Delete event from array
-          const index = events.findIndex((e) => e.id == id);
+          const index = events.findIndex(e => e.id == id);
           if (index !== -1) {
             events.splice(index, 1);
           }
 
           // Re-render calendar
           renderCalendar();
+          
+          // Mostrar mensaje de éxito
+          showSuccessMessage('Evento eliminado correctamente');
         } else {
-          showError(
-            "Error al eliminar: " + (data.error || "Error desconocido")
-          );
+          showError('Error al eliminar: ' + (data.error || 'Error desconocido'));
         }
       })
-      .catch((error) => {
-        showError("Error de conexión: " + error.message);
+      .catch(error => {
+        showError('Error de conexión: ' + error.message);
       });
+    });
   }
 
   /**
@@ -739,12 +832,5 @@ function handleEventFormSubmit(e) {
     // Update color in the picker and hidden input
     customColorPicker.value = color;
     eventColor.value = color;
-  }
-
-  /**
-   *Displays an error message
-   */
-  function showError(message) {
-    alert(message);
   }
 });

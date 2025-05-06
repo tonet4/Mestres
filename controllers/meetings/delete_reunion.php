@@ -35,7 +35,6 @@ if ($id <= 0) {
 }
 
 try {
-    // NUEVA FUNCIONALIDAD: Eliminar eventos asociados del calendario mensual
     $stmt = $conn->prepare("
         DELETE FROM eventos_calendario_anual
         WHERE usuario_id = :usuario_id 

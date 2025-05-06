@@ -3,7 +3,6 @@
  * @author Antonio Esteban Lorenzo
  * 
  */
-// Incluir los archivos necesarios
 require_once '../../includes/auth.php';
 require_once '../../api/config.php';;
 

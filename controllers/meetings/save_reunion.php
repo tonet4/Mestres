@@ -91,8 +91,6 @@ try {
     $reunion['hora_formateada'] = $reunion['hora'] ? date('H:i', strtotime($reunion['hora'])) : '';
     $reunion['fecha_creacion_formateada'] = date('d/m/Y H:i', strtotime($reunion['fecha_creacion']));
     
-    // NUEVA FUNCIONALIDAD: Crear/actualizar evento en el calendario mensual
-    // Comprobar si ya existe un evento para esta reunión
     $stmt = $conn->prepare("
         SELECT id FROM eventos_calendario_anual 
         WHERE usuario_id = :usuario_id 
@@ -104,7 +102,6 @@ try {
     $stmt->bindParam(':descripcion', $descripcion_pattern);
     $stmt->execute();
     
-    // Preparar los datos del evento
     $titulo_evento = $titulo;
     $descripcion_evento = "[REUNION_ID:" . $id . "] ";
     
@@ -112,12 +109,10 @@ try {
         $descripcion_evento .= "Hora: " . date('H:i', strtotime($hora)) . " - ";
     }
     
-    // Añadir parte del contenido a la descripción
     $contenido_resumido = substr(strip_tags($contenido), 0, 100);
     $descripcion_evento .= $contenido_resumido;
     
     if ($evento = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Actualizar evento existente
         $stmt = $conn->prepare("
             UPDATE eventos_calendario_anual
             SET fecha = :fecha, 
@@ -132,7 +127,6 @@ try {
         $stmt->bindParam(':descripcion', $descripcion_evento);
         $stmt->execute();
     } else {
-        // Crear nuevo evento
         $stmt = $conn->prepare("
             INSERT INTO eventos_calendario_anual 
             (usuario_id, fecha, titulo, descripcion, icono, color)

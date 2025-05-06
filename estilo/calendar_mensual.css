@@ -608,6 +608,7 @@
 }
 
 .custom-modal .cancel {
+    font-family: var(--font-main);
     background-color: #e0e0e0;
     color: #333;
 }
@@ -623,4 +624,26 @@
 
 .custom-modal .delete:hover {
     background-color: #c0392b;
+}
+
+.edit-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    vertical-align: middle;
+}
+
+.tooltip-edit-btn, .edit-event-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.tooltip-edit-btn:hover, .edit-event-btn:hover {
+    transform: scale(1.2);
 }

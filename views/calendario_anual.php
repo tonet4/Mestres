@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Antonio Esteban Lorenzo
  * 
@@ -72,7 +73,8 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
-            <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>        </ul>
+            <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+        </ul>
     </div>
 
     <!-- Overlay for when the sidebar is open -->
@@ -106,10 +108,10 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <button class="nav-btn" id="current-year">
-                    <i class="fas fa-calendar"></i> 
+                    <i class="fas fa-calendar"></i>
                 </button>
                 <button class="nav-btn" id="next-year">
-                     <i class="fas fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
             <div class="add-event-btn">
@@ -152,6 +154,17 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
             <!-- Will be populated by JavaScript -->
         </div>
     </main>
+
+    <div id="custom-modal" class="modal custom-modal">
+        <div class="modal-content">
+            <h2 id="custom-modal-title">Título</h2>
+            <p id="custom-modal-message">Mensaje</p>
+            <div class="modal-buttons">
+                <button id="custom-modal-cancel" class="modal-btn cancel">Cancelar</button>
+                <button id="custom-modal-confirm" class="modal-btn confirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal to add/edit events -->
     <div id="event-modal" class="modal">

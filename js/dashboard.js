@@ -46,34 +46,37 @@ document.addEventListener('DOMContentLoaded', function() {
     editButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             const noteId = this.getAttribute('data-id');
-            const noteText = document.querySelector(`#nota-${noteId} .task-text`).textContent;
+            const noteContainer = document.querySelector(`#nota-${noteId}`);
+            const noteText = noteContainer.querySelector('.task-text').textContent;
+            
+            // Guardar una referencia a la estructura original
+            const originalContent = noteContainer.innerHTML;
+            
+            // Limpiar el contenedor de la nota
+            noteContainer.innerHTML = '';
             
             // Crear un textarea para edición
             const textarea = document.createElement('textarea');
             textarea.value = noteText;
             textarea.className = 'edit-textarea';
-            
-            // Crear botones de guardar y cancelar
-            const saveBtn = document.createElement('button');
-            saveBtn.textContent = 'Guardar';
-            saveBtn.className = 'save-btn';
-            
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = 'Cancelar';
-            cancelBtn.className = 'cancel-btn';
+            noteContainer.appendChild(textarea);
             
             // Crear contenedor para botones
             const btnContainer = document.createElement('div');
             btnContainer.className = 'form-buttons';
-            btnContainer.appendChild(saveBtn);
-            btnContainer.appendChild(cancelBtn);
+            noteContainer.appendChild(btnContainer);
             
-            // Reemplazar el contenido de la nota con el formulario de edición
-            const taskItem = document.querySelector(`#nota-${noteId}`);
-            const originalContent = taskItem.innerHTML;
-            taskItem.innerHTML = '';
-            taskItem.appendChild(textarea);
-            taskItem.appendChild(btnContainer);
+            // Botón guardar
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = 'Guardar';
+            saveBtn.className = 'save-btn';
+            btnContainer.appendChild(saveBtn);
+            
+            // Botón cancelar
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Cancelar';
+            cancelBtn.className = 'cancel-btn';
+            btnContainer.appendChild(cancelBtn);
             
             // Enfocar el textarea
             textarea.focus();
@@ -87,26 +90,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Cancelar edición
             cancelBtn.addEventListener('click', function() {
-                taskItem.innerHTML = originalContent;
+                noteContainer.innerHTML = originalContent;
+                
                 // Volver a añadir event listeners a los botones
-                const newEditBtn = taskItem.querySelector('.edit-task');
-                const newDeleteBtn = taskItem.querySelector('.delete-task');
-                
-                if (newEditBtn) {
-                    newEditBtn.addEventListener('click', function() {
-                        const noteId = this.getAttribute('data-id');
-                        // ... resto del código de edición
-                    });
-                }
-                
-                if (newDeleteBtn) {
-                    newDeleteBtn.addEventListener('click', function() {
-                        if (confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
-                            document.getElementById('delete-nota-id').value = this.getAttribute('data-id');
-                            deleteForm.submit();
-                        }
-                    });
-                }
+                attachEventListeners(noteContainer);
             });
         });
     });
@@ -120,4 +107,72 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Función para volver a añadir event listeners después de cancelar edición
+    function attachEventListeners(container) {
+        const newEditBtn = container.querySelector('.edit-task');
+        const newDeleteBtn = container.querySelector('.delete-task');
+        
+        if (newEditBtn) {
+            newEditBtn.addEventListener('click', function() {
+                const noteId = this.getAttribute('data-id');
+                const noteContainer = document.querySelector(`#nota-${noteId}`);
+                const noteText = noteContainer.querySelector('.task-text').textContent;
+                
+                // Guardar una referencia a la estructura original
+                const originalContent = noteContainer.innerHTML;
+                
+                // Limpiar el contenedor de la nota
+                noteContainer.innerHTML = '';
+                
+                // Crear un textarea para edición
+                const textarea = document.createElement('textarea');
+                textarea.value = noteText;
+                textarea.className = 'edit-textarea';
+                noteContainer.appendChild(textarea);
+                
+                // Crear contenedor para botones
+                const btnContainer = document.createElement('div');
+                btnContainer.className = 'form-buttons';
+                noteContainer.appendChild(btnContainer);
+                
+                // Botón guardar
+                const saveBtn = document.createElement('button');
+                saveBtn.textContent = 'Guardar';
+                saveBtn.className = 'save-btn';
+                btnContainer.appendChild(saveBtn);
+                
+                // Botón cancelar
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'Cancelar';
+                cancelBtn.className = 'cancel-btn';
+                btnContainer.appendChild(cancelBtn);
+                
+                // Enfocar el textarea
+                textarea.focus();
+                
+                // Guardar cambios
+                saveBtn.addEventListener('click', function() {
+                    document.getElementById('edit-nota-id').value = noteId;
+                    document.getElementById('edit-nota-texto').value = textarea.value;
+                    editForm.submit();
+                });
+                
+                // Cancelar edición
+                cancelBtn.addEventListener('click', function() {
+                    noteContainer.innerHTML = originalContent;
+                    attachEventListeners(noteContainer);
+                });
+            });
+        }
+        
+        if (newDeleteBtn) {
+            newDeleteBtn.addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
+                    document.getElementById('delete-nota-id').value = this.getAttribute('data-id');
+                    deleteForm.submit();
+                }
+            });
+        }
+    }
 });

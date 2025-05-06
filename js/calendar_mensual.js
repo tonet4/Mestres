@@ -349,10 +349,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="event-tooltip-actions">
                                     ${isReunion && reunionId ? 
                                         `<button class="tooltip-view-btn" data-reunion-id="${reunionId}">
-                                            <i class="fas fa-eye"></i>
+                                            <img src="../img/ojo.png" alt="Editar" class="edit-icon">
                                         </button>` : 
                                         `<button class="tooltip-edit-btn" data-event-id="${event.id}">
-                                            <i class="fas fa-edit"></i>
+                                            <img src="../img/lapiz.png" alt="Editar" class="edit-icon">
                                         </button>`
                                     }
                                     <button class="tooltip-delete-btn" data-event-id="${event.id}">
@@ -709,10 +709,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="event-actions">
                         ${isReunion && reunionId ? 
                             `<button class="view-reunion-btn" data-reunion-id="${reunionId}">
-                                <i class="fas fa-eye"></i>
+                                <img src="../img/ojo.png" alt="Editar" class="edit-icon">
                             </button>` : 
-                            `<button class="edit-event-btn" data-id="${event.id}">
-                                <i class="fas fa-edit"></i>
+                            `<button class="tooltip-edit-btn" data-event-id="${event.id}">
+                                <img src="../img/lapiz.png" alt="Editar" class="edit-icon">
                             </button>`
                         }
                     </div>

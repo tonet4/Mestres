@@ -220,8 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                         <?php else: ?>
                             <?php foreach ($notas as $nota): ?>
                                 <div class="task-item" id="nota-<?php echo $nota['id']; ?>">
-                                    <div class="task-text"><?php echo htmlspecialchars($nota['texto']); ?></div>
-                                    <div class="task-actions">
+                                    <div class="task-text"><?php echo nl2br(htmlspecialchars($nota['texto'])); ?></div>                                    <div class="task-actions">
                                         <button class="edit-task" data-id="<?php echo $nota['id']; ?>">
                                         <img src="../img/notas.png" alt="editar" class="delete-icon">
                                         </button>

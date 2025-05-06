@@ -3,7 +3,7 @@
  */
 
 
-@media screen and (max-width: 991px) {
+ @media screen and (max-width: 991px) {
     /* Annual */
     .year-grid {
         grid-template-columns: repeat(2, 1fr);
