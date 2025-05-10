@@ -1,7 +1,7 @@
 /**
  * @author Antonio Esteban Lorenzo
  *
- * Vue.js application for managing students
+ * ALUMNOS.js
  */
 
 document.addEventListener("DOMContentLoaded", function () {
