@@ -173,9 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <ul class="sidebar-menu">
             <li class="active"><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
-            <li><a href="#"><i class="fas fa-book"></i> Asignaturas</a></li>
+            <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
+            <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
