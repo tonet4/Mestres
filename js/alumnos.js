@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
               // Set preview image
               this.previewImage = alumno.imagen 
                 ? `../img/alumnos/${alumno.imagen}` 
-                : '../img/alumnos/default.png';
+                : '../img/user.png';
             } else {
               console.log("Creando nuevo alumno");
               // Add mode - reset form
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
               };
               
               // Reset preview image
-              this.previewImage = '../img/alumnos/default.png';
+              this.previewImage = '../img/alumnos/user.png';
             }
   
             // Show the modal

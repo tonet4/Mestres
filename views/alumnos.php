@@ -70,7 +70,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
-            <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
+            <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
@@ -163,7 +163,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <div class="card-header" @click="alumno.expanded = !alumno.expanded">
                         <div class="header-content">
                             <div class="alumno-avatar">
-                                <img :src="alumno.imagen ? '../img/alumnos/' + alumno.imagen : '../img/alumnos/default.png'" alt="Foto de perfil">
+                                <img :src="alumno.imagen ? '../img/alumnos/' + alumno.imagen : '../img/user.png'" alt="Foto de perfil">
                             </div>
                             <div class="alumno-info">
                                 <h5 class="card-title">{{ alumno.nombre }} {{ alumno.apellidos }}</h5>

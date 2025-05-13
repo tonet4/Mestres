@@ -1,0 +1,654 @@
+/* Estilos para la sección de evaluaciones */
+
+/* Filtros */
+.filters-container {
+    margin-bottom: 1.5rem;
+    padding: 15px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 5px 15px rgba(166, 216, 240, 0.4);
+}
+
+.filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-col label {
+    display: block;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    font-family: var(--font-main);
+    background-color: white;
+}
+
+/* Mensajes informativos */
+.info-message {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.info-message i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.info-message p {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.info-message.warning i {
+    color: var(--accent-color);
+}
+
+/* Botones de acción */
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    font-family: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.action-btn i {
+    font-size: 1rem;
+}
+
+.action-btn.add-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.action-btn.save-btn {
+    background-color: var(--success-color);
+    color: var(--text-color);
+}
+
+.action-btn.calculate-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.action-btn.small {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+}
+
+/* Tabla de calificaciones */
+.table-responsive {
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+    border-radius: 16px;
+    background-color: white;
+}
+
+.tabla-calificaciones {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-calificaciones th,
+.tabla-calificaciones td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.tabla-calificaciones th {
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.alumno-header {
+    text-align: left;
+    min-width: 200px;
+    position: sticky;
+    left: 0;
+    z-index: 11;
+    background-color: #f8f9fa;
+}
+
+.evaluacion-header {
+    min-width: 120px;
+    padding-bottom: 40px;
+}
+
+.evaluacion-fecha {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.evaluacion-porcentaje {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.evaluacion-actions {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.nota-final-header {
+    background-color: #f0f0f0;
+    position: sticky;
+    right: 0;
+    z-index: 10;
+}
+
+.alumno-cell {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 9;
+}
+
+.alumno-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alumno-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+}
+
+.alumno-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.alumno-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.calificacion-cell {
+    padding: 5px;
+}
+
+.calificacion-input {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: var(--font-main);
+}
+
+.calificacion-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(166, 216, 240, 0.25);
+}
+
+.nota-final-cell {
+    background-color: #f0f0f0;
+    position: sticky;
+    right: 0;
+    z-index: 9;
+}
+
+.nota-final {
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 60px;
+}
+
+.nota-sobresaliente {
+    background-color: #b5ead7;
+    color: #1e5f4e;
+}
+
+.nota-notable {
+    background-color: #c1e1c5;
+    color: #2c5e2e;
+}
+
+.nota-aprobado {
+    background-color: #fdffb6;
+    color: #7c6e00;
+}
+
+.nota-suspenso {
+    background-color: #ffcbc4;
+    color: #872a1f;
+}
+
+/* Estilos para los modales */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* Estilos para los componentes del modal */
+.modal-dialog {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-title {
+    margin: 0;
+    font-family: "fuente1";
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal-header.delete-header {
+    background-color: var(--accent-color);
+}
+
+.modal-header.success-header {
+    background-color: var(--success-color);
+}
+
+.modal-header.error-header {
+    background-color: var(--accent-color);
+}
+
+/* Estilos para lista de períodos */
+.periodos-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+
+.periodo-item, .criterio-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.periodo-item:hover, .criterio-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.periodo-info h5, .criterio-info h5 {
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.periodo-info p, .criterio-info p {
+    margin: 0 0 5px 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.criterio-peso {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.periodo-actions, .criterio-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.btn-link:hover {
+    transform: scale(1.2);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-danger {
+    color: #ff6b6b;
+}
+
+/* Empty message */
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Formularios */
+.periodo-form, .criterio-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.periodo-form h5, .criterio-form h5 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-family: var(--font-main);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(166, 216, 240, 0.25);
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 1rem;
+}
+
+.form-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #89c4e1;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #ff8c7a;
+    transform: translateY(-2px);
+}
+
+.total-porcentaje {
+    margin-left: 10px;
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: normal;
+}
+
+/* Estilos responsivos */
+@media (max-width: 992px) {
+    .table-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .filters-row {
+        flex-direction: column;
+    }
+    
+    .alumno-header, .alumno-cell {
+        min-width: 150px;
+    }
+    
+    .evaluacion-header {
+        min-width: 100px;
+    }
+    
+    .alumno-avatar {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .alumno-name {
+        font-size: 0.9rem;
+    }
+    
+    .calificacion-input {
+        width: 50px;
+        padding: 6px;
+    }
+    
+    .periodo-item, .criterio-item {
+        flex-direction: column;
+    }
+    
+    .periodo-actions, .criterio-actions {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-title {
+        font-size: 1.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+    
+    .nota-final {
+        padding: 4px 8px;
+        min-width: 50px;
+        font-size: 0.9rem;
+    }
+}

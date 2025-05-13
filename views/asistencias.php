@@ -28,8 +28,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <!-- Estilos -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../estilo/asistencias.css?v=<?php echo time(); ?>">
-    
-    <!-- Font Awesome Icons -->
+
+    <link rel="shortcut icon" href="../img/logo2.png"> 
+        <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -69,7 +70,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li class="active"><a href="asistencias.php"><i class="fas fa-clipboard-check"></i> Asistencias</a></li>
-            <li><a href="#"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
+            <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
             <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
@@ -197,7 +198,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                          :class="{ 'has-observation': alumno.observaciones }">
                         <div class="student-info">
                             <div class="student-avatar">
-                                <img :src="alumno.imagen ? '../img/alumnos/' + alumno.imagen : '../img/alumnos/default.png'" alt="Foto de perfil">
+                                <img :src="alumno.imagen ? '../img/alumnos/' + alumno.imagen : '../img/user.png'" alt="Foto de perfil">
                             </div>
                             <div class="student-details">
                                 <h4>{{ alumno.nombre }} {{ alumno.apellidos }}</h4>

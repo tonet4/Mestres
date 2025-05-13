@@ -98,7 +98,7 @@ try {
         }
         
         // If a new image is uploaded, delete the old one
-        if ($imagen && !empty($alumno['imagen']) && $alumno['imagen'] != 'default.png') {
+        if ($imagen && !empty($alumno['imagen']) && $alumno['imagen'] != 'user.png') {
             $old_image_path = '../../img/alumnos/' . $alumno['imagen'];
             if (file_exists($old_image_path)) {
                 unlink($old_image_path);
