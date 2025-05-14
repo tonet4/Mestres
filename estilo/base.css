@@ -103,6 +103,7 @@
     gap: 8px;
     box-shadow: 0 4px 8px rgba(166, 216, 240, 0.4);
     font-family: var(--font-main);
+    font-size: 0.9rem;
 }
 
 .action-btn:hover {
@@ -123,6 +124,9 @@ html, body {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
     font-family: var(--font-main);
     color: var(--text-color);
     line-height: 1.6;
@@ -130,7 +134,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-height: 100vh;
 }
 
 a {

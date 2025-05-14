@@ -984,3 +984,31 @@
 2025-05-13 18:12:07 - Acción determinada: get_events_by_year
 2025-05-13 18:12:07 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[]}
 
+2025-05-13 19:08:07 - Solicitud recibida
+2025-05-13 19:08:07 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-13 19:08:07 - POST: []
+2025-05-13 19:08:07 - Autenticación: Sí
+2025-05-13 19:08:07 - Acción determinada: get_events_by_month
+2025-05-13 19:08:07 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-13 19:08:22 - Solicitud recibida
+2025-05-13 19:08:22 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-13 19:08:22 - POST: []
+2025-05-13 19:08:22 - Autenticación: Sí
+2025-05-13 19:08:22 - Acción determinada: get_events_by_year
+2025-05-13 19:08:22 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[]}
+
+2025-05-13 19:08:26 - Solicitud recibida
+2025-05-13 19:08:26 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-13 19:08:26 - POST: []
+2025-05-13 19:08:26 - Autenticación: Sí
+2025-05-13 19:08:26 - Acción determinada: get_events_by_month
+2025-05-13 19:08:26 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-13 19:08:39 - Solicitud recibida
+2025-05-13 19:08:39 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-13 19:08:39 - POST: []
+2025-05-13 19:08:39 - Autenticación: Sí
+2025-05-13 19:08:39 - Acción determinada: get_events_by_month
+2025-05-13 19:08:39 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+

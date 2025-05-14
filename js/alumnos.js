@@ -5,11 +5,11 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Verificar que el elemento existe antes de inicializar Vue
+// Verify that the element exists before initializing Vue
     if (document.getElementById("alumnos-app")) {
       console.log("Inicializando Vue.js app en #alumnos-app");
   
-      // Función para manejar modales propios
+// Function to handle your own modals
       function ModalManager() {
         this.showModal = function(modalId) {
           const modal = document.getElementById(modalId);
@@ -69,10 +69,10 @@ document.addEventListener("DOMContentLoaded", function () {
         mounted() {
           console.log("Vue montado correctamente");
   
-          // Añadir controladores para cerrar modales al hacer clic en close buttons
+          // Add handlers to close modals when clicking close buttons
           document.querySelectorAll('.btn-close').forEach(closeBtn => {
             closeBtn.addEventListener('click', (e) => {
-              // Buscar el elemento modal padre
+              // Find the parent modal element
               let modal = e.target.closest('.modal');
               if (modal) {
                 modal.classList.remove('active');
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
           });
   
-          // Cargamos los grupos y alumnos al inicio
+          // We load the groups and students at the beginning
           this.loadGrupos().then(() => {
             this.loadAlumnos();
           });
@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
               .then(data => {
                 console.log("Datos recibidos:", data);
                 if (data.success) {
-                  // Añadir la propiedad expanded a cada alumno
                   this.alumnos = data.alumnos.map(alumno => {
                     alumno.expanded = false;
                     return alumno;

@@ -26,10 +26,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnado - QUADERN MESTRES</title>
 
-    <!-- Estilos -->
+    <!-- Styles -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../estilo/alumnos.css?v=<?php echo time(); ?>">
-    
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Vue.js -->
@@ -108,7 +107,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                 type="text"
                                 class="search-input"
                                 v-model="searchTerm"
-                                placeholder="Buscar por nombre, apellido o grupo...">
+                                placeholder="Buscar por nombre...">
                             <button
                                 class="search-clear-btn"
                                 @click="clearSearch"
@@ -174,10 +173,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </div>
                         <div class="alumno-actions">
                             <button class="btn-link text-primary" @click.stop="showModal(alumno)">
-                                <i class="fas fa-edit"></i>
+                                <img src="../img/notas.png" alt="editar" class="icon-img">
                             </button>
                             <button class="btn-link text-danger" @click.stop="confirmDelete(alumno)">
-                                <i class="fas fa-trash"></i>
+                                <img src="../img/basura.png" alt="borrar" class="icon-img">
                             </button>
                             <button class="btn-link text-info toggle-btn">
                                 <i :class="['fas', alumno.expanded ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
@@ -220,110 +219,134 @@ $usuario_nombre = $_SESSION['user_nombre'];
             </div>
 
             <!-- Modal for adding/editing alumno -->
-<div class="modal" id="alumnoModal" tabindex="-1">
-    <div class="modal-dialog modal-wide">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ editMode ? 'Editar Alumno' : 'Nuevo Alumno' }}</h5>
-                <button type="button" class="btn-close" @click="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form @submit.prevent="saveAlumno">
-                    <div class="form-layout">
-                        <!-- Columna izquierda -->
-                        <div class="form-column left-column">
-                            <div class="form-group mb-4">
-                                <div class="avatar-upload">
-                                    <div class="avatar-preview" :style="{ 'background-image': 'url(' + previewImage + ')' }">
-                                        <input type="file" id="imagen" @change="onFileChange" accept="image/*">
-                                        <label for="imagen" class="avatar-edit">
-                                            <i class="fas fa-camera"></i>
-                                        </label>
+            <div class="modal" id="alumnoModal" tabindex="-1">
+                <div class="modal-dialog modal-wide">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ editMode ? 'Editar Alumno' : 'Nuevo Alumno' }}</h5>
+                            <button type="button" class="btn-close" @click="closeModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="saveAlumno">
+                                <div class="form-layout">
+                                    <!-- Left colum -->
+                                    <div class="form-column left-column">
+                                        <div class="form-group mb-4">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-preview" :style="{ 'background-image': 'url(' + previewImage + ')' }">
+                                                    <input type="file" id="imagen" @change="onFileChange" accept="image/*">
+                                                    <label for="imagen" class="avatar-edit">
+                                                        <img src="../img/lapiz.png" alt="Editar" width="16" height="16">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="nombre" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/usuario.png" alt="Usuario" class="icon-img">
+                                                </span>
+                                                Nombre
+                                            </label>
+                                            <input type="text" class="form-control" id="nombre" v-model="formData.nombre" required placeholder="Nombre del alumno">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="apellidos" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/usuario2.png" alt="Apellidos" class="icon-img">
+                                                </span>
+                                                Apellidos
+                                            </label>
+                                            <input type="text" class="form-control" id="apellidos" v-model="formData.apellidos" required placeholder="Apellidos del alumno">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="fecha_nacimiento" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/pastel.png" alt="Fecha de nacimiento" class="icon-img">
+                                                </span>
+                                                Fecha de Nacimiento
+                                            </label>
+                                            <input type="date" class="form-control" id="fecha_nacimiento" v-model="formData.fecha_nacimiento">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="grupo_id" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/users.png" alt="Grupo" class="icon-img">
+                                                </span>
+                                                Grupo
+                                            </label>
+                                            <select class="form-control" id="grupo_id" v-model="formData.grupo_id">
+                                                <option value="">Seleccionar grupo</option>
+                                                <option v-for="grupo in grupos" :key="grupo.id" :value="grupo.id">
+                                                    {{ grupo.nombre }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right colum -->
+                                    <div class="form-column right-column">
+                                        <div class="form-group">
+                                            <label for="email" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/email.png" alt="Email" class="icon-img">
+                                                </span>
+                                                Email
+                                            </label>
+                                            <input type="email" class="form-control" id="email" v-model="formData.email" placeholder="Email del alumno o familia">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="telefono" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/chat.png" alt="Teléfono" class="icon-img">
+                                                </span>
+                                                Teléfono
+                                            </label>
+                                            <input type="tel" class="form-control" id="telefono" v-model="formData.telefono" placeholder="Teléfono de contacto">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="direccion" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/localizacion.png" alt="Dirección" class="icon-img">
+                                                </span>
+                                                Dirección
+                                            </label>
+                                            <input type="text" class="form-control" id="direccion" v-model="formData.direccion" placeholder="Dirección del alumno">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="observaciones" class="form-label">
+                                                <span class="icon-img-container">
+                                                    <img src="../img/notas.png" alt="Observaciones" class="icon-img">
+                                                </span>
+                                                Observaciones
+                                            </label>
+                                            <textarea class="form-control" id="observaciones" rows="4" v-model="formData.observaciones" placeholder="Observaciones, notas adicionales..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="nombre" class="form-label">
-                                    <i class="fas fa-user me-2"></i>Nombre
-                                </label>
-                                <input type="text" class="form-control" id="nombre" v-model="formData.nombre" required placeholder="Nombre del alumno">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="apellidos" class="form-label">
-                                    <i class="fas fa-user-tag me-2"></i>Apellidos
-                                </label>
-                                <input type="text" class="form-control" id="apellidos" v-model="formData.apellidos" required placeholder="Apellidos del alumno">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="fecha_nacimiento" class="form-label">
-                                    <i class="fas fa-birthday-cake me-2"></i>Fecha de Nacimiento
-                                </label>
-                                <input type="date" class="form-control" id="fecha_nacimiento" v-model="formData.fecha_nacimiento">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="grupo_id" class="form-label">
-                                    <i class="fas fa-users me-2"></i>Grupo
-                                </label>
-                                <select class="form-control" id="grupo_id" v-model="formData.grupo_id">
-                                    <option value="">Seleccionar grupo</option>
-                                    <option v-for="grupo in grupos" :key="grupo.id" :value="grupo.id">
-                                        {{ grupo.nombre }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- Columna derecha -->
-                        <div class="form-column right-column">
-                            <div class="form-group">
-                                <label for="email" class="form-label">
-                                    <i class="fas fa-envelope me-2"></i>Email
-                                </label>
-                                <input type="email" class="form-control" id="email" v-model="formData.email" placeholder="Email del alumno o familia">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefono" class="form-label">
-                                    <i class="fas fa-phone me-2"></i>Teléfono
-                                </label>
-                                <input type="tel" class="form-control" id="telefono" v-model="formData.telefono" placeholder="Teléfono de contacto">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="direccion" class="form-label">
-                                    <i class="fas fa-map-marker-alt me-2"></i>Dirección
-                                </label>
-                                <input type="text" class="form-control" id="direccion" v-model="formData.direccion" placeholder="Dirección del alumno">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="observaciones" class="form-label">
-                                    <i class="fas fa-sticky-note me-2"></i>Observaciones
-                                </label>
-                                <textarea class="form-control" id="observaciones" rows="4" v-model="formData.observaciones" placeholder="Observaciones, notas adicionales..."></textarea>
-                            </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" @click="closeModal">
+                                        <i class="fas fa-times me-1 btnspace"></i>Cancelar
+                                    </button>
+                                    <button type="submit" class="btn-primary">
+                                        <i class="fas fa-save me-1 btnspace"></i>{{ editMode ? 'Actualizar' : 'Guardar' }}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" @click="closeModal">
-                            <i class="fas fa-times me-1"></i>Cancelar
-                        </button>
-                        <button type="submit" class="btn-primary">
-                            <i class="fas fa-save me-1"></i>Guardar
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
             <!-- Modal for managing grupos -->
             <div class="modal" id="gruposModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
@@ -331,7 +354,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         <div class="modal-header">
                             <h5 class="modal-title">Gestión de Grupos</h5>
                             <button type="button" class="btn-close" @click="closeGruposModal">
-                            <i class="fas fa-times"></i>
+                                <i class="fas fa-times"></i>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -347,10 +370,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                     </div>
                                     <div class="grupo-actions">
                                         <button class="btn-link text-primary" @click="editGrupo(grupo)">
-                                            <i class="fas fa-edit"></i>
+                                            <img src="../img/notas.png" alt="editar" class="icon-img">
                                         </button>
                                         <button class="btn-link text-danger" @click="confirmDeleteGrupo(grupo)">
-                                            <i class="fas fa-trash"></i>
+                                            <img src="../img/basura.png" alt="borrar" class="icon-img">
                                         </button>
                                     </div>
                                 </div>
@@ -371,10 +394,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                 </div>
                                 <div class="form-actions">
                                     <button type="button" class="btn-secondary" @click="cancelEditGrupo" v-if="editandoGrupo">
-                                        <i class="fas fa-times me-1"></i>Cancelar
+                                        <i class="fas fa-times me-1 btnspace"></i>Cancelar
                                     </button>
-                                    <button type="submit" class="btn-primary">
-                                        <i class="fas fa-save me-1"></i>{{ editandoGrupo ? 'Actualizar' : 'Añadir' }}
+                                    <button type="submit" class="btn-primary btnspace">
+                                        <i class="fas fa-save me-1 btnspace"></i>{{ editandoGrupo ? 'Actualizar' : 'Añadir' }}
                                     </button>
                                 </div>
                             </form>
