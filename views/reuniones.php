@@ -45,8 +45,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-            <title>QUADERN MESTRES</title>
-            <link rel="shortcut icon" href="../img/logo2.png">
+            <h1>QUADERN de Mestres</h1>
         </div>
         <div class="nav-right">
             <div class="user-info">

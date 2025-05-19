@@ -30,7 +30,7 @@ $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
 $nombre = isset($_POST['nombre']) ? limpiarDatos($_POST['nombre']) : '';
 $descripcion = isset($_POST['descripcion']) ? limpiarDatos($_POST['descripcion']) : '';
 $color = isset($_POST['color']) ? limpiarDatos($_POST['color']) : '#3498db';
-$icono = isset($_POST['icono']) ? limpiarDatos($_POST['icono']) : 'book';
+$icono = isset($_POST['icono']) ? limpiarDatos($_POST['icono']) : 'libro.png';
 
 // Validate required fields
 if (empty($nombre)) {
@@ -44,10 +44,21 @@ if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) {
     $color = '#3498db'; // Default color if invalid
 }
 
-// List of allowed icons
-$allowedIcons = ['book', 'calculator', 'microscope', 'flask', 'music', 'paint-brush', 'language', 'globe', 'atom', 'history', 'laptop-code', 'running'];
+// Lista de imágenes permitidas
+$allowedIcons = ['ingles.png', 
+'calculadora.png', 
+'bd.png', 
+'codigo.png', 
+'computadora.png', 
+'musico.png', 
+'pensar.png', 
+'gimnasia.png', 
+'libro.png', 
+'geografia.png', 
+'diseño.png', 
+'graduation-cap.png'];
 if (!in_array($icono, $allowedIcons)) {
-    $icono = 'book'; // Default icon if invalid
+    $icono = 'libro.png'; // Imagen predeterminada si no es válida
 }
 
 try {

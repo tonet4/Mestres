@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Antonio Esteban Lorenzo
  * 
@@ -26,10 +27,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
 
-    <!-- Estilos -->
+    <!-- Styles -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../estilo/asignaturas.css?v=<?php echo time(); ?>">
-    
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Vue.js -->
@@ -128,9 +129,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-
-            
-
             <!-- Loading indicator -->
             <div v-if="loading" class="text-center">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
@@ -157,15 +155,16 @@ $usuario_nombre = $_SESSION['user_nombre'];
 
             <!-- Asignaturas grid -->
             <div v-else class="asignaturas-grid">
-                <div v-for="(asignatura, index) in asignaturasFiltradas" :key="asignatura.id" 
-                    class="asignatura-card" 
-                    :class="{'expanded': asignatura.expanded}" 
+                <div v-for="(asignatura, index) in asignaturasFiltradas" :key="asignatura.id"
+                    class="asignatura-card"
+                    :class="{'expanded': asignatura.expanded}"
                     :data-id="asignatura.id"
                     :style="{ borderColor: asignatura.color }">
                     <div class="card-header" @click="asignatura.expanded = !asignatura.expanded" :style="{ background: asignatura.color }">
                         <div class="header-content">
                             <div class="asignatura-icon">
-                                <i :class="['fas', 'fa-' + asignatura.icono]"></i>
+                                <!-- Imagen en lugar de icono de Font Awesome -->
+                                <img :src="'../img/' + asignatura.icono" :alt="asignatura.nombre" class="icon-img-d">
                             </div>
                             <div class="asignatura-info">
                                 <h5 class="card-title">{{ asignatura.nombre }}</h5>
@@ -178,10 +177,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </div>
                         <div class="asignatura-actions">
                             <button class="btn-link text-primary" @click.stop="showModal(asignatura)">
-                                <i class="fas fa-edit"></i>
+                                <img src="../img/notas.png" alt="editar" class="icon-img-b">
                             </button>
                             <button class="btn-link text-danger" @click.stop="confirmDelete(asignatura)">
-                                <i class="fas fa-trash"></i>
+                                <img src="../img/basura.png" alt="borrar" class="icon-img-b">
                             </button>
                             <button class="btn-link text-info toggle-btn">
                                 <i :class="['fas', asignatura.expanded ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
@@ -229,14 +228,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
                             <form @submit.prevent="saveAsignatura">
                                 <div class="form-group">
                                     <label for="nombre" class="form-label">
-                                        <i class="fas fa-book me-2"></i>Nombre
+                                        <img src="../img/etiqueta.png" alt="nombre" class="icon-img">Nombre
                                     </label>
                                     <input type="text" class="form-control" id="nombre" v-model="formData.nombre" required placeholder="Nombre de la asignatura">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="descripcion" class="form-label">
-                                        <i class="fas fa-info-circle me-2"></i>Descripción
+                                        <img src="../img/descripcion.png" alt="descripcion" class="icon-img"></i>Descripción
                                     </label>
                                     <textarea class="form-control" id="descripcion" rows="3" v-model="formData.descripcion" placeholder="Descripción, detalles, objetivos..."></textarea>
                                 </div>
@@ -245,7 +244,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                     <div class="form-col">
                                         <div class="form-group">
                                             <label for="color" class="form-label">
-                                                <i class="fas fa-palette me-2"></i>Color
+                                                <img src="../img/color.png" alt="color" class="icon-img">Color
                                             </label>
                                             <div class="color-selector">
                                                 <input type="color" id="color" v-model="formData.color" class="form-control color-input" @input="previewColor = formData.color">
@@ -256,35 +255,31 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                     <div class="form-col">
                                         <div class="form-group">
                                             <label for="icono" class="form-label">
-                                                <i class="fas fa-icons me-2"></i>Icono
+                                               Selecciona un ícono
                                             </label>
-                                            <select class="form-control" id="icono" v-model="formData.icono">
-                                                <option value="book">Libro</option>
-                                                <option value="calculator">Calculadora</option>
-                                                <option value="microscope">Microscopio</option>
-                                                <option value="flask">Matraz</option>
-                                                <option value="music">Música</option>
-                                                <option value="paint-brush">Pintura</option>
-                                                <option value="language">Idiomas</option>
-                                                <option value="globe">Geografía</option>
-                                                <option value="atom">Ciencias</option>
-                                                <option value="history">Historia</option>
-                                                <option value="laptop-code">Informática</option>
-                                                <option value="running">Educación Física</option>
-                                            </select>
-                                            <div class="icon-preview">
-                                                <i :class="['fas', 'fa-' + formData.icono]"></i>
+
+                                            <div class="icon-grid-container">
+                                                <div class="icon-grid">
+                                                    <div v-for="icon in iconos"
+                                                        :key="icon"
+                                                        class="icon-option"
+                                                        :class="{'selected': formData.icono === icon}"
+                                                        @click="formData.icono = icon">
+                                                        <img :src="'../img/' + icon" :alt="icon" class="icon-preview-img">
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-actions">
                                     <button type="button" class="btn-secondary" @click="closeModal">
-                                        <i class="fas fa-times me-1"></i>Cancelar
+                                        <i class="fas fa-times me-1 icon-img-c"></i>Cancelar
                                     </button>
                                     <button type="submit" class="btn-primary">
-                                        <i class="fas fa-save me-1"></i>Guardar
+                                        <i class="fas fa-save me-1 icon-img-c"></i>Guardar
                                     </button>
                                 </div>
                             </form>
@@ -307,21 +302,21 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </div>
                         <div class="modal-body">
                             <p v-if="selectedAsignatura">Asigna grupos a la asignatura: <strong>{{ selectedAsignatura.nombre }}</strong></p>
-                            
+
                             <div v-if="!grupos.length" class="text-center">
                                 <p>No hay grupos disponibles. Primero debes crear grupos en la sección de Alumnado.</p>
                                 <button class="btn-outline-primary mt-2" @click="goToAlumnos">
                                     <i class="fas fa-users me-1"></i>Ir a Gestión de Alumnos
                                 </button>
                             </div>
-                            
+
                             <div v-else>
                                 <div class="grupo-selector" v-for="grupo in grupos" :key="grupo.id">
                                     <div class="form-check">
-                                        <input 
-                                            type="checkbox" 
-                                            :id="'grupo-' + grupo.id" 
-                                            :value="grupo.id" 
+                                        <input
+                                            type="checkbox"
+                                            :id="'grupo-' + grupo.id"
+                                            :value="grupo.id"
                                             v-model="selectedGrupos"
                                             class="form-check-input">
                                         <label :for="'grupo-' + grupo.id" class="form-check-label">
@@ -330,7 +325,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                         </label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-actions">
                                     <button type="button" class="btn-secondary" @click="closeGruposModal">
                                         <i class="fas fa-times me-1"></i>Cancelar
