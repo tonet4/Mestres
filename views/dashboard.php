@@ -134,7 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../estilo/base.css">
     <link rel="stylesheet" href="../estilo/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -151,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <img src="../img/logo2.png" alt="Logo Quadern Mestres">
             </div>
             <h1>QUADERN de Mestres</h1>
+            <link rel="shortcut icon" href="../img/logo2.png">
         </div>
         <div class="nav-right">
             <div class="user-info">
@@ -178,8 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>

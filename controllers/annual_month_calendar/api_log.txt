@@ -1012,3 +1012,59 @@
 2025-05-13 19:08:39 - Acción determinada: get_events_by_month
 2025-05-13 19:08:39 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
 
+2025-05-14 22:04:59 - Solicitud recibida
+2025-05-14 22:04:59 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-14 22:04:59 - POST: []
+2025-05-14 22:04:59 - Autenticación: Sí
+2025-05-14 22:04:59 - Acción determinada: get_events_by_month
+2025-05-14 22:04:59 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-14 22:05:05 - Solicitud recibida
+2025-05-14 22:05:05 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-14 22:05:05 - POST: []
+2025-05-14 22:05:05 - Autenticación: Sí
+2025-05-14 22:05:05 - Acción determinada: get_events_by_year
+2025-05-14 22:05:05 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[]}
+
+2025-05-15 18:53:48 - Solicitud recibida
+2025-05-15 18:53:48 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-15 18:53:48 - POST: []
+2025-05-15 18:53:48 - Autenticación: Sí
+2025-05-15 18:53:48 - Acción determinada: get_events_by_month
+2025-05-15 18:53:48 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[]}
+
+2025-05-15 18:53:51 - Solicitud recibida
+2025-05-15 18:53:51 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-15 18:53:51 - POST: []
+2025-05-15 18:53:51 - Autenticación: Sí
+2025-05-15 18:53:51 - Acción determinada: get_events_by_year
+2025-05-15 18:53:51 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[]}
+
+2025-05-16 12:51:18 - Solicitud recibida
+2025-05-16 12:51:18 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-16 12:51:18 - POST: []
+2025-05-16 12:51:18 - Autenticación: Sí
+2025-05-16 12:51:18 - Acción determinada: get_events_by_month
+2025-05-16 12:51:18 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"}]}
+
+2025-05-16 12:51:53 - Solicitud recibida
+2025-05-16 12:51:53 - GET: []
+2025-05-16 12:51:53 - POST: {"action":"add","event_id":"","color":"#e74c3c","event_date":"2025-05-24","title":"Jugar a f\u00fatbol","description":"partido a las 12","icon":"star","event-type":"normal"}
+2025-05-16 12:51:53 - Autenticación: Sí
+2025-05-16 12:51:53 - Acción determinada: add
+2025-05-16 12:51:53 - Respuesta: {"success":true,"debug_info":{"get":[],"post":{"action":"add","event_id":"","color":"#e74c3c","event_date":"2025-05-24","title":"Jugar a f\u00fatbol","description":"partido a las 12","icon":"star","event-type":"normal"},"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Evento guardado con \u00e9xito","action":"add","data":{"id":"21","usuario_id":"2","fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}}
+
+2025-05-16 12:52:01 - Solicitud recibida
+2025-05-16 12:52:01 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-16 12:52:01 - POST: []
+2025-05-16 12:52:01 - Autenticación: Sí
+2025-05-16 12:52:01 - Acción determinada: get_events_by_year
+2025-05-16 12:52:01 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"},{"id":21,"usuario_id":2,"fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}]}
+
+2025-05-16 12:52:05 - Solicitud recibida
+2025-05-16 12:52:05 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-16 12:52:05 - POST: []
+2025-05-16 12:52:05 - Autenticación: Sí
+2025-05-16 12:52:05 - Acción determinada: get_events_by_month
+2025-05-16 12:52:05 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"},{"id":21,"usuario_id":2,"fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}]}
+

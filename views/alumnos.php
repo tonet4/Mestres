@@ -24,7 +24,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnado - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
 
     <!-- Styles -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
@@ -70,8 +71,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>

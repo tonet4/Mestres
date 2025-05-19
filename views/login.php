@@ -40,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../estilo/base_principal.css">
     <link rel="stylesheet" href="../estilo/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

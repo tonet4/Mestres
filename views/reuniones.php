@@ -24,13 +24,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reuniones - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../estilo/reuniones.css?v=<?php echo time(); ?>">
-    
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Vue.js -->
@@ -44,7 +45,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-            <h1>QUADERN de Mestres</h1>
+            <title>QUADERN MESTRES</title>
+            <link rel="shortcut icon" href="../img/logo2.png">
         </div>
         <div class="nav-right">
             <div class="user-info">
@@ -72,8 +74,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
@@ -112,7 +112,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-
             <!-- Loading indicator -->
             <div v-if="loading" class="text-center py-5">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
@@ -146,7 +145,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <!-- Reuniones grid -->
             <div v-else class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div v-for="(reunion, index) in reunionesFiltradas" :key="reunion.id" class="col">
-                <div class="card reunion-card" :class="{'expanded': reunion.expanded}" :data-id="reunion.id">                        <div class="card-header" @click="reunion.expanded = !reunion.expanded">
+                    <div class="card reunion-card" :class="{'expanded': reunion.expanded}" :data-id="reunion.id">
+                        <div class="card-header" @click="reunion.expanded = !reunion.expanded">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="header-content">
                                     <div class="fecha-badge mb-2">
@@ -161,10 +161,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                 </div>
                                 <div class="reunion-actions">
                                     <button class="btn btn-sm btn-link text-primary" @click.stop="showModal(reunion)">
-                                        <i class="fas fa-edit"></i>
+                                        <img src="../img/notas.png" alt="editar" class="icon-img-b">
                                     </button>
                                     <button class="btn btn-sm btn-link text-danger" @click.stop="confirmDelete(reunion)">
-                                        <i class="fas fa-trash"></i>
+                                        <img src="../img/basura.png" alt="borrar" class="icon-img-b">
                                     </button>
                                     <button class="btn btn-sm btn-link text-info toggle-btn">
                                         <i :class="['fas', reunion.expanded ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
@@ -194,33 +194,35 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ editMode ? 'Editar Reunión' : 'Nueva Reunión' }}</h5>
-                            <button type="button" class="btn-close" @click="closeModal"></button>
+                            <button type="button" class="btn-close" @click="closeModal">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <form @submit.prevent="saveReunion">
                                 <div class="mb-4">
                                     <label for="titulo" class="form-label">
-                                        <i class="fas fa-heading me-2"></i>Título
+                                        <img src="../img/titular.png" alt="titulo" class="icon-img">Título
                                     </label>
                                     <input type="text" class="form-control" id="titulo" v-model="formData.titulo" required placeholder="Título de la reunión">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <label for="fecha" class="form-label">
-                                            <i class="fas fa-calendar-alt me-2"></i>Fecha
+                                            <img src="../img/calendario.png" alt="fecha" class="icon-img"></i>Fecha
                                         </label>
                                         <input type="date" class="form-control" id="fecha" v-model="formData.fecha" required>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <label for="hora" class="form-label">
-                                            <i class="fas fa-clock me-2"></i>Hora
+                                            <img src="../img/reloj.png" alt="hora" class="icon-img">Hora
                                         </label>
                                         <input type="time" class="form-control" id="hora" v-model="formData.hora">
                                     </div>
                                 </div>
                                 <div class="mb-4">
                                     <label for="contenido" class="form-label">
-                                        <i class="fas fa-align-left me-2"></i>Contenido
+                                        <img src="../img/contenido.png" alt="contenido" class="icon-img">Contenido
                                     </label>
                                     <textarea class="form-control" id="contenido" rows="5" v-model="formData.contenido" placeholder="Detalles de la reunión..."></textarea>
                                 </div>
@@ -251,7 +253,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         <div class="modal-body">
                             <p class="mb-1">¿Estás seguro de que deseas eliminar la reunión?</p>
                             <p class="font-weight-bold">{{ selectedReunion?.titulo }}</p>
-                            <p class="text-danger mb-0"><small>Esta acción no se puede deshacer.</small></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-sm btn-outline-secondary" @click="closeDeleteModal">Cancelar</button>
@@ -263,7 +264,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Modal de notificación -->
+            <!-- Notification modal -->
             <div class="modal" id="notificationModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">

@@ -71,7 +71,8 @@ $monthName = $monthNames[$month];
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
-            <h1>QUADERN de Mestres</h1>
+            <title>QUADERN MESTRES</title>
+            <link rel="shortcut icon" href="../img/logo2.png">
         </div>
         <div class="nav-right">
             <div class="user-info">
@@ -99,8 +100,6 @@ $monthName = $monthNames[$month];
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>

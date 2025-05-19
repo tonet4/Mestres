@@ -1,8 +1,13 @@
-/* Estilos para la sección de reuniones */
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ *
+ *      M E E T I N G S 
+ /
 
 /* Header styles */
 .calendar-title {
-    font-size: 1.8rem !important;
+    font-size: 2.5rem !important;
     font-weight: 700 !important;
     color: var(--text-color) !important;
     font-family: "fuente1" !important;
@@ -26,6 +31,20 @@
     color: #6c757d !important;
 }
 
+.icon-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    object-fit: contain;
+}
+
+.icon-img-b {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+
 /* Card styles */
 .reunion-card {
     border-radius: 16px !important;
@@ -38,7 +57,7 @@
 }
 
 .reunion-card.expanded {
-    height: auto !important; /* Altura automática cuando está expandida */
+    height: auto !important;
     min-height: 150px !important;
 }
 
@@ -60,7 +79,6 @@
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
 }
 
-/* Estilo para asegurar que los iconos estén a la derecha */
 .card-header .d-flex {
     display: flex !important;
     justify-content: space-between !important;
@@ -90,7 +108,6 @@
     background-color: white !important;
 }
 
-/* Animación para el despliegue */
 .card-body, .card-footer {
     transition: all 0.3s ease-in-out !important;
 }
@@ -174,6 +191,20 @@
 
 .modal .btn-close {
     opacity: 0.7 !important;
+    width: 30px;
+    height: 30px;
+    border: none;
+    transition: transform 0.2s ease;
+    border-radius: 50%;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    background: none;
+}
+
+
+.modal .btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg);
 }
 
 .modal .form-control {
@@ -285,7 +316,7 @@
     box-shadow: 0 4px 8px rgba(255, 214, 165, 0.5) !important;
 }
 
-/* Estilo para el modal de notificación */
+/* Style for the notification modal */
 #notificationModal .modal-header {
     color: white !important;
 }
@@ -382,13 +413,12 @@
     margin-left: 0.5rem !important;
 }
 
-/* Alternativa - para un diseño más compacto */
 .hora-badge {
     margin-left: 0.5rem !important;
     font-weight: 600 !important;
 }
 
-/* Buscador con fondo de colores y sombra */
+/* Search engine with colored background and shadow */
 .search-container {
     margin-bottom: 1.5rem !important;
     padding: 5px !important;
@@ -437,6 +467,7 @@
 .search-container .btn-outline-secondary:hover {
     background-color: #f8f9fa !important;
 }
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .reunion-card .card-title {

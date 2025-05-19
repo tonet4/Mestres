@@ -24,7 +24,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluaciones - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
 
     <!-- Estilos -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
@@ -71,8 +72,6 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-user-check"></i> Asistencias</a></li>
             <li class="active"><a href="evaluaciones.php"><i class="fas fa-chart-line"></i> Evaluaciones</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
@@ -186,15 +185,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                     </div>
                                 </td>
                                 <td v-for="evaluacion in evaluaciones" :key="evaluacion.id" class="calificacion-cell">
-                                <input 
-    type="number" 
-    min="0" 
-    max="10" 
-    step="0.1" 
-    class="calificacion-input" 
-    v-model="calificaciones[alumno.id + '-' + evaluacion.id]"
-    @change="validarYMarcarComoModificado(alumno.id, evaluacion.id)"
->
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="10"
+                                        step="0.1"
+                                        class="calificacion-input"
+                                        v-model="calificaciones[alumno.id + '-' + evaluacion.id]"
+                                        @change="validarYMarcarComoModificado(alumno.id, evaluacion.id)">
                                 </td>
                                 <td class="nota-final-cell">
                                     <div class="nota-final" :class="getClaseNotaFinal(alumno.id)">
@@ -300,11 +298,11 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </div>
                         <div class="modal-body">
                             <form @submit.prevent="guardarEvaluacion">
-                            <input type="hidden" v-model="evaluacionForm.grupo_id">
-                            <div class="form-group">
-        <label class="form-label">Nombre de la Evaluación</label>
-        <input type="text" class="form-control" v-model="evaluacionForm.nombre" required placeholder="Ej: Examen Tema 1">
-    </div>
+                                <input type="hidden" v-model="evaluacionForm.grupo_id">
+                                <div class="form-group">
+                                    <label class="form-label">Nombre de la Evaluación</label>
+                                    <input type="text" class="form-control" v-model="evaluacionForm.nombre" required placeholder="Ej: Examen Tema 1">
+                                </div>
                                 <div class="form-group">
                                     <label class="form-label">Fecha</label>
                                     <input type="date" class="form-control" v-model="evaluacionForm.fecha" required>
