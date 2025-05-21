@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Antonio Esteban Lorenzo
  * 
@@ -67,7 +68,6 @@ try {
     $notas = $stmt->fetchAll();
 } catch (PDOException $e) {
     $notas = [];
-    
 }
 
 // Process the addition, editing, or deletion of notes
@@ -86,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 header("Location: dashboard.php");
                 exit;
             } catch (PDOException $e) {
-               
             }
         }
     } elseif ($_POST['action'] === 'edit' && isset($_POST['nota_id'])) {
@@ -106,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 header("Location: dashboard.php");
                 exit;
             } catch (PDOException $e) {
-                
             }
         }
     } elseif ($_POST['action'] === 'delete' && isset($_POST['nota_id'])) {
@@ -123,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             header("Location: dashboard.php");
             exit;
         } catch (PDOException $e) {
-           
         }
     }
 }
@@ -221,9 +218,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                         <?php else: ?>
                             <?php foreach ($notas as $nota): ?>
                                 <div class="task-item" id="nota-<?php echo $nota['id']; ?>">
-                                    <div class="task-text"><?php echo nl2br(htmlspecialchars($nota['texto'])); ?></div>                                    <div class="task-actions">
+                                    <div class="task-text"><?php echo nl2br(htmlspecialchars($nota['texto'])); ?></div>
+                                    <div class="task-actions">
                                         <button class="edit-task" data-id="<?php echo $nota['id']; ?>">
-                                        <img src="../img/notas.png" alt="editar" class="delete-icon">
+                                            <img src="../img/notas.png" alt="editar" class="delete-icon">
                                         </button>
                                         <button class="delete-task" data-id="<?php echo $nota['id']; ?>">
                                             <img src="../img/basura.png" alt="Eliminar" class="delete-icon">
@@ -263,9 +261,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <input type="hidden" name="nota_id" id="delete-nota-id">
     </form>
 
-    <footer>
-        <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+    <!-- FOOTER -->
+    <footer class="footer-dark">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                <div>
+                    <h3>QUADERN de Mestres</h3>
+                    <span>v1.0 · 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces Útiles</h4>
+            <div class="footer-links">
+                <a href="privacidad.html" target="_blank"><i class="fas fa-shield-alt"></i> Privacidad</a>
+                <a href="condiciones.html" target="_blank"><i class="fas fa-file-contract"></i> Condiciones</a>
+                <a href="contacto.php" target="_blank"><i class="fas fa-envelope"></i> Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://twitter.com/quadernmestres" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/quadernmestres" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/tone4" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/company/quadernmestres" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section credits-section">
+            <p>Proyecto desarrollado por Antonio Esteban Lorenzo · CFGS DAW · IES La Sénia,Paiporta</p>
+            <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+            <div class="back-to-top" id="back-to-top">
+                <a href="#" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
     </footer>
+
+    <!-- JavaScript for the up button -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
     <script src="../js/dashboard.js"></script>
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="./estilo/base_principal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -37,34 +39,39 @@
 
         <section class="features">
             <div class="title-container">
-                
-                <h2><span class="sun-image"><img src="https://media-public.canva.com/518iM/MAFj7v518iM/1/tl.png" alt="Doodle sun star"></span>Caracteristicas principales</h2>
+
+                <h2><span class="sun-image"><img src="https://media-public.canva.com/518iM/MAFj7v518iM/1/tl.png"
+                            alt="Doodle sun star"></span>Caracteristicas principales</h2>
             </div>
             <div class="feature-cards">
                 <div class="card">
                     <div class="card-icon">
-                        <img src="https://media-public.canva.com/03sAs/MAEqts03sAs/1/t.png" alt="Gestión de Alumnos icono">
+                        <img src="https://media-public.canva.com/03sAs/MAEqts03sAs/1/t.png"
+                            alt="Gestión de Alumnos icono">
                     </div>
                     <h3>Gestión de Alumnos</h3>
                     <p>Registra y organiza a tus estudiantes con toda su información relevante.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <img src="https://media-public.canva.com/fjqsU/MAF6NmfjqsU/1/t.png" alt="Gestión de Alumnos icono">
+                        <img src="https://media-public.canva.com/fjqsU/MAF6NmfjqsU/1/t.png"
+                            alt="Gestión de Alumnos icono">
                     </div>
                     <h3>Control de Notas</h3>
                     <p>Lleva un seguimiento detallado de las evaluaciones y calificaciones.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <img src="https://media-public.canva.com/Tq0zo/MAFil9Tq0zo/1/t.png" alt="Gestión de Alumnos icono">
+                        <img src="https://media-public.canva.com/Tq0zo/MAFil9Tq0zo/1/t.png"
+                            alt="Gestión de Alumnos icono">
                     </div>
                     <h3>Calendario</h3>
                     <p>Planifica tus clases y eventos importantes con un calendario integrado.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <img src="https://media-public.canva.com/MADohn-_deg/1/thumbnail.png" alt="Gestión de Alumnos icono">
+                        <img src="https://media-public.canva.com/MADohn-_deg/1/thumbnail.png"
+                            alt="Gestión de Alumnos icono">
                     </div>
                     <h3>Notas Rápidas</h3>
                     <p>Apunta recordatorios y notas importantes sobre tus clases y alumnos.</p>
@@ -74,14 +81,75 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+    <footer class="footer-dark">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <img src="./img/logo2.png" alt="Logo Quadern Mestres">
+                <div>
+                    <h3>QUADERN de Mestres</h3>
+                    <span>v1.0 · 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces Útiles</h4>
+            <div class="footer-links">
+                <a href="./views/privacidad.html" target="_blank"><i class="fas fa-shield-alt"></i> Privacidad</a>
+                <a href="./views/condiciones.html" target="_blank"><i class="fas fa-file-contract"></i> Condiciones</a>
+                <a href="./view/contacto.php" target="_blank"><i class="fas fa-envelope"></i> Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://twitter.com/quadernmestres" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/quadernmestres" target="_blank" aria-label="Instagram"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://github.com/tonet4" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/feed/" target="_blank" aria-label="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section credits-section">
+            <p>Proyecto desarrollado por Antonio Esteban Lorenzo · CFGS DAW · IES La Sénia, Paiporta</p>
+            <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+            <div class="back-to-top" id="back-to-top">
+                <a href="#" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
     </footer>
 
-   
     <script src="js/main.js"></script>
 
-     <!-- Scripts for the borderless nav -->
+
+    <!-- JavaScript for the up button -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            // Mostrar u ocultar el botón dependiendo del scroll
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <!-- Scripts for the borderless nav -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             window.addEventListener('scroll', function () {
@@ -97,4 +165,5 @@
         });
     </script>
 </body>
+
 </html>

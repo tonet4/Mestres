@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condiciones de Uso - QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
+    <link rel="stylesheet" href="../estilo/base.css">
+    <link rel="stylesheet" href="../estilo/dashboard.css">
+        <link rel="stylesheet" href="../estilo/enlaces.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                </a>
+            </div>
+            <h1>QUADERN de Mestres</h1>
+        </div>
+        <div class="nav-right">
+            <div class="user-info">
+                <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($_SESSION['user_nombre'] ?? 'Usuario'); ?></span>
+            </div>
+            <div class="logout-btn" onclick="location.href='../api/logout.php'">
+                <img src="../img/salida.png"></img>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="main-content">
+
+        <div class="terms-container">
+            <div class="terms-header">
+                <h1>Condiciones de Uso</h1>
+                <p>Última actualización: 21 de mayo de 2025</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>1. Introducción</h2>
+                <p>Bienvenido/a a QUADERN de Mestres. Al acceder y utilizar esta aplicación, aceptas cumplir con estas Condiciones de Uso. Por favor, lee este documento detenidamente antes de comenzar a utilizar nuestros servicios.</p>
+                <p>QUADERN de Mestres es una aplicación diseñada para facilitar la gestión docente, desarrollada como proyecto educativo por Antonio Esteban Lorenzo para el CFGS de Desarrollo de Aplicaciones Web en el IES La Sénia, Paiporta.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>2. Definiciones</h2>
+                <ul>
+                    <li><strong>"Aplicación"</strong> se refiere a QUADERN de Mestres, incluyendo todas sus funcionalidades, contenidos y servicios.</li>
+                    <li><strong>"Usuario"</strong> se refiere a cualquier persona que acceda, navegue o utilice la aplicación.</li>
+                    <li><strong>"Contenido"</strong> se refiere a cualquier información, datos, textos, archivos, imágenes o material almacenado o generado en la aplicación.</li>
+                    <li><strong>"Datos de alumnado"</strong> se refiere a cualquier información relacionada con estudiantes registrada en la aplicación.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2>3. Registro y Cuentas</h2>
+                <p>Para utilizar QUADERN de Mestres, debes:</p>
+                <ol>
+                    <li>Estar registrado como usuario autorizado</li>
+                    <li>Proporcionar información verdadera, precisa y completa durante el proceso de registro.</li>
+                    <li>Mantener la confidencialidad de tus credenciales de acceso.</li>
+                    <li>Ser responsable de todas las actividades realizadas bajo tu cuenta.</li>
+                </ol>
+                <p>Nos reservamos el derecho de suspender o terminar cuentas que violen estas condiciones o que permanezcan inactivas durante un período prolongado.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>4. Uso Aceptable</h2>
+                <p>Como usuario de QUADERN de Mestres, te comprometes a:</p>
+                <ul>
+                    <li>Utilizar la aplicación exclusivamente para fines educativos y de gestión docente.</li>
+                    <li>No realizar conductas que puedan dañar, deshabilitar, sobrecargar o deteriorar la aplicación.</li>
+                    <li>No intentar acceder a información o cuentas de otros usuarios sin autorización.</li>
+                    <li>Respetar la privacidad y confidencialidad de los datos, especialmente los relativos al alumnado.</li>
+                    <li>No utilizar la aplicación para almacenar o transmitir contenido ilegal, difamatorio, obsceno o que viole derechos de terceros.</li>
+                    <li>Cumplir con todas las leyes y regulaciones aplicables.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2>5. Propiedad Intelectual</h2>
+                <p>QUADERN de Mestres y todos sus componentes (incluyendo, pero no limitado a, software, diseño, logotipos, textos e imágenes) están protegidos por derechos de propiedad intelectual.</p>
+                <p>Como usuario, se te concede una licencia limitada, no exclusiva y no transferible para utilizar la aplicación conforme a estas Condiciones de Uso. Esta licencia no incluye:</p>
+                <ul>
+                    <li>Redistribuir, vender, alquilar o transferir la aplicación a terceros.</li>
+                    <li>Copiar, modificar, adaptar o crear obras derivadas de la aplicación.</li>
+                    <li>Descompilar, desensamblar o aplicar ingeniería inversa a cualquier parte de la aplicación.</li>
+                    <li>Eliminar avisos de propiedad intelectual o marcas de agua.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2>6. Contenido del Usuario</h2>
+                <p>Eres propietario del contenido que creas y subes a la aplicación (como notas, evaluaciones, planificaciones, etc.), pero nos concedes una licencia para almacenarlo y procesarlo con el fin de proporcionar el servicio.</p>
+                <p>Te responsabilizas de todo el contenido que subas, confirmas que tienes derecho a utilizarlo y que no infringe derechos de terceros.</p>
+                <p>Nos reservamos el derecho a eliminar cualquier contenido que consideremos inapropiado o que viole estas condiciones.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>7. Protección de Datos de Alumnado</h2>
+                <p>Como usuario, te comprometes a:</p>
+                <ul>
+                    <li>Obtener los consentimientos necesarios según la normativa aplicable antes de registrar datos de alumnado.</li>
+                    <li>Utilizar los datos únicamente para fines educativos legítimos.</li>
+                    <li>No compartir o exportar datos de alumnado fuera de la aplicación sin las garantías adecuadas.</li>
+                    <li>Informar inmediatamente de cualquier vulneración de seguridad relacionada con estos datos.</li>
+                </ul>
+                <p>Para más información sobre cómo tratamos los datos personales, consulta nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>8. Limitación de Responsabilidad</h2>
+                <p>QUADERN de Mestres se proporciona "tal cual" y "según disponibilidad", sin garantías de ningún tipo, ya sean expresas o implícitas.</p>
+                <p>No garantizamos que la aplicación esté libre de errores, sea segura o ininterrumpida, ni que los resultados obtenidos de su uso sean precisos o confiables.</p>
+                <p>En ningún caso seremos responsables por daños indirectos, incidentales, especiales o consecuentes derivados del uso o la imposibilidad de uso de la aplicación.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>9. Modificaciones</h2>
+                <p>Nos reservamos el derecho de modificar estas Condiciones de Uso en cualquier momento. Las modificaciones entrarán en vigor inmediatamente después de su publicación en la aplicación.</p>
+                <p>El uso continuado de la aplicación después de la publicación de cambios constituye la aceptación de dichos cambios.</p>
+            </div>
+
+            <div class="terms-section">
+                <h2>10. Terminación</h2>
+                <p>Podemos terminar o suspender tu acceso a la aplicación inmediatamente, sin previo aviso ni responsabilidad, por cualquier razón, incluyendo, sin limitación, la violación de estas Condiciones de Uso.</p>
+                <p>Tras la terminación, tu derecho a utilizar la aplicación cesará inmediatamente.</p>
+            </div>
+
+            <div class="terms-contact">
+                <h3>11. Contacto</h3>
+                <p>Si tienes preguntas sobre estas Condiciones de Uso, puedes contactarnos a través de:</p>
+                <p><strong>Email:</strong> antonio.esteban.lorenzo.88@gmail.com</p>
+                <p><strong>Formulario de contacto:</strong> Disponible en la sección <a href="contacto.php" target="_blank">Contacto</a> de la aplicación</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!--FOOTER-->
+    <footer class="footer-dark">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <a href="../index.html">
+                    <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                </a>
+                <div>
+                    <h3>QUADERN de Mestres</h3>
+                    <span>v1.0 · 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces Útiles</h4>
+            <div class="footer-links">
+                <a href="privacidad.html" target="_blank"><i class="fas fa-shield-alt"></i> Privacidad</a>
+                <a href="condiciones.html" target="_blank"><i class="fas fa-file-contract"></i> Condiciones</a>
+                <a href="contacto.php" target="_blank"><i class="fas fa-envelope"></i> Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://twitter.com/quadernmestres" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/quadernmestres" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/tone4" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/company/quadernmestres" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section credits-section">
+            <p>Proyecto desarrollado por Antonio Esteban Lorenzo · CFGS DAW · IES La Sénia, Paiporta</p>
+            <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top-fixed" id="back-to-top">
+        <a href="#" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript button up -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            if (window.scrollY > 100) {
+                backToTopButton.classList.add('show');
+            }
+
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

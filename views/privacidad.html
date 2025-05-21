@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - QUADERN MESTRES</title>
+    <link rel="shortcut icon" href="../img/logo2.png">
+    <link rel="stylesheet" href="../estilo/base.css">
+    <link rel="stylesheet" href="../estilo/dashboard.css">
+    <link rel="stylesheet" href="../estilo/enlaces.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                </a>
+            </div>
+            <h1>QUADERN de Mestres</h1>
+        </div>
+        <div class="nav-right">
+            <div class="user-info">
+                <span id="user-name">Bienvenido/a, <?php echo htmlspecialchars($_SESSION['user_nombre'] ?? 'Usuario'); ?></span>
+            </div>
+            <div class="logout-btn" onclick="location.href='../api/logout.php'">
+                <img src="../img/salida.png"></img>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="main-content">
+        <div class="privacy-container">
+            <div class="privacy-header">
+                <h1>Política de Privacidad</h1>
+                <p>Última actualización: 21 de mayo de 2025</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>1. Introducción</h2>
+                <p>En QUADERN de Mestres, nos comprometemos a proteger la privacidad de los datos personales de nuestros usuarios. Esta Política de Privacidad explica cómo recopilamos, utilizamos, almacenamos y protegemos la información proporcionada por los usuarios de nuestra aplicación.</p>
+                <p>Al utilizar QUADERN de Mestres, aceptas las prácticas descritas en esta política. Te recomendamos leer detenidamente este documento para comprender nuestro compromiso con la protección de tus datos.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>2. Información que recopilamos</h2>
+                <p>Para proporcionar y mejorar nuestros servicios, recopilamos la siguiente información:</p>
+                <ul>
+                    <li><strong>Información de cuenta:</strong> Nombre, apellidos, correo electrónico y centro educativo.</li>
+                    <li><strong>Datos de alumnado:</strong> Nombres, apellidos, datos de contacto, notas y observaciones introducidas por el docente.</li>
+                    <li><strong>Contenido generado:</strong> Notas, evaluaciones, planificaciones y cualquier otro contenido creado mientras utilizas la aplicación.</li>
+                    <li><strong>Información de uso:</strong> Cómo interactúas con nuestra aplicación, frecuencia de uso y funcionalidades más utilizadas.</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2>3. Cómo utilizamos la información</h2>
+                <p>Utilizamos la información recopilada para:</p>
+                <ul>
+                    <li>Proporcionar, mantener y mejorar nuestra aplicación y sus funcionalidades.</li>
+                    <li>Personalizar la experiencia del usuario.</li>
+                    <li>Desarrollar nuevas características basadas en las necesidades de los usuarios.</li>
+                    <li>Enviar notificaciones importantes relacionadas con la cuenta o cambios en nuestros servicios.</li>
+                    <li>Detectar, prevenir y solucionar problemas técnicos o de seguridad.</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2>4. Protección de datos de alumnado</h2>
+                <p>Entendemos la sensibilidad de los datos relacionados con el alumnado. Por ello:</p>
+                <ul>
+                    <li>No compartimos información identificable del alumnado con terceros bajo ninguna circunstancia.</li>
+                    <li>Implementamos medidas de seguridad adicionales para proteger estos datos.</li>
+                    <li>Cumplimos estrictamente con todas las regulaciones aplicables a la protección de datos de menores.</li>
+                    <li>Permitimos a los docentes gestionar y eliminar los datos del alumnado cuando sea necesario.</li>
+                </ul>
+                <p>Se recomienda a los docentes informar a las familias sobre el uso de esta herramienta y obtener los consentimientos necesarios según la normativa de su centro educativo.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>5. Almacenamiento y seguridad</h2>
+                <p>Nos comprometemos a proteger la seguridad de tus datos personales. Implementamos medidas técnicas y organizativas adecuadas para proteger la información contra accesos no autorizados, alteraciones, divulgaciones o destrucciones.</p>
+                <p>Todos los datos son almacenados en servidores seguros y utilizamos conexiones cifradas (SSL/TLS) para la transmisión de información.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>6. Tus derechos</h2>
+                <p>Como usuario de QUADERN de Mestres, tienes derecho a:</p>
+                <ul>
+                    <li>Acceder a tus datos personales.</li>
+                    <li>Rectificar información inexacta.</li>
+                    <li>Solicitar la eliminación de tus datos.</li>
+                    <li>Oponerte al procesamiento de tus datos en determinadas circunstancias.</li>
+                    <li>Solicitar la limitación del procesamiento de tus datos.</li>
+                    <li>Solicitar la portabilidad de tus datos.</li>
+                </ul>
+                <p>Para ejercer cualquiera de estos derechos, puedes contactar con nosotros a través de los canales indicados en la sección "Contacto".</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>7. Cambios en esta política</h2>
+                <p>Podemos actualizar nuestra Política de Privacidad ocasionalmente. Te notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página y, si los cambios son significativos, te proporcionaremos una notificación más prominente.</p>
+                <p>Te recomendamos revisar periódicamente esta Política de Privacidad para estar informado sobre cómo protegemos tu información.</p>
+            </div>
+
+            <div class="privacy-contact">
+                <h3>8. Contacto</h3>
+                <p>Si tienes preguntas sobre esta Política de Privacidad o sobre el tratamiento de tus datos, puedes contactarnos a través de:</p>
+                <p><strong>Email:</strong> antonio.esteban.lorenzo.88@gmail.com</p>
+                <p><strong>Formulario de contacto:</strong> Disponible en la sección "Contacto" de la aplicación</p>
+            </div>
+        </div>
+    </main>
+
+        <!--FOOTER-->
+    <footer class="footer-dark">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <a href="../index.html">
+                    <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                </a>
+                <div>
+                    <h3>QUADERN de Mestres</h3>
+                    <span>v1.0 · 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces Útiles</h4>
+            <div class="footer-links">
+                <a href="privacidad.html" target="_blank"><i class="fas fa-shield-alt"></i> Privacidad</a>
+                <a href="condiciones.html" target="_blank"><i class="fas fa-file-contract"></i> Condiciones</a>
+                <a href="contacto.php" target="_blank"><i class="fas fa-envelope"></i> Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://twitter.com/quadernmestres" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/quadernmestres" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/tone4" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/company/quadernmestres" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section credits-section">
+            <p>Proyecto desarrollado por Antonio Esteban Lorenzo · CFGS DAW · IES La Sénia,Paiporta</p>
+            <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+            <div class="back-to-top" id="back-to-top">
+                <a href="#" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for the up button -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
