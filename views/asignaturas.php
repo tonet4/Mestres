@@ -353,10 +353,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         <div class="modal-body">
                             <p class="mb-1">¿Estás seguro de que deseas eliminar la asignatura?</p>
                             <p class="font-weight-bold">{{ selectedAsignatura?.nombre }}</p>
-                            <p class="text-danger mb-0"><small>Esta acción no se puede deshacer.</small></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn-outline-secondary" @click="closeDeleteModal">Cancelar</button>
+                            <button type="button" class="btn-outline-secondary icon-img-c" @click="closeDeleteModal">Cancelar</button>
                             <button type="button" class="btn-danger" @click="deleteAsignatura">
                                 <i class="fas fa-trash me-1"></i>Eliminar
                             </button>

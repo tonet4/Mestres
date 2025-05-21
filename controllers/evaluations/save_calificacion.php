@@ -27,14 +27,13 @@ $evaluacion_id = isset($_POST['evaluacion_id']) ? (int)$_POST['evaluacion_id'] :
 $valor = isset($_POST['valor']) ? (float)$_POST['valor'] : 0;
 $observaciones = isset($_POST['observaciones']) ? trim($_POST['observaciones']) : '';
 
-// Validar el rango de la nota (0-10)
+// Validate the grade range (0-10)
 if ($valor < 0) {
     $valor = 0;
 } else if ($valor > 10) {
     $valor = 10;
 }
 
-// Redondear a 2 decimales
 $valor = round($valor, 2);
 
 // Validate required fields

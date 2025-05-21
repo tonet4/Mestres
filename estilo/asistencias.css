@@ -1,8 +1,12 @@
-/* Estilos para el módulo de Asistencias */
-
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ *  A T T E N D A N C E
+ *       
+ /
 /* Header styles */
 .calendar-title {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--text-color);
     font-family: "fuente1";
@@ -42,6 +46,7 @@
     font-weight: 600;
     margin-bottom: 5px;
     color: var(--text-color);
+    font-size: 1rem;
 }
 
 .filter-select, .filter-input {
@@ -65,6 +70,13 @@
 .filter-select:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.icon-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    object-fit: contain;
 }
 
 .action-btn {
@@ -186,19 +198,19 @@
 }
 
 .status-indicator.presente {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50; 
 }
 
 .status-indicator.ausente {
-    background-color: #F44336; /* Rojo */
+    background-color: #F44336; /
 }
 
 .status-indicator.retraso {
-    background-color: #FFC107; /* Amarillo */
+    background-color: #FFC107; 
 }
 
 .status-indicator.justificado {
-    background-color: #2196F3; /* Azul */
+    background-color: #2196F3; 
 }
 
 .legend-text {
@@ -229,7 +241,7 @@
 }
 
 .student-card.has-observation {
-    border-left: 4px solid #9C27B0; /* Púrpura para indicar observación */
+    border-left: 4px solid #9C27B0;
 }
 
 .student-info {
@@ -280,38 +292,37 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #757575; /* Color de icono gris oscuro para contraste */
-    background-color: #E0E0E0; /* Gris claro por defecto */
+    color: #757575; 
+    background-color: #E0E0E0; 
     font-size: 1rem;
 }
 
 .status-btn.presente.active {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50; 
     color: white;
 }
 
 .status-btn.ausente.active {
-    background-color: #F44336; /* Rojo */
+    background-color: #F44336; 
     color: white;
 }
 
 .status-btn.retraso.active {
-    background-color: #FFC107; /* Amarillo */
-    color: #333; /* Negro para mejor contraste con amarillo */
+    background-color: #FFC107; 
+    color: #333; 
 }
 
 .status-btn.justificado.active {
-    background-color: #2196F3; /* Azul */
+    background-color: #2196F3; 
     color: white;
 }
 
-/* Mantener los efectos de hover */
+
 .status-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Mantener los efectos para botones activos */
 .status-btn.active {
     transform: scale(1.1);
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7), 0 3px 10px rgba(0, 0, 0, 0.3);
@@ -322,7 +333,7 @@
     height: 38px;
     border-radius: 50%;
     border: none;
-    background-color: #E0E0E0; /* Gris claro */
+    background-color: #E0E0E0; 
     color: #757575;
     display: flex;
     align-items: center;
@@ -337,7 +348,7 @@
 }
 
 .observation-btn.has-notes {
-    background-color: #9C27B0; /* Púrpura */
+    background-color: #9C27B0; 
     color: white;
 }
 

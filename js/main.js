@@ -1,3 +1,8 @@
+/**
+ * @author Antonio Esteban Lorenzo
+ *
+ * 
+ */
 document.addEventListener('DOMContentLoaded', function() {
     // Menú responsive
     const menuToggle = document.querySelector('.menu-toggle');

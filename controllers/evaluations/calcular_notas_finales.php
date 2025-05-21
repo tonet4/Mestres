@@ -104,14 +104,13 @@ try {
             if (isset($calificaciones_enviadas[$alumno_id][$evaluacion_id])) {
                 $valor = (float)$calificaciones_enviadas[$alumno_id][$evaluacion_id];
                 
-                // Validar el rango de la nota (0-10)
+                // Validate the grade range (0-10)
                 if ($valor < 0) {
                     $valor = 0;
                 } else if ($valor > 10) {
                     $valor = 10;
                 }
                 
-                // Redondear a 2 decimales
                 $valor = round($valor, 2);
                 
                 $porcentaje = (float)$evaluacion['porcentaje'];
@@ -126,7 +125,7 @@ try {
                 
                 error_log("Contribución: $contribucion, Nota acumulada: $nota_final, Porcentaje acumulado: $total_porcentaje_calculado");
                 
-                // Asegurarse de que la calificación esté guardada en la base de datos
+                //Make sure the grade is saved in the database
                 $stmt = $conn->prepare("
                     INSERT INTO calificaciones (alumno_id, evaluacion_id, valor) 
                     VALUES (:alumno_id, :evaluacion_id, :valor) 

@@ -1,22 +1,20 @@
 /**
  * @author Antonio Esteban Lorenzo
  *
- * EVALUACIONES.js
+ * 
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Verificar que el elemento existe antes de inicializar Vue
-    if (document.getElementById("evaluaciones-app")) {
-      console.log("Inicializando Vue.js app en #evaluaciones-app");
-  
-      // Función para manejar modales propios
+    // Check if the element exists before initializing Vue
+    if (document.getElementById("evaluaciones-app")) {  
+      // Function to handle custom modals
       function ModalManager() {
         this.showModal = function(modalId) {
           const modal = document.getElementById(modalId);
           if (modal) {
             modal.classList.add('active');
           } else {
-            console.error(`Modal ${modalId} no encontrado`);
+            console.error(`Modal ${modalId} not found`);
           }
         };
         
@@ -34,27 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const app = new Vue({
         el: "#evaluaciones-app",
         data: {
-          // Datos de selección
+          // Selection data
           selectedGrupo: "",
           selectedAsignatura: "",
           selectedPeriodo: "",
 
-          // Datos de la aplicación
+          // Application data
           grupos: [],
           asignaturas: [],
           periodos: [],
           alumnos: [],
           evaluaciones: [],
 
-          // Datos de calificaciones
+          // Grades data
           calificaciones: {},
           calificacionesModificadas: {},
           notasFinales: {},
 
-          // Estados de UI
+          // UI states
           loading: false,
 
-          // Formularios
+          // Forms
           periodoForm: {
             id: 0,
             nombre: "",
@@ -73,13 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
             porcentaje: 0,
           },
 
-          // Confirmación
+          // Confirmation
           confirmType: "",
           confirmCallback: null,
           confirmData: null,
           confirmMessage: "",
 
-          // Notificación
+          // Notification
           notificationTitle: "",
           notificationMessage: "",
           notificationType: "success",
@@ -90,12 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         },
         mounted() {
-          console.log("Vue montado correctamente");
-
-          // Añadir controladores para cerrar modales al hacer clic en close buttons
+          // Add handlers to close modals when clicking close buttons
           document.querySelectorAll(".btn-close").forEach((closeBtn) => {
             closeBtn.addEventListener("click", (e) => {
-              // Buscar el elemento modal padre
+              // Find the parent modal element
               let modal = e.target.closest(".modal");
               if (modal) {
                 modal.classList.remove("active");
@@ -103,27 +99,24 @@ document.addEventListener("DOMContentLoaded", function () {
             });
           });
 
-          // Cargar datos iniciales
+          // Load initial data
           this.loadGrupos();
-          this.loadAsignaturas();
+          this.loadAsignaturas(); // Load all subjects at startup (for general use)
           this.loadPeriodos();
         },
         methods: {
           /**
-           * Cargar grupos
+           * Load groups
            */
           loadGrupos() {
-            console.log("Cargando grupos...");
-
             return fetch("../controllers/students/get_grupos.php")
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Datos de grupos recibidos:", data);
                 if (data.success) {
                   this.grupos = data.grupos;
                 } else {
@@ -131,30 +124,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               })
               .catch((error) => {
-                console.error("Error al cargar grupos:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al cargar los grupos: " + error.message,
+                  "Se produjo un error al cargar los grupos: " + error.message,
                   "error"
                 );
               });
           },
 
           /**
-           * Cargar asignaturas
+           * Load subjects
            */
           loadAsignaturas() {
-            console.log("Cargando asignaturas...");
-
             return fetch("../controllers/subjects/get_asignaturas.php")
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Datos de asignaturas recibidos:", data);
                 if (data.success) {
                   this.asignaturas = data.asignaturas;
                 } else {
@@ -162,10 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               })
               .catch((error) => {
-                console.error("Error al cargar asignaturas:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al cargar las asignaturas: " +
+                  "Se produjo un error al cargar las asignaturas: " +
                     error.message,
                   "error"
                 );
@@ -173,20 +161,78 @@ document.addEventListener("DOMContentLoaded", function () {
           },
 
           /**
-           * Cargar períodos de evaluación
+           * Load subjects by group
            */
-          loadPeriodos() {
-            console.log("Cargando períodos de evaluación...");
-
-            return fetch("../controllers/evaluations/get_periodos.php")
+          loadAsignaturasByGrupo(grupoId) {
+            this.loading = true;
+            return fetch(`../controllers/subjects/get_asignaturas_by_grupo.php?grupo_id=${grupoId}`)
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Datos de períodos recibidos:", data);
+                if (data.success) {
+                  this.asignaturas = data.asignaturas;
+                  // Reset the selected subject if it's not in the new list
+                  if (this.selectedAsignatura) {
+                    const asignaturaExiste = this.asignaturas.some(
+                      (a) => a.id == this.selectedAsignatura
+                    );
+                    if (!asignaturaExiste) {
+                      this.selectedAsignatura = "";
+                    }
+                  }
+                } else {
+                  this.showNotification("Error", data.message, "error");
+                }
+              })
+              .catch((error) => {
+                this.showNotification(
+                  "Error",
+                  "Se produjo un error al cargar los asignaturas: " +
+                    error.message,
+                  "error"
+                );
+              })
+              .finally(() => {
+                this.loading = false;
+              });
+          },
+
+          /**
+           * Handler for the selected group change
+           */
+          onGrupoChange() {
+            // Reset subject and period
+            this.selectedAsignatura = "";
+            
+            // If a group is selected, load its subjects
+            if (this.selectedGrupo) {
+              this.loadAsignaturasByGrupo(this.selectedGrupo);
+            } else {
+              // If no group is selected, load all subjects
+              this.loadAsignaturas();
+            }
+            
+            // Update the displayed data (will be called after subjects are updated)
+            this.cargarDatos();
+          },
+
+          /**
+           * Load evaluation periods
+           */
+          loadPeriodos() {
+
+            return fetch("../controllers/evaluations/get_periodos.php")
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP Error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then((data) => {
                 if (data.success) {
                   this.periodos = data.periodos;
                 } else {
@@ -194,10 +240,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               })
               .catch((error) => {
-                console.error("Error al cargar períodos:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al cargar los períodos: " +
+                  "Se produjo un error al cargar los períodos: " +
                     error.message,
                   "error"
                 );
@@ -205,87 +250,81 @@ document.addEventListener("DOMContentLoaded", function () {
           },
 
           /**
-           * Cargar datos de calificaciones
+           * Load grade data
            */
-          /**
- * Cargar datos de calificaciones
- */
-cargarDatos() {
-  if (!this.selectedGrupo || !this.selectedAsignatura || !this.selectedPeriodo) {
-    // Reiniciar datos si falta alguna selección
-    this.alumnos = [];
-    this.evaluaciones = [];
-    this.calificaciones = {};
-    this.calificacionesModificadas = {};
-    this.notasFinales = {};
-    return;
-  }
-  
-  this.loading = true;
-  console.log("Cargando datos de calificaciones...");
-  
-  // Establecer los valores del formulario de evaluación
-  this.evaluacionForm.asignatura_id = this.selectedAsignatura;
-  this.evaluacionForm.periodo_id = this.selectedPeriodo;
-  this.evaluacionForm.grupo_id = this.selectedGrupo; // Añadir el grupo_id
-  
-  fetch(`../controllers/evaluations/get_calificaciones.php?asignatura_id=${this.selectedAsignatura}&periodo_id=${this.selectedPeriodo}&grupo_id=${this.selectedGrupo}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Datos de calificaciones recibidos:", data);
-      if (data.success) {
-        this.evaluaciones = data.evaluaciones;
-        this.alumnos = data.alumnos;
-        
-        // Inicializar calificaciones
-        this.calificaciones = {};
-        this.calificacionesModificadas = {};
-        
-        // Organizar calificaciones en formato alumno_id-evaluacion_id
-        if (data.calificaciones) {
-          for (const key in data.calificaciones) {
-            if (data.calificaciones.hasOwnProperty(key)) {
-              const calificacion = data.calificaciones[key];
-              const calKey = `${calificacion.alumno_id}-${calificacion.evaluacion_id}`;
-              this.calificaciones[calKey] = calificacion.valor;
+          cargarDatos() {
+            if (!this.selectedGrupo || !this.selectedAsignatura || !this.selectedPeriodo) {
+              // Reset data if any selection is missing
+              this.alumnos = [];
+              this.evaluaciones = [];
+              this.calificaciones = {};
+              this.calificacionesModificadas = {};
+              this.notasFinales = {};
+              return;
             }
-          }
-        }
-        
-        // Organizar notas finales por alumno_id
-        this.notasFinales = {};
-        if (data.notas_finales) {
-          for (const key in data.notas_finales) {
-            if (data.notas_finales.hasOwnProperty(key)) {
-              const notaFinal = data.notas_finales[key];
-              this.notasFinales[notaFinal.alumno_id] = notaFinal.valor_final;
-            }
-          }
-        }
-      } else {
-        this.showNotification("Error", data.message, "error");
-      }
-    })
-    .catch(error => {
-      console.error("Error al cargar calificaciones:", error);
-      this.showNotification(
-        "Error",
-        "Ha ocurrido un error al cargar los datos: " + error.message,
-        "error"
-      );
-    })
-    .finally(() => {
-      this.loading = false;
-    });
-},
+            
+            this.loading = true;
+            
+            // Set evaluation form values
+            this.evaluacionForm.asignatura_id = this.selectedAsignatura;
+            this.evaluacionForm.periodo_id = this.selectedPeriodo;
+            this.evaluacionForm.grupo_id = this.selectedGrupo; // Add grupo_id
+            
+            fetch(`../controllers/evaluations/get_calificaciones.php?asignatura_id=${this.selectedAsignatura}&periodo_id=${this.selectedPeriodo}&grupo_id=${this.selectedGrupo}`)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP Error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                if (data.success) {
+                  this.evaluaciones = data.evaluaciones;
+                  this.alumnos = data.alumnos;
+                  
+                  // Initialize grades
+                  this.calificaciones = {};
+                  this.calificacionesModificadas = {};
+                  
+                  // Organize grades in alumno_id-evaluacion_id format
+                  if (data.calificaciones) {
+                    for (const key in data.calificaciones) {
+                      if (data.calificaciones.hasOwnProperty(key)) {
+                        const calificacion = data.calificaciones[key];
+                        const calKey = `${calificacion.alumno_id}-${calificacion.evaluacion_id}`;
+                        this.calificaciones[calKey] = calificacion.valor;
+                      }
+                    }
+                  }
+                  
+                  // Organize final grades by alumno_id
+                  this.notasFinales = {};
+                  if (data.notas_finales) {
+                    for (const key in data.notas_finales) {
+                      if (data.notas_finales.hasOwnProperty(key)) {
+                        const notaFinal = data.notas_finales[key];
+                        this.notasFinales[notaFinal.alumno_id] = notaFinal.valor_final;
+                      }
+                    }
+                  }
+                } else {
+                  this.showNotification("Error", data.message, "error");
+                }
+              })
+              .catch(error => {
+                this.showNotification(
+                  "Error",
+                  "An error occurred while loading data: " + error.message,
+                  "error"
+                );
+              })
+              .finally(() => {
+                this.loading = false;
+              });
+          },
 
           /**
-           * Marcar una calificación como modificada
+           * Mark a grade as modified
            */
           marcarComoModificado(alumnoId, evaluacionId) {
             const key = `${alumnoId}-${evaluacionId}`;
@@ -293,13 +332,13 @@ cargarDatos() {
           },
 
           /**
-           * Guardar calificaciones modificadas
+           * Save modified grades
            */
           guardarCalificaciones() {
             if (Object.keys(this.calificacionesModificadas).length === 0) {
               this.showNotification(
-                "Información",
-                "No hay cambios para guardar",
+                "Information",
+                "No changes to save",
                 "info"
               );
               return;
@@ -326,7 +365,7 @@ cargarDatos() {
                   }
                 ).then((response) => {
                   if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
+                    throw new Error(`HTTP Error: ${response.status}`);
                   }
                   return response.json();
                 });
@@ -337,22 +376,17 @@ cargarDatos() {
 
             Promise.all(promesas)
               .then((resultados) => {
-                console.log(
-                  "Resultados de guardar calificaciones:",
-                  resultados
-                );
                 this.calificacionesModificadas = {};
                 this.showNotification(
                   "Éxito",
-                  "Calificaciones guardadas correctamente",
-                  "success"
+                  "Calificaciones guardadas exitosamente",
+                  "éxito"
                 );
               })
               .catch((error) => {
-                console.error("Error al guardar calificaciones:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al guardar las calificaciones: " +
+                  "Se produjo un error al guardar las calificaciones: " +
                     error.message,
                   "error"
                 );
@@ -363,146 +397,133 @@ cargarDatos() {
           },
 
           /**
-           * Calcular notas finales
+           * Calculate final grades
            */
-/**
- * Calcular notas finales
- */
-calcularNotasFinales() {
-  if (this.alumnos.length === 0 || this.evaluaciones.length === 0) {
-    this.showNotification("Información", "No hay alumnos o evaluaciones para calcular notas finales", "info");
-    return;
-  }
-  
-  console.log("Calculando notas finales...");
-  console.log("Alumnos:", this.alumnos);
-  console.log("Evaluaciones:", this.evaluaciones);
-  console.log("Calificaciones:", this.calificaciones);
-  
-  // Preparar datos de calificaciones para enviar al servidor
-  const calificacionesParaEnviar = {};
-  
-  // Para cada alumno y cada evaluación, añadir la calificación si existe
-  this.alumnos.forEach(alumno => {
-    const alumnoId = alumno.id;
-    calificacionesParaEnviar[alumnoId] = {};
-    
-    this.evaluaciones.forEach(evaluacion => {
-      const evaluacionId = evaluacion.id;
-      const key = `${alumnoId}-${evaluacionId}`;
-      
-      if (this.calificaciones[key]) {
-        // Validar la calificación antes de enviarla
-        let valor = parseFloat(this.calificaciones[key]);
-        
-        if (isNaN(valor)) {
-          valor = 0;
-        } else if (valor < 0) {
-          valor = 0;
-        } else if (valor > 10) {
-          valor = 10;
-        }
-        
-        // Redondear a 2 decimales
-        valor = Math.round(valor * 100) / 100;
-        
-        calificacionesParaEnviar[alumnoId][evaluacionId] = valor;
-        console.log(`Calificación de alumno ${alumnoId} en evaluación ${evaluacionId}: ${valor}`);
-      } else {
-        console.log(`No hay calificación para alumno ${alumnoId} en evaluación ${evaluacionId}`);
-      }
-    });
-  });
-  
-  console.log("Calificaciones para enviar:", calificacionesParaEnviar);
-  
-  this.loading = true;
-  const alumnoIds = this.alumnos.map(alumno => alumno.id);
-  
-  const formData = new FormData();
-  formData.append('asignatura_id', this.selectedAsignatura);
-  formData.append('periodo_id', this.selectedPeriodo);
-  formData.append('grupo_id', this.selectedGrupo); // Añadir el grupo_id
-  formData.append('alumnos', JSON.stringify(alumnoIds));
-  formData.append('calificaciones', JSON.stringify(calificacionesParaEnviar));
-  
-  fetch('../controllers/evaluations/calcular_notas_finales.php', {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Respuesta de calcular notas finales:", data);
-      if (data.success) {
-        this.notasFinales = {};
-        
-        // Actualizar las notas finales
-        for (const alumnoId in data.notas_finales) {
-          if (data.notas_finales.hasOwnProperty(alumnoId)) {
-            console.log(`Nota final para alumno ${alumnoId}:`, data.notas_finales[alumnoId].valor_final);
-            this.notasFinales[alumnoId] = data.notas_finales[alumnoId].valor_final;
-          }
-        }
-        
-        let mensaje = "Notas finales calculadas correctamente";
-        if (data.total_porcentaje !== 100) {
-          mensaje += ` (Nota: El total de porcentajes es ${data.total_porcentaje}%)`;
-        }
-        
-        this.showNotification("Éxito", mensaje, "success");
-      } else {
-        this.showNotification("Error", data.message, "error");
-      }
-    })
-    .catch(error => {
-      console.error("Error al calcular notas finales:", error);
-      this.showNotification(
-        "Error",
-        "Ha ocurrido un error al calcular las notas finales: " + error.message,
-        "error"
-      );
-    })
-    .finally(() => {
-      this.loading = false;
-    });
-},
+          calcularNotasFinales() {
+            if (this.alumnos.length === 0 || this.evaluaciones.length === 0) {
+              this.showNotification("Información”, “No hay estudiantes ni evaluaciones para calcular calificaciones finales", "info");
+              return;
+            }
+            
+            // Prepare grade data to send to the server
+            const calificacionesParaEnviar = {};
+            
+            // For each student and each evaluation, add the grade if it exists
+            this.alumnos.forEach(alumno => {
+              const alumnoId = alumno.id;
+              calificacionesParaEnviar[alumnoId] = {};
+              
+              this.evaluaciones.forEach(evaluacion => {
+                const evaluacionId = evaluacion.id;
+                const key = `${alumnoId}-${evaluacionId}`;
+                
+                if (this.calificaciones[key]) {
+                  // Validate the grade before sending it
+                  let valor = parseFloat(this.calificaciones[key]);
+                  
+                  if (isNaN(valor)) {
+                    valor = 0;
+                  } else if (valor < 0) {
+                    valor = 0;
+                  } else if (valor > 10) {
+                    valor = 10;
+                  }
+                  
+                  // Round to 2 decimals
+                  valor = Math.round(valor * 100) / 100;
+                  
+                  calificacionesParaEnviar[alumnoId][evaluacionId] = valor;
+                } else {
+                  console.log(`No  ${alumnoId} en ${evaluacionId}`);
+                }
+              });
+            });
+                        
+            this.loading = true;
+            const alumnoIds = this.alumnos.map(alumno => alumno.id);
+            
+            const formData = new FormData();
+            formData.append('asignatura_id', this.selectedAsignatura);
+            formData.append('periodo_id', this.selectedPeriodo);
+            formData.append('grupo_id', this.selectedGrupo); // Add the grupo_id
+            formData.append('alumnos', JSON.stringify(alumnoIds));
+            formData.append('calificaciones', JSON.stringify(calificacionesParaEnviar));
+            
+            fetch('../controllers/evaluations/calcular_notas_finales.php', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP Error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                if (data.success) {
+                  this.notasFinales = {};
+                  
+                  // Update final grades
+                  for (const alumnoId in data.notas_finales) {
+                    if (data.notas_finales.hasOwnProperty(alumnoId)) {
+                      this.notasFinales[alumnoId] = data.notas_finales[alumnoId].valor_final;
+                    }
+                  }
+                  
+                  let mensaje = "Calificaciones finales calculadas exitosamente";
+                  if (data.total_porcentaje !== 100) {
+                    mensaje += ` (Note: Total percentage is ${data.total_porcentaje}%)`;
+                  }
+                  
+                  this.showNotification("Éxito", mensaje, "Éxito");
+                } else {
+                  this.showNotification("Error", data.message, "error");
+                }
+              })
+              .catch(error => {
+                this.showNotification(
+                  "Error",
+                  "Se produjo un error al calcular las calificaciones finales: " + error.message,
+                  "error"
+                );
+              })
+              .finally(() => {
+                this.loading = false;
+              });
+          },
 
-/**
- * Validar y marcar como modificada una calificación
- */
-validarYMarcarComoModificado(alumnoId, evaluacionId) {
-  const key = `${alumnoId}-${evaluacionId}`;
-  
-  // Validar el rango (0-10)
-  let valor = parseFloat(this.calificaciones[key]);
-  
-  if (isNaN(valor)) {
-    // Si no es un número, establecerlo en 0
-    valor = 0;
-  } else if (valor < 0) {
-    // Si es menor que 0, establecerlo en 0
-    valor = 0;
-  } else if (valor > 10) {
-    // Si es mayor que 10, establecerlo en 10
-    valor = 10;
-  }
-  
-  // Redondear a 2 decimales
-  valor = Math.round(valor * 100) / 100;
-  
-  // Actualizar el valor
-  this.calificaciones[key] = valor;
-  
-  // Marcar como modificado
-  this.calificacionesModificadas[key] = valor;
-},
           /**
-           * Obtener la nota final de un alumno
+           * Validate and mark a grade as modified
+           */
+          validarYMarcarComoModificado(alumnoId, evaluacionId) {
+            const key = `${alumnoId}-${evaluacionId}`;
+            
+            // Validate the range (0-10)
+            let valor = parseFloat(this.calificaciones[key]);
+            
+            if (isNaN(valor)) {
+              // If not a number, set it to 0
+              valor = 0;
+            } else if (valor < 0) {
+              // If less than 0, set it to 0
+              valor = 0;
+            } else if (valor > 10) {
+              // If greater than 10, set it to 10
+              valor = 10;
+            }
+            
+            // Round to 2 decimals
+            valor = Math.round(valor * 100) / 100;
+            
+            // Update the value
+            this.calificaciones[key] = valor;
+            
+            // Mark as modified
+            this.calificacionesModificadas[key] = valor;
+          },
+          
+          /**
+           * Get the final grade of a student
            */
           getNotaFinal(alumnoId) {
             if (this.notasFinales[alumnoId]) {
@@ -512,7 +533,7 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Obtener la clase CSS para la nota final
+           * Get the CSS class for the final grade
            */
           getClaseNotaFinal(alumnoId) {
             const nota = this.notasFinales[alumnoId];
@@ -525,17 +546,17 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Calcular el total de porcentajes de las evaluaciones
+           * Calculate the total percentage of evaluations
            */
           calcularTotalPorcentaje() {
             let total = 0;
 
-            // Sumar el porcentaje de las evaluaciones existentes
+            // Sum the percentage of existing evaluations
             for (const evaluacion of this.evaluaciones) {
               total += parseFloat(evaluacion.porcentaje) || 0;
             }
 
-            // Si estamos editando una evaluación, restar su porcentaje actual (para no contarlo doble)
+            // If we're editing an evaluation, subtract its current percentage (to avoid double counting)
             if (this.evaluacionForm.id > 0) {
               const evaluacionActual = this.evaluaciones.find(
                 (e) => e.id === this.evaluacionForm.id
@@ -545,14 +566,14 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
               }
             }
 
-            // Sumar el porcentaje del formulario actual
+            // Add the percentage of the current form
             total += parseFloat(this.evaluacionForm.porcentaje) || 0;
 
             return total.toFixed(2);
           },
 
           /**
-           * Mostrar modal de períodos
+           * Show periods modal
            */
           showPeriodosModal() {
             this.resetPeriodoForm();
@@ -560,14 +581,14 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Cerrar modal de períodos
+           * Close periods modal
            */
           closePeriodosModal() {
             modalManager.hideModal("periodosModal");
           },
 
           /**
-           * Resetear formulario de período
+           * Reset period form
            */
           resetPeriodoForm() {
             this.periodoForm = {
@@ -580,7 +601,7 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Editar período
+           * Edit period
            */
           editarPeriodo(periodo) {
             this.periodoForm = {
@@ -593,7 +614,7 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Guardar período
+           * Save period
            */
           guardarPeriodo() {
             this.loading = true;
@@ -611,16 +632,15 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
             })
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Respuesta de guardar período:", data);
                 if (data.success) {
-                  // Actualizar la lista de períodos
+                  // Update the list of periods
                   if (this.periodoForm.id > 0) {
-                    // Actualizar período existente
+                    // Update existing period
                     const index = this.periodos.findIndex(
                       (p) => p.id === data.periodo.id
                     );
@@ -628,21 +648,20 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
                       this.periodos.splice(index, 1, data.periodo);
                     }
                   } else {
-                    // Añadir nuevo período
+                    // Add new period
                     this.periodos.push(data.periodo);
                   }
 
-                  this.showNotification("Éxito", data.message, "success");
+                  this.showNotification("Success", data.message, "success");
                   this.resetPeriodoForm();
                 } else {
                   this.showNotification("Error", data.message, "error");
                 }
               })
               .catch((error) => {
-                console.error("Error al guardar período:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al guardar el período: " +
+                  "Se produjo un error al guardar el período: " +
                     error.message,
                   "error"
                 );
@@ -653,18 +672,18 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Confirmar eliminación de período
+           * Confirm period deletion
            */
           confirmarEliminarPeriodo(periodo) {
             this.confirmType = "eliminarPeriodo";
             this.confirmData = periodo;
-            this.confirmMessage = `¿Estás seguro de que deseas eliminar el período "${periodo.nombre}"?`;
+            this.confirmMessage = `¿Estás segura de que quieres eliminar el período "${periodo.nombre}"?`;
             this.confirmCallback = this.eliminarPeriodo;
             modalManager.showModal("confirmModal");
           },
 
           /**
-           * Eliminar período
+           * Delete period
            */
           eliminarPeriodo() {
             const periodo = this.confirmData;
@@ -679,14 +698,13 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
             })
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Respuesta de eliminar período:", data);
                 if (data.success) {
-                  // Eliminar de la lista
+                  // Remove from the list
                   const index = this.periodos.findIndex(
                     (p) => p.id === periodo.id
                   );
@@ -694,22 +712,21 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
                     this.periodos.splice(index, 1);
                   }
 
-                  // Si es el período seleccionado, resetear selección
+                  // If it's the selected period, reset selection
                   if (this.selectedPeriodo === periodo.id) {
                     this.selectedPeriodo = "";
                     this.cargarDatos();
                   }
 
-                  this.showNotification("Éxito", data.message, "success");
+                  this.showNotification("Success", data.message, "success");
                 } else {
                   this.showNotification("Error", data.message, "error");
                 }
               })
               .catch((error) => {
-                console.error("Error al eliminar período:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al eliminar el período: " +
+                  "Se produjo un error al eliminar el período.: " +
                     error.message,
                   "error"
                 );
@@ -720,32 +737,32 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Mostrar modal de evaluación
+           * Show evaluation modal
            */
           showEvaluacionModal() {
             this.resetEvaluacionForm();
             this.evaluacionForm.asignatura_id = this.selectedAsignatura;
             this.evaluacionForm.periodo_id = this.selectedPeriodo;
-            this.evaluacionForm.fecha = new Date().toISOString().split("T")[0]; // Fecha actual
+            this.evaluacionForm.fecha = new Date().toISOString().split("T")[0]; // Current date
             modalManager.showModal("evaluacionModal");
           },
 
           /**
-           * Cerrar modal de evaluación
+           * Close evaluation modal
            */
           closeEvaluacionModal() {
             modalManager.hideModal("evaluacionModal");
           },
 
           /**
-           * Resetear formulario de evaluación
+           * Reset evaluation form
            */
           resetEvaluacionForm() {
             this.evaluacionForm = {
               id: 0,
               asignatura_id: this.selectedAsignatura,
               periodo_id: this.selectedPeriodo,
-              grupo_id: this.selectedGrupo, // Inicializar con el grupo seleccionado
+              grupo_id: this.selectedGrupo, // Initialize with the selected group
               nombre: "",
               descripcion: "",
               fecha: new Date().toISOString().split('T')[0],
@@ -754,14 +771,14 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
-           * Editar evaluación
+           * Edit evaluation
            */
           editarEvaluacion(evaluacion) {
             this.evaluacionForm = {
               id: evaluacion.id,
               asignatura_id: evaluacion.asignatura_id,
               periodo_id: evaluacion.periodo_id,
-              grupo_id: evaluacion.grupo_id, // Añadir el grupo_id
+              grupo_id: evaluacion.grupo_id, // Add the grupo_id
               nombre: evaluacion.nombre,
               descripcion: evaluacion.descripcion || "",
               fecha: evaluacion.fecha,
@@ -772,83 +789,81 @@ validarYMarcarComoModificado(alumnoId, evaluacionId) {
           },
 
           /**
- * Guardar evaluación
- */
-guardarEvaluacion() {
-  this.loading = true;
-  
-  const formData = new FormData();
-  formData.append('id', this.evaluacionForm.id);
-  formData.append('asignatura_id', this.evaluacionForm.asignatura_id);
-  formData.append('periodo_id', this.evaluacionForm.periodo_id);
-  formData.append('grupo_id', this.evaluacionForm.grupo_id); // Añadir el grupo_id
-  formData.append('nombre', this.evaluacionForm.nombre);
-  formData.append('descripcion', this.evaluacionForm.descripcion);
-  formData.append('fecha', this.evaluacionForm.fecha);
-  formData.append('porcentaje', this.evaluacionForm.porcentaje);
-  
-  fetch('../controllers/evaluations/save_evaluacion.php', {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Respuesta de guardar evaluación:", data);
-      if (data.success) {
-        // Actualizar la lista de evaluaciones
-        if (this.evaluacionForm.id > 0) {
-          // Actualizar evaluación existente
-          const index = this.evaluaciones.findIndex(e => e.id === data.evaluacion.id);
-          if (index !== -1) {
-            this.evaluaciones.splice(index, 1, data.evaluacion);
-          }
-        } else {
-          // Añadir nueva evaluación
-          this.evaluaciones.push(data.evaluacion);
-          
-          // Ordenar por fecha
-          this.evaluaciones.sort((a, b) => {
-            return new Date(a.fecha) - new Date(b.fecha);
-          });
-        }
-        
-        this.showNotification("Éxito", data.message, "success");
-        this.closeEvaluacionModal();
-      } else {
-        this.showNotification("Error", data.message, "error");
-      }
-    })
-    .catch(error => {
-      console.error("Error al guardar evaluación:", error);
-      this.showNotification(
-        "Error",
-        "Ha ocurrido un error al guardar la evaluación: " + error.message,
-        "error"
-      );
-    })
-    .finally(() => {
-      this.loading = false;
-    });
-},
+           * Save evaluation
+           */
+          guardarEvaluacion() {
+            this.loading = true;
+            
+            const formData = new FormData();
+            formData.append('id', this.evaluacionForm.id);
+            formData.append('asignatura_id', this.evaluacionForm.asignatura_id);
+            formData.append('periodo_id', this.evaluacionForm.periodo_id);
+            formData.append('grupo_id', this.evaluacionForm.grupo_id); // Add the grupo_id
+            formData.append('nombre', this.evaluacionForm.nombre);
+            formData.append('descripcion', this.evaluacionForm.descripcion);
+            formData.append('fecha', this.evaluacionForm.fecha);
+            formData.append('porcentaje', this.evaluacionForm.porcentaje);
+            
+            fetch('../controllers/evaluations/save_evaluacion.php', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP Error: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                if (data.success) {
+                  // Update the list of evaluations
+                  if (this.evaluacionForm.id > 0) {
+                    // Update existing evaluation
+                    const index = this.evaluaciones.findIndex(e => e.id === data.evaluacion.id);
+                    if (index !== -1) {
+                      this.evaluaciones.splice(index, 1, data.evaluacion);
+                    }
+                  } else {
+                    // Add new evaluation
+                    this.evaluaciones.push(data.evaluacion);
+                    
+                    // Sort by date
+                    this.evaluaciones.sort((a, b) => {
+                      return new Date(a.fecha) - new Date(b.fecha);
+                    });
+                  }
+                  
+                  this.showNotification("Success", data.message, "success");
+                  this.closeEvaluacionModal();
+                } else {
+                  this.showNotification("Error", data.message, "error");
+                }
+              })
+              .catch(error => {
+                this.showNotification(
+                  "Error",
+                  "Se produjo un error al guardar la evaluación.: " + error.message,
+                  "error"
+                );
+              })
+              .finally(() => {
+                this.loading = false;
+              });
+          },
 
           /**
-           * Confirmar eliminación de evaluación
+           * Confirm evaluation deletion
            */
           confirmarEliminarEvaluacion(evaluacion) {
             this.confirmType = "eliminarEvaluacion";
             this.confirmData = evaluacion;
-            this.confirmMessage = `¿Estás seguro de que deseas eliminar la evaluación "${evaluacion.nombre}"?`;
+            this.confirmMessage = `¿Está seguro de que desea eliminar la evaluación "${evaluacion.nombre}"?`;
             this.confirmCallback = this.eliminarEvaluacion;
             modalManager.showModal("confirmModal");
           },
 
           /**
-           * Eliminar evaluación
+           * Delete evaluation
            */
           eliminarEvaluacion() {
             const evaluacion = this.confirmData;
@@ -863,14 +878,13 @@ guardarEvaluacion() {
             })
               .then((response) => {
                 if (!response.ok) {
-                  throw new Error(`Error HTTP: ${response.status}`);
+                  throw new Error(`HTTP Error: ${response.status}`);
                 }
                 return response.json();
               })
               .then((data) => {
-                console.log("Respuesta de eliminar evaluación:", data);
                 if (data.success) {
-                  // Eliminar de la lista
+                  // Remove from the list
                   const index = this.evaluaciones.findIndex(
                     (e) => e.id === evaluacion.id
                   );
@@ -878,7 +892,7 @@ guardarEvaluacion() {
                     this.evaluaciones.splice(index, 1);
                   }
 
-                  // Eliminar las calificaciones asociadas
+                  // Delete associated grades
                   for (const alumno of this.alumnos) {
                     const key = `${alumno.id}-${evaluacion.id}`;
                     if (this.calificaciones[key]) {
@@ -889,19 +903,18 @@ guardarEvaluacion() {
                     }
                   }
 
-                  // Restablecer notasFinales ya que pueden cambiar
+                  // Reset notasFinales as they may change
                   this.notasFinales = {};
 
-                  this.showNotification("Éxito", data.message, "success");
+                  this.showNotification("Success", data.message, "success");
                 } else {
                   this.showNotification("Error", data.message, "error");
                 }
               })
               .catch((error) => {
-                console.error("Error al eliminar evaluación:", error);
                 this.showNotification(
                   "Error",
-                  "Ha ocurrido un error al eliminar la evaluación: " +
+                  "Se produjo un error al eliminar la evaluación: " +
                     error.message,
                   "error"
                 );
@@ -912,7 +925,7 @@ guardarEvaluacion() {
           },
 
           /**
-           * Cerrar modal de confirmación
+           * Close confirmation modal
            */
           closeConfirmModal() {
             modalManager.hideModal("confirmModal");
@@ -923,7 +936,7 @@ guardarEvaluacion() {
           },
 
           /**
-           * Ejecutar acción de confirmación
+           * Execute confirmation action
            */
           confirmarAccion() {
             if (this.confirmCallback) {
@@ -933,7 +946,7 @@ guardarEvaluacion() {
           },
 
           /**
-           * Mostrar notificación
+           * Show notification
            */
           showNotification(title, message, type = "success") {
             this.notificationTitle = title;
@@ -944,14 +957,14 @@ guardarEvaluacion() {
           },
 
           /**
-           * Cerrar modal de notificación
+           * Close notification modal
            */
           closeNotificationModal() {
             modalManager.hideModal("notificationModal");
           },
 
           /**
-           * Formatear fecha para mostrar
+           * Format date for display
            */
           formatDate(dateString) {
             if (!dateString) return "";
@@ -962,6 +975,6 @@ guardarEvaluacion() {
         },
       });
   } else {
-    console.error("No se encontró el elemento #evaluaciones-app en el DOM");
+    console.error("Element #evaluaciones-app not found in the DOM");
   }
 });

@@ -26,7 +26,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png"> 
 
-    <!-- Estilos -->
+    <!-- Styles -->
     <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../estilo/asistencias.css?v=<?php echo time(); ?>">
 
@@ -87,12 +87,12 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <h1 class="calendar-title">Control de Asistencias</h1>
             </div>
 
-            <!-- Filtros y selección -->
-            <div class="filters-container">
+            <!-- Filters and selection -->
+             <div class="filters-container">
                 <div class="filter-row">
                     <div class="filter-group">
                         <label for="asignatura-select" class="filter-label">
-                            <i class="fas fa-book me-2"></i>Asignatura
+                            <img src="../img/libro.png" alt="libro" class="icon-img">Asignatura
                         </label>
                         <select id="asignatura-select" v-model="selectedAsignatura" @change="onAsignaturaChange" class="filter-select">
                             <option value="">Selecciona una asignatura</option>
@@ -104,7 +104,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     
                     <div class="filter-group">
                         <label for="grupo-select" class="filter-label">
-                            <i class="fas fa-users me-2"></i>Grupo
+                            <img src="../img/users.png" alt="grupo" class="icon-img">Grupo
                         </label>
                         <select id="grupo-select" v-model="selectedGrupo" @change="onGrupoChange" class="filter-select" :disabled="!selectedAsignatura || gruposFiltrados.length === 0">
                             <option value="">Selecciona un grupo</option>
@@ -116,7 +116,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     
                     <div class="filter-group">
                         <label for="fecha-select" class="filter-label">
-                            <i class="fas fa-calendar-day me-2"></i>Fecha
+                           <img src="../img/calendar.png" alt="fecha" class="icon-img">Fecha
                         </label>
                         <input type="date" id="fecha-select" v-model="selectedFecha" class="filter-input">
                     </div>
@@ -133,14 +133,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <p class="mt-2">Cargando datos...</p>
             </div>
 
-            <!-- Estado vacío (no se ha seleccionado nada) -->
+            <!-- Empty state (nothing selected) -->
             <div v-else-if="!dataLoaded" class="empty-state">
                 <i class="fas fa-clipboard-check fa-3x text-muted mb-3"></i>
                 <h3>Selecciona una asignatura, grupo y fecha</h3>
                 <p class="text-muted">Para comenzar, selecciona los criterios de búsqueda y haz clic en "Cargar Lista"</p>
             </div>
 
-            <!-- No hay alumnos en el grupo -->
+            <!-- There are no students in the group -->
             <div v-else-if="alumnos.length === 0" class="empty-state">
                 <i class="fas fa-users-slash fa-3x text-muted mb-3"></i>
                 <h3>No hay alumnos en este grupo</h3>
@@ -150,9 +150,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </button>
             </div>
 
-            <!-- Lista de asistencia -->
+            <!-- Attendance list -->
             <div v-else>
-                <!-- Cabecera de la lista -->
+                <!-- List header -->
                 <div class="attendance-header">
                     <div class="attendance-info">
                         <h3>
@@ -171,7 +171,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     </div>
                 </div>
 
-                <!-- Leyenda de estados -->
+                <!-- Status Legend -->
                 <div class="legend-container">
                     <div class="legend-item">
                         <span class="status-indicator presente"></span>
@@ -191,7 +191,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     </div>
                 </div>
 
-                <!-- Lista de alumnos -->
+                <!-- List of students -->
                 <div class="students-list">
                     <div v-for="alumno in alumnos" :key="alumno.id" class="student-card"
                          :class="{ 'has-observation': alumno.observaciones }">
@@ -225,7 +225,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     </div>
                 </div>
 
-                <!-- Botón guardar inferior -->
+                <!-- Save button below -->
                 <div class="bottom-actions">
                     <button class="action-btn save-btn" @click="guardarAsistencias" :disabled="!hayAlgunCambio">
                         <i class="fas fa-save"></i> Guardar Cambios
@@ -233,7 +233,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Modal para añadir observaciones -->
+            <!-- Modal to add comments -->
             <div class="modal" id="observacionModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -269,7 +269,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Modal de notificación -->
+            <!-- Notification modal -->
             <div class="modal" id="notificationModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">

@@ -1,3 +1,8 @@
+/**
+ * @author Antonio Esteban Lorenzo
+ *
+ * 
+ */
 document.addEventListener('DOMContentLoaded', function() {
     // Variables para el menú lateral
     const menuToggle = document.getElementById('menu-toggle');

@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($resultado['success']) {
             $success = $resultado['message'];
             // Clear form fields
-            $nombre = $apellidos = $email = '';
+            header("Location: login.php");
         } else {
             $error = $resultado['message'];
         }

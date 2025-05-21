@@ -1,11 +1,11 @@
 /**
  * @author Antonio Esteban Lorenzo
  *
- * M E E T I N G S
+ *
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-// Verify that the element exists before initializing Vue
+  // Verify that the element exists before initializing Vue
   if (document.getElementById("reuniones-app")) {
     console.log("Inicializando Vue.js app en #reuniones-app");
 
@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Set default date to today for new reuniones
         this.formData.fecha = new Date().toISOString().slice(0, 10);
-        
-// Check if there is a meeting ID to highlight in the URL
+
+        // Check if there is a meeting ID to highlight in the URL
         const params = new URLSearchParams(window.location.search);
-        const highlightId = params.get('highlight');
-        
+        const highlightId = params.get("highlight");
+
         if (highlightId) {
           // Save reference to use after loading meetings
           this.highlightReunionId = parseInt(highlightId);
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         clearSearch() {
           this.searchTerm = "";
         },
-        
+
         /**
          * Load all reuniones from the server
          */
@@ -134,25 +134,32 @@ document.addEventListener("DOMContentLoaded", function () {
                   return reunion;
                 });
                 console.log("Reuniones cargadas:", this.reuniones);
-                
+
                 // If there is an ID to highlight, expand that meeting
                 if (this.highlightReunionId) {
                   this.$nextTick(() => {
-                    const reunionIndex = this.reuniones.findIndex(r => r.id === this.highlightReunionId);
+                    const reunionIndex = this.reuniones.findIndex(
+                      (r) => r.id === this.highlightReunionId
+                    );
                     if (reunionIndex !== -1) {
                       // Expand the meeting
                       this.reuniones[reunionIndex].expanded = true;
-                      
+
                       // Scroll to the meeting and highlight it
                       setTimeout(() => {
-                        const element = document.querySelector(`.reunion-card[data-id="${this.highlightReunionId}"]`);
+                        const element = document.querySelector(
+                          `.reunion-card[data-id="${this.highlightReunionId}"]`
+                        );
                         if (element) {
-                          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                          element.classList.add('highlight-reunion');
-                          
+                          element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                          element.classList.add("highlight-reunion");
+
                           // Remove highlighting after 3 seconds
                           setTimeout(() => {
-                            element.classList.remove('highlight-reunion');
+                            element.classList.remove("highlight-reunion");
                           }, 3000);
                         }
                       }, 500);
@@ -272,12 +279,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const expanded = this.reuniones[index].expanded;
                     data.reunion.expanded = expanded;
 
-                   // Make sure the formatted time is present
+                    // Make sure the formatted time is present
                     if (data.reunion.hora) {
                       data.reunion.hora_formateada = data.reunion.hora.substr(
                         0,
                         5
-                      ); 
+                      );
                     } else {
                       data.reunion.hora_formateada = "";
                     }
@@ -286,14 +293,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   }
                 } else {
                   // Otherwise, add the new reunion to the array
-                  data.reunion.expanded = true; 
+                  data.reunion.expanded = true;
 
                   // Make sure the formatted time is present
                   if (data.reunion.hora) {
                     data.reunion.hora_formateada = data.reunion.hora.substr(
                       0,
                       5
-                    ); 
+                    );
                   } else {
                     data.reunion.hora_formateada = "";
                   }

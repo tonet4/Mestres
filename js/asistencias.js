@@ -1,29 +1,27 @@
 /**
  * @author Antonio Esteban Lorenzo
  *
- * Vue.js application for managing attendance
+ * 
  */
-
 document.addEventListener("DOMContentLoaded", function () {
-    // Verificar que el elemento existe antes de inicializar Vue
+    // Verify that the element exists before initializing Vue
     if (document.getElementById("asistencias-app")) {
-      console.log("Inicializando Vue.js app en #asistencias-app");
   
-      // Función para manejar modales propios
+      // Function to handle your own modals
       function ModalManager() {
         this.showModal = function(modalId) {
           const modal = document.getElementById(modalId);
           if (modal) {
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
+            document.body.style.overflow = 'hidden'; 
             
-            // Asegurar que los botones de cierre funcionen
+            // Ensure the close buttons work
             const closeButtons = modal.querySelectorAll('.btn-close');
             closeButtons.forEach(btn => {
                 btn.onclick = () => this.hideModal(modalId);
             });
             
-            // Cerrar al hacer clic fuera del contenido
+            // Close on click outside content
             modal.onclick = (e) => {
                 if (e.target === modal) {
                     this.hideModal(modalId);
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const modal = document.getElementById(modalId);
           if (modal) {
             modal.classList.remove('active');
-            document.body.style.overflow = ''; // Permite scroll de nuevo
+            document.body.style.overflow = ''; 
           }
         };
       }
@@ -56,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
           asistenciasOriginales: {},
           selectedAsignatura: "",
           selectedGrupo: "",
-          selectedFecha: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
+          selectedFecha: new Date().toISOString().split('T')[0], 
           asignaturaActual: null,
           grupoActual: null,
           loading: false,
@@ -70,10 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
         mounted() {
           console.log("Vue montado correctamente");
   
-          // Cargar asignaturas y grupos al inicio
+          // Load subjects and groups at start
           this.loadAsignaturas();
           
-          // Inicializar modales
+          // Initialize modals
           document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
               if (e.target === modal) {
@@ -92,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return asignatura.grupos;
           },
           hayAlgunCambio() {
-            // Comparar asistencias actuales con las originales
+            // Compare current attendances with the original ones
             for (const alumnoId in this.asistencias) {
               const original = this.asistenciasOriginales[alumnoId] || { estado: null, observaciones: null };
               const actual = this.asistencias[alumnoId];
@@ -175,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Cargar la lista de asistencia
+           * Upload the attendance list
            */
           cargarAsistencias() {
             if (!this.selectedAsignatura || !this.selectedGrupo || !this.selectedFecha) {
@@ -187,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.alumnos = []; // Clear alumnos array
             console.log("Cargando lista de asistencia...");
             
-            // Primero, cargar los alumnos del grupo
+            // First, load the students in the group
             fetch(`../controllers/attendance/get_alumnos_asignatura.php`, {
               method: 'POST',
               headers: {
@@ -196,14 +194,14 @@ document.addEventListener("DOMContentLoaded", function () {
               body: `asignatura_id=${this.selectedAsignatura}&grupo_id=${this.selectedGrupo}`
             })
               .then(response => {
-                // Capturar el texto completo de la respuesta
+                // Capture the full text of the response
                 return response.text().then(text => {
                   try {
-                    // Intentar parsear como JSON
+                    // Attempt to parse as JSON
                     console.log("Respuesta cruda de alumnos:", text);
                     return JSON.parse(text);
                   } catch (e) {
-                    // Si no es JSON válido, mostrar el texto y lanzar error
+                    // If it is not valid JSON, display the text and throw an error
                     console.error("Respuesta no es JSON válido:", text);
                     throw new Error("La respuesta no es JSON válido");
                   }
@@ -212,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
               .then(data => {
                 console.log("Datos de alumnos recibidos:", data);
                 if (data.success) {
-                  // Hacemos una copia profunda para evitar problemas de reactividad
+                  // We make a deep copy to avoid reactivity problems
                   const alumnosCopy = JSON.parse(JSON.stringify(data.alumnos));
                   this.asignaturaActual = data.asignatura;
                   this.grupoActual = data.grupo;
@@ -220,15 +218,15 @@ document.addEventListener("DOMContentLoaded", function () {
                   console.log("Alumnos cargados:", alumnosCopy);
                   console.log("Número de alumnos:", alumnosCopy.length);
                   
-                  // URL para la segunda petición
+                  // URL for the second request
                   const url2 = `../controllers/attendance/get_asistencias.php`;
                   console.log("Haciendo fetch a:", url2);
                   
-                  // Datos para la segunda petición
+                  // Data for the second request
                   const body2 = `asignatura_id=${this.selectedAsignatura}&grupo_id=${this.selectedGrupo}&fecha=${this.selectedFecha}`;
                   console.log("Con datos:", body2);
                   
-                  // Luego, cargar las asistencias registradas (si hay)
+                  // Then, load the recorded attendances (if any)
                   return fetch(url2, {
                     method: 'POST',
                     headers: {
@@ -236,17 +234,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
                     body: body2
                   }).then(response => {
-                    // Capturar el texto completo de la respuesta
+                   // Capture the full text of the response
                     return response.text().then(text => {
                       try {
-                        // Intentar parsear como JSON
+                        // Attempt to parse as JSON
                         console.log("Respuesta cruda de asistencias:", text);
                         return {
                           alumnosCopy: alumnosCopy,
                           asistenciasData: JSON.parse(text)
                         };
                       } catch (e) {
-                        // Si no es JSON válido, mostrar el texto y lanzar error
+                        // If it is not valid JSON, display the text and throw an error
                         console.error("Respuesta 2 no es JSON válido:", text);
                         throw new Error("La respuesta 2 no es JSON válido");
                       }
@@ -262,31 +260,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data = combinedData.asistenciasData;
                 
                 if (data.success) {
-                  // Asegurarse de que asistencias sea siempre un objeto
+                  // Make sure assists is always an object
                   this.asistencias = {};
                   this.asistenciasOriginales = {};
                   
-                  // Si data.asistencias es un objeto, usar directamente
+                  // If data.asistencias is an object, use it directly
                   if (data.asistencias && typeof data.asistencias === 'object' && !Array.isArray(data.asistencias)) {
                     this.asistencias = data.asistencias;
                     this.asistenciasOriginales = JSON.parse(JSON.stringify(data.asistencias));
                   }
                   
-                  // Inicializar el estado de asistencia para cada alumno
+                  // Initialize attendance status for each student
                   const alumnosConEstado = alumnosCopy.map(alumno => {
                     const alumnoConEstado = {...alumno};
                     
-                    // Si ya tiene una asistencia registrada, usarla
+                    // If you already have a registered attendance, use it
                     if (this.asistencias[alumno.id]) {
                       alumnoConEstado.estado = this.asistencias[alumno.id].estado;
                       alumnoConEstado.observaciones = this.asistencias[alumno.id].observaciones;
                     } else {
-                      // Por defecto, inicializar como 'presente'
+                      // By default, initialize as 'present'
                       alumnoConEstado.estado = 'presente';
                       alumnoConEstado.observaciones = null;
                     }
                     
-                    // Guardar en el objeto de asistencias
+                    // Save to the attendance object
                     this.asistencias[alumno.id] = {
                       estado: alumnoConEstado.estado,
                       observaciones: alumnoConEstado.observaciones
@@ -295,10 +293,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return alumnoConEstado;
                   });
                   
-                  // Actualizar la lista de alumnos
+                 // Update the list of students
                   this.alumnos = alumnosConEstado;
                   
-                  // Marcar como datos cargados
+                  // Mark as loaded data
                   this.dataLoaded = true;
                   
                   console.log("Estado dataLoaded:", this.dataLoaded);
@@ -306,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   console.log("Asistencias:", this.asistencias);
                   console.log("¿Se debería mostrar la lista?", this.dataLoaded && this.alumnos.length > 0);
                   
-                  // Forzar actualización de Vue
+                  // Force Vue update
                   this.$forceUpdate();
                 } else {
                   throw new Error(data.message);
@@ -323,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
               .finally(() => {
                 this.loading = false;
                 
-                // Debug: verificar el estado final
+                // Debug: check the final state
                 setTimeout(() => {
                   console.log("Estado FINAL dataLoaded:", this.dataLoaded);
                   console.log("Estado FINAL alumnos.length:", this.alumnos.length);
@@ -333,13 +331,13 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Cambiar el estado de asistencia de un alumno
+           * Changing a student's attendance status
            */
           cambiarEstado(alumno, estado) {
             console.log(`Cambiando estado de ${alumno.nombre} a ${estado}`);
             alumno.estado = estado;
             
-            // Actualizar el objeto de asistencias
+            // Update the attendance object
             this.asistencias[alumno.id] = {
               estado: estado,
               observaciones: alumno.observaciones
@@ -347,14 +345,14 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Seleccionar un estado para todos los alumnos
+           * Select a status for all students
            */
           seleccionarTodos(estado) {
             console.log(`Seleccionando todos como ${estado}`);
             this.alumnos.forEach(alumno => {
               alumno.estado = estado;
               
-              // Actualizar el objeto de asistencias
+              // Update the attendance object
               this.asistencias[alumno.id] = {
                 estado: estado,
                 observaciones: alumno.observaciones
@@ -363,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Guardar todas las asistencias
+           * Save all assists
            */
           guardarAsistencias() {
             if (!this.hayAlgunCambio) {
@@ -374,14 +372,14 @@ document.addEventListener("DOMContentLoaded", function () {
             this.loading = true;
             console.log("Guardando asistencias...");
             
-            // Preparar datos para enviar
+            // Prepare data for sending
             const alumnosData = this.alumnos.map(alumno => ({
               id: alumno.id,
               estado: alumno.estado,
               observaciones: alumno.observaciones
             }));
             
-            // Enviar datos al servidor
+            //Send data to server
             fetch("../controllers/attendance/save_asistencia.php", {
               method: 'POST',
               headers: {
@@ -403,8 +401,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
                   
-                  // Actualizar las asistencias originales para reflejar los cambios guardados
-                  this.asistenciasOriginales = JSON.parse(JSON.stringify(this.asistencias)); // Copia profunda
+                  // Update the original attendances to reflect the saved changes
+                  this.asistenciasOriginales = JSON.parse(JSON.stringify(this.asistencias)); 
                 } else {
                   throw new Error(data.message);
                 }
@@ -423,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Mostrar modal de observaciones
+           * Show observations modal
            */
           showObservacionModal(alumno) {
             this.selectedAlumno = alumno;
@@ -432,7 +430,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Cerrar modal de observaciones
+           * Close observations modal
            */
           closeObservacionModal() {
             modalManager.hideModal('observacionModal');
@@ -441,35 +439,35 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Guardar observación
+           * Save observation
            */
           guardarObservacion() {
             if (!this.selectedAlumno) return;
             
             console.log(`Guardando observación para ${this.selectedAlumno.nombre}: ${this.observacionText}`);
             
-            // Actualizar la observación del alumno
+            //Update student observation
             this.selectedAlumno.observaciones = this.observacionText || null;
             
-            // Actualizar el objeto de asistencias
+            // Update the attendance object
             this.asistencias[this.selectedAlumno.id] = {
               estado: this.selectedAlumno.estado,
               observaciones: this.selectedAlumno.observaciones
             };
             
-            // Cerrar el modal
+            // Close the modal
             this.closeObservacionModal();
           },
           
           /**
-           * Ir a la sección de alumnos
+           * Go to the student section
            */
           goToAlumnos() {
             window.location.href = 'alumnos.php';
           },
           
           /**
-           * Formatear fecha YYYY-MM-DD a DD/MM/YYYY
+           * Format date YYYY-MM-DD to DD/MM/YYYY
            */
           formatDate(date) {
             if (!date) return '';
@@ -483,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           
           /**
-           * Obtener icono para cada estado
+           * Get icon for each state
            */
           getIconForStatus(status) {
             const icons = {

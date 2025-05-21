@@ -82,7 +82,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <!-- Main content - Vue app -->
     <main class="main-content">
         <div id="evaluaciones-app">
-            <!-- Header with title and action buttons -->
+           <!-- Header with title and action buttons -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="calendar-title">Sistema de Evaluaciones</h1>
                 <div class="action-buttons">
@@ -92,12 +92,14 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Filtros para evaluaciones -->
+            <!-- Filters for evaluations -->
             <div class="filters-container">
                 <div class="filters-row">
                     <div class="filter-col">
-                        <label>Grupo:</label>
-                        <select v-model="selectedGrupo" @change="cargarDatos" class="filter-select">
+                        <label>
+                            <img src="../img/users.png" alt="grupo" class="icon-img">Grupo:
+                        </label>
+                        <select v-model="selectedGrupo" @change="onGrupoChange" class="filter-select">
                             <option value="">Selecciona un grupo</option>
                             <option v-for="grupo in grupos" :key="grupo.id" :value="grupo.id">
                                 {{ grupo.nombre }}
@@ -105,7 +107,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </select>
                     </div>
                     <div class="filter-col">
-                        <label>Asignatura:</label>
+                        <label><img src="../img/libro.png" alt="asignatura" class="icon-img">
+                            Asignatura:
+                        </label>
                         <select v-model="selectedAsignatura" @change="cargarDatos" class="filter-select">
                             <option value="">Selecciona una asignatura</option>
                             <option v-for="asignatura in asignaturas" :key="asignatura.id" :value="asignatura.id">
@@ -114,7 +118,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </select>
                     </div>
                     <div class="filter-col">
-                        <label>Período:</label>
+                        <label><img src="../img/calendar.png" alt="periodo" class="icon-img">
+                            Período:
+                        </label>
                         <select v-model="selectedPeriodo" @change="cargarDatos" class="filter-select">
                             <option value="">Selecciona un período</option>
                             <option v-for="periodo in periodos" :key="periodo.id" :value="periodo.id">
@@ -125,7 +131,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Mensaje informativo cuando no hay selección -->
+            <!-- Informational message when there is no selection -->
             <div v-if="!selectedGrupo || !selectedAsignatura || !selectedPeriodo" class="info-message">
                 <i class="fas fa-info-circle"></i>
                 <p>Selecciona un grupo, asignatura y período para comenzar a calificar.</p>
@@ -137,14 +143,11 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 <p class="mt-2">Cargando datos...</p>
             </div>
 
-            <!-- Tabla de calificaciones -->
+           <!-- Ratings table -->
             <div v-else-if="alumnos.length > 0" class="calificaciones-container">
                 <div class="table-actions">
                     <button class="action-btn add-btn" @click="showEvaluacionModal">
                         <i class="fas fa-plus"></i> Nueva Evaluación
-                    </button>
-                    <button class="action-btn save-btn" @click="guardarCalificaciones" :disabled="!hayCalificacionesSinGuardar">
-                        <i class="fas fa-save"></i> Guardar Calificaciones
                     </button>
                     <button class="action-btn calculate-btn" @click="calcularNotasFinales">
                         <i class="fas fa-calculator"></i> Calcular Notas Finales
@@ -162,10 +165,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                     <div class="evaluacion-porcentaje">{{ evaluacion.porcentaje }}%</div>
                                     <div class="evaluacion-actions">
                                         <button class="btn-link text-primary" @click="editarEvaluacion(evaluacion)">
-                                            <i class="fas fa-edit"></i>
+                                            <img src="../img/notas.png" alt="editar" class="icon-img-b">
                                         </button>
                                         <button class="btn-link text-danger" @click="confirmarEliminarEvaluacion(evaluacion)">
-                                            <i class="fas fa-trash"></i>
+                                            <img src="../img/basura.png" alt="eliminar" class="icon-img-b">
                                         </button>
                                     </div>
                                 </th>
@@ -204,22 +207,22 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     </table>
                 </div>
 
-                <!-- Sin evaluaciones -->
+                <!-- No reviews -->
                 <div v-if="evaluaciones.length === 0" class="info-message warning mt-4">
                     <i class="fas fa-exclamation-triangle"></i>
                     <p>No hay evaluaciones definidas. Crea una nueva evaluación para comenzar a calificar.</p>
                 </div>
             </div>
 
-            <!-- Mensaje cuando no hay alumnos en el grupo seleccionado -->
+           <!-- Message when there are no students in the selected group -->
             <div v-else-if="selectedGrupo && alumnos.length === 0" class="info-message warning">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>No hay alumnos asignados al grupo seleccionado.</p>
             </div>
 
-            <!-- Modal para períodos de evaluación -->
+            <!-- Modal for evaluation periods -->
             <div class="modal" id="periodosModal" tabindex="-1">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Períodos de Evaluación</h5>
@@ -227,66 +230,74 @@ $usuario_nombre = $_SESSION['user_nombre'];
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <!-- Lista de períodos existentes -->
-                            <div class="periodos-list">
-                                <div v-if="periodos.length === 0" class="empty-message">
-                                    <i class="fas fa-info-circle"></i>
-                                    <p>No hay períodos de evaluación definidos.</p>
+                        <div class="modal-body periodo-modal-body">
+                            <!-- Two-column layout -->
+                            <div class="periodo-layout">
+                                <!-- Left column: Form to create/edit periods -->
+                                <div class="periodo-form-container">
+                                    <form @submit.prevent="guardarPeriodo" class="periodo-form">
+                                        <h5>{{ periodoForm.id > 0 ? 'Editar Período' : 'Nuevo Período' }}</h5>
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre del Período</label>
+                                            <input type="text" class="form-control" v-model="periodoForm.nombre" required placeholder="Ej: Primer Trimestre">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-col">
+                                                <label class="form-label">Fecha Inicio</label>
+                                                <input type="date" class="form-control" v-model="periodoForm.fecha_inicio" required>
+                                            </div>
+                                            <div class="form-col">
+                                                <label class="form-label">Fecha Fin</label>
+                                                <input type="date" class="form-control" v-model="periodoForm.fecha_fin" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Descripción</label>
+                                            <textarea class="form-control" v-model="periodoForm.descripcion" placeholder="Descripción opcional"></textarea>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn-secondary" @click="resetPeriodoForm" v-if="periodoForm.id > 0">
+                                                <i class="fas fa-times"></i> Cancelar
+                                            </button>
+                                            <button type="submit" class="btn-primary">
+                                                <i class="fas fa-save"></i> {{ periodoForm.id > 0 ? 'Actualizar' : 'Crear' }}
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div v-else v-for="periodo in periodos" :key="periodo.id" class="periodo-item">
-                                    <div class="periodo-info">
-                                        <h5>{{ periodo.nombre }}</h5>
-                                        <p>{{ formatDate(periodo.fecha_inicio) }} - {{ formatDate(periodo.fecha_fin) }}</p>
-                                        <p v-if="periodo.descripcion">{{ periodo.descripcion }}</p>
-                                    </div>
-                                    <div class="periodo-actions">
-                                        <button class="btn-link text-primary" @click="editarPeriodo(periodo)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn-link text-danger" @click="confirmarEliminarPeriodo(periodo)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+
+                                <!-- Right column: List of existing periods -->
+                                <div class="periodos-list-container">
+                                    <h5>Períodos existentes</h5>
+                                    <div class="periodos-list">
+                                        <div v-if="periodos.length === 0" class="empty-message">
+                                            <i class="fas fa-info-circle"></i>
+                                            <p>No hay períodos de evaluación definidos.</p>
+                                        </div>
+                                        <div v-else v-for="periodo in periodos" :key="periodo.id" class="periodo-item">
+                                            <div class="periodo-info">
+                                                <h5>{{ periodo.nombre }}</h5>
+                                                <p>{{ formatDate(periodo.fecha_inicio) }} - {{ formatDate(periodo.fecha_fin) }}</p>
+                                                <p v-if="periodo.descripcion">{{ periodo.descripcion }}</p>
+                                            </div>
+                                            <div class="periodo-actions">
+                                                <button class="btn-link text-primary" @click="editarPeriodo(periodo)">
+                                                    <img src="../img/notas.png" alt="editar" class="icon-img-b">
+                                                </button>
+                                                <button class="btn-link text-danger" @click="confirmarEliminarPeriodo(periodo)">
+                                                    <img src="../img/basura.png" alt="eliminar" class="icon-img-b">
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Formulario para crear/editar períodos -->
-                            <form @submit.prevent="guardarPeriodo" class="periodo-form">
-                                <h5>{{ periodoForm.id > 0 ? 'Editar Período' : 'Nuevo Período' }}</h5>
-                                <div class="form-group">
-                                    <label class="form-label">Nombre del Período</label>
-                                    <input type="text" class="form-control" v-model="periodoForm.nombre" required placeholder="Ej: Primer Trimestre">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-col">
-                                        <label class="form-label">Fecha Inicio</label>
-                                        <input type="date" class="form-control" v-model="periodoForm.fecha_inicio" required>
-                                    </div>
-                                    <div class="form-col">
-                                        <label class="form-label">Fecha Fin</label>
-                                        <input type="date" class="form-control" v-model="periodoForm.fecha_fin" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Descripción</label>
-                                    <textarea class="form-control" v-model="periodoForm.descripcion" placeholder="Descripción opcional"></textarea>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn-secondary" @click="resetPeriodoForm" v-if="periodoForm.id > 0">
-                                        <i class="fas fa-times"></i> Cancelar
-                                    </button>
-                                    <button type="submit" class="btn-primary">
-                                        <i class="fas fa-save"></i> {{ periodoForm.id > 0 ? 'Actualizar' : 'Crear' }}
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Modal para evaluaciones -->
+            <!-- Modal for evaluations -->
             <div class="modal" id="evaluacionModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -329,7 +340,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Modal de confirmación -->
+            <!-- Confirmation modal -->
             <div class="modal" id="confirmModal" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -354,7 +365,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Modal de notificación -->
+            <!-- Notification modal -->
             <div class="modal" id="notificationModal" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">

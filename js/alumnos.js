@@ -1,7 +1,7 @@
 /**
  * @author Antonio Esteban Lorenzo
  *
- * ALUMNOS.js
+ * 
  */
 
 document.addEventListener("DOMContentLoaded", function () {
