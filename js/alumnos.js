@@ -7,7 +7,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 // Verify that the element exists before initializing Vue
     if (document.getElementById("alumnos-app")) {
-      console.log("Inicializando Vue.js app en #alumnos-app");
   
 // Function to handle your own modals
       function ModalManager() {
@@ -67,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
           notificationType: "success",
         },
         mounted() {
-          console.log("Vue montado correctamente");
   
           // Add handlers to close modals when clicking close buttons
           document.querySelectorAll('.btn-close').forEach(closeBtn => {
@@ -123,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           loadAlumnos() {
             this.loading = true;
-            console.log("Cargando alumnos...");
   
             return fetch("../controllers/students/get_alumnos.php")
               .then(response => {
@@ -133,13 +130,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Datos recibidos:", data);
                 if (data.success) {
                   this.alumnos = data.alumnos.map(alumno => {
                     alumno.expanded = false;
                     return alumno;
                   });
-                  console.log("Alumnos cargados:", this.alumnos);
                 } else {
                   this.showAlert("Error", data.message, "error");
                 }
@@ -161,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Load all grupos from the server
            */
           loadGrupos() {
-            console.log("Cargando grupos...");
   
             return fetch("../controllers/students/get_grupos.php")
               .then(response => {
@@ -171,10 +165,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Datos de grupos recibidos:", data);
                 if (data.success) {
                   this.grupos = data.grupos;
-                  console.log("Grupos cargados:", this.grupos);
                 } else {
                   this.showAlert("Error", data.message, "error");
                 }
@@ -195,7 +187,6 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           showModal(alumno = null) {
             if (alumno) {
-              console.log("Editando alumno:", alumno);
               // Edit mode - populate form with alumno data
               this.editMode = true;
               this.formData = {
@@ -215,7 +206,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? `../img/alumnos/${alumno.imagen}` 
                 : '../img/user.png';
             } else {
-              console.log("Creando nuevo alumno");
               // Add mode - reset form
               this.editMode = false;
               this.formData = {
@@ -285,7 +275,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Save a alumno (create or update)
            */
           saveAlumno() {
-            console.log("Guardando alumno:", this.formData);
             
             // Create FormData object
             const formData = new FormData();
@@ -317,7 +306,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
   
@@ -358,7 +346,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * @param {Object} alumno - Alumno to delete
            */
           confirmDelete(alumno) {
-            console.log("Solicitando confirmación para eliminar alumno:", alumno.id);
             this.selectedAlumno = alumno;
             modalManager.showModal('deleteModal');
           },
@@ -376,9 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           deleteAlumno() {
             if (!this.selectedAlumno) return;
-  
-            console.log("Eliminando alumno:", this.selectedAlumno.id);
-  
+    
             // Create FormData object
             const formData = new FormData();
             formData.append("id", this.selectedAlumno.id);
@@ -395,7 +380,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
   
@@ -459,7 +443,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Save grupo
            */
           saveGrupo() {
-            console.log("Guardando grupo:", this.grupoForm);
             
             // Create FormData object
             const formData = new FormData();
@@ -480,7 +463,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
   
@@ -519,7 +501,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * @param {Object} grupo - Grupo to delete
            */
           confirmDeleteGrupo(grupo) {
-            console.log("Solicitando confirmación para eliminar grupo:", grupo.id);
             this.selectedGrupo = grupo;
             modalManager.showModal('deleteGrupoModal');
           },
@@ -537,9 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           deleteGrupo() {
             if (!this.selectedGrupo) return;
-  
-            console.log("Eliminando grupo:", this.selectedGrupo.id);
-  
+    
             // Create FormData object
             const formData = new FormData();
             formData.append("id", this.selectedGrupo.id);
@@ -556,7 +535,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
   
@@ -644,7 +622,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Show a notification modal
            */
           showAlert(title, message, type) {
-            console.log(`Alerta: ${title} - ${message} (${type})`);
             this.notificationTitle = title;
             this.notificationMessage = message;
             this.notificationType = type;

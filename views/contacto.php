@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - QUADERN MESTRES</title>
+    <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
-    <link rel="stylesheet" href="../estilo/base.css">
-    <link rel="stylesheet" href="../estilo/dashboard.css">
-        <link rel="stylesheet" href="../estilo/enlaces.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/dashboard.css">
+        <link rel="stylesheet" href="../style/enlaces.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -18,7 +18,7 @@
         <div class="nav-left">
             <div class="logo">
                 <a href="../index.html">
-                    <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                    <img src="../img/logo2.png" alt="logo">
                 </a>
             </div>
             <h1>QUADERN de Mestres</h1>

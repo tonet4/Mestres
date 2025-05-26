@@ -6,7 +6,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 // Verify that the element exists before initializing Vue
     if (document.getElementById("asignaturas-app")) {
-      console.log("Inicializando Vue.js app en #asignaturas-app");
   
       // Function to handle your own modals
       function ModalManager() {
@@ -82,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
           notificationType: "success",
         },
         mounted() {
-          console.log("Vue montado correctamente");
   
           // We load the groups and subjects at the beginning
           this.loadGrupos().then(() => {
@@ -126,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           loadAsignaturas() {
             this.loading = true;
-            console.log("Cargando asignaturas...");
 
             return fetch("../controllers/subjects/get_asignaturas.php")
               .then(response => {
@@ -136,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Datos recibidos:", data);
                 if (data.success) {
                   // Preserve the expansion status of existing subjects
                   const expandedState = {};
@@ -153,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return asignatura;
                   });
                   
-                  console.log("Asignaturas cargadas:", this.asignaturas);
                 } else {
                   this.showAlert("Error", data.message, "error");
                 }
@@ -175,7 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Load all grupos from the server
            */
           loadGrupos() {
-            console.log("Cargando grupos...");
 
             return fetch("../controllers/subjects/get_grupos.php")
               .then(response => {
@@ -185,10 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Datos de grupos recibidos:", data);
                 if (data.success) {
                   this.grupos = data.grupos;
-                  console.log("Grupos cargados:", this.grupos);
                 } else {
                   this.showAlert("Error", data.message, "error");
                 }
@@ -209,7 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           showModal(asignatura = null) {
             if (asignatura) {
-              console.log("Editando asignatura:", asignatura);
               // Edit mode - populate form with asignatura data
               this.editMode = true;
               // Use Object.assign to create a copy and avoid references
@@ -224,9 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
               // Set preview color
               this.previewColor = asignatura.color;
               
-              console.log("Datos cargados en el formulario:", this.formData);
             } else {
-              console.log("Creando nueva asignatura");
               // Add mode - reset form
               this.editMode = false;
               this.formData = {
@@ -273,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Save a asignatura (create or update)
            */
           saveAsignatura() {
-            console.log("Guardando asignatura:", this.formData);
             
             // Create FormData object
             const formData = new FormData();
@@ -295,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
 
@@ -312,8 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
                       // Use Vue.set to ensure reactivity
                       this.$set(this.asignaturas, index, asignaturaActualizada);
                       
-                      console.log("Asignatura actualizada en índice:", index);
-                      console.log("Nueva versión:", this.asignaturas[index]);
                     }
                   } else {
                     // If it is a new subject
@@ -349,9 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           saveGruposAsignatura() {
             if (!this.selectedAsignatura) return;
-            
-            console.log("Guardando grupos para asignatura:", this.selectedAsignatura.id, this.selectedGrupos);
-            
+                        
             // Create FormData object
             const formData = new FormData();
             formData.append("asignatura_id", this.selectedAsignatura.id);
@@ -369,7 +352,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
 
@@ -421,7 +403,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * @param {Object} asignatura - Asignatura to delete
            */
           confirmDelete(asignatura) {
-            console.log("Solicitando confirmación para eliminar asignatura:", asignatura.id);
             this.selectedAsignatura = asignatura;
             modalManager.showModal('deleteModal');
           },
@@ -440,7 +421,6 @@ document.addEventListener("DOMContentLoaded", function () {
           deleteAsignatura() {
             if (!this.selectedAsignatura) return;
 
-            console.log("Eliminando asignatura:", this.selectedAsignatura.id);
 
             // Create FormData object
             const formData = new FormData();
@@ -458,7 +438,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
 
@@ -499,7 +478,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Show a notification modal
            */
           showAlert(title, message, type) {
-            console.log(`Alerta: ${title} - ${message} (${type})`);
             this.notificationTitle = title;
             this.notificationMessage = message;
             this.notificationType = type;

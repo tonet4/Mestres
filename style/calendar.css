@@ -561,6 +561,8 @@
     background-color: #f8f9fa;
     color: var(--text-color);
     border: 1px solid var(--border-color);
+    font-family: var(--font-main);
+    font-size: 1rem;
 }
 
 .modal-btn.cancel:hover {
@@ -584,7 +586,7 @@
 
 .modal-btn.delete {
     font-family: var(--font-main);
-    background-color: var(--accent-color);
+    background-color: #e74c3c;
     color: white;
     border: none;
     box-shadow: 0 4px 8px rgba(220, 138, 38, 0.4);
@@ -592,7 +594,7 @@
 }
 
 .modal-btn.delete:hover {
-    background-color: #ffc082;
+    background-color: #ea6363;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(202, 122, 25, 0.5);
 }

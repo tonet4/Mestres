@@ -7,8 +7,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Verify that the element exists before initializing Vue
   if (document.getElementById("reuniones-app")) {
-    console.log("Inicializando Vue.js app en #reuniones-app");
-
     // Vue application
     const app = new Vue({
       el: "#reuniones-app",
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         notificationType: "success",
       },
       mounted() {
-        console.log("Vue montado correctamente");
 
         // Initialize Bootstrap modals - only if the elements exist
         if (document.getElementById("reunionModal")) {
@@ -102,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
          */
         loadReuniones() {
           this.loading = true;
-          console.log("Cargando reuniones...");
 
           return fetch("../controllers/meetings/get_reuniones.php")
             .then((response) => {
@@ -125,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             })
             .then((data) => {
-              console.log("Datos recibidos:", data);
               if (data.success) {
                 // Add the expanded property to each meeting
                 this.reuniones = data.reuniones.map((reunion) => {
@@ -133,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   reunion.expanded = false;
                   return reunion;
                 });
-                console.log("Reuniones cargadas:", this.reuniones);
 
                 // If there is an ID to highlight, expand that meeting
                 if (this.highlightReunionId) {
@@ -190,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
          */
         showModal(reunion = null) {
           if (reunion) {
-            console.log("Editando reunión:", reunion);
             // Edit mode - populate form with reunion data
             this.editMode = true;
             this.formData = {
@@ -201,7 +194,6 @@ document.addEventListener("DOMContentLoaded", function () {
               contenido: reunion.contenido,
             };
           } else {
-            console.log("Creando nueva reunión");
             // Add mode - reset form
             this.editMode = false;
             this.formData = {
@@ -234,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
          * Save a reunion (create or update)
          */
         saveReunion() {
-          console.log("Guardando reunión:", this.formData);
           // Create FormData object
           const formData = new FormData();
           formData.append("id", this.formData.id);
@@ -265,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             })
             .then((data) => {
-              console.log("Respuesta del servidor:", data);
               if (data.success) {
                 this.showAlert("Éxito", data.message, "success");
 
@@ -329,10 +319,6 @@ document.addEventListener("DOMContentLoaded", function () {
          * @param {Object} reunion - Reunion to delete
          */
         confirmDelete(reunion) {
-          console.log(
-            "Solicitando confirmación para eliminar reunión:",
-            reunion.id
-          );
           this.selectedReunion = reunion;
           if (this.deleteModal) {
             this.deleteModal.show();
@@ -354,8 +340,6 @@ document.addEventListener("DOMContentLoaded", function () {
          */
         deleteReunion() {
           if (!this.selectedReunion) return;
-
-          console.log("Eliminando reunión:", this.selectedReunion.id);
 
           // Create FormData object
           const formData = new FormData();
@@ -383,7 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             })
             .then((data) => {
-              console.log("Respuesta del servidor:", data);
               if (data.success) {
                 this.showAlert("Éxito", data.message, "success");
 
@@ -446,7 +429,6 @@ document.addEventListener("DOMContentLoaded", function () {
          * Show a notification modal
          */
         showAlert(title, message, type) {
-          console.log(`Alerta: ${title} - ${message} (${type})`);
           this.notificationTitle = title;
           this.notificationMessage = message;
           this.notificationType = type;

@@ -268,6 +268,167 @@
     font-style: italic;
 }
 
+/* Estilos para el horario en el dashboard */
+.horario-dashboard-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    overflow: hidden;
+    border: 2px solid var(--secondary-color);
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horario-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.horario-dashboard-header h2 {
+    font-size: 1.7rem;
+    text-shadow: 2px 2px 3px var(--accent-color);
+    font-family: "fuente1";
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.horario-dashboard-header h2 i {
+    margin-right: 10px;
+}
+
+.horario-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.horario-dashboard-content {
+    padding: 20px;
+}
+
+.horario-dashboard-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.horario-dashboard-title h3 {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin: 0 0 5px 0;
+}
+
+.horario-dashboard-descripcion {
+    color: #777;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.horario-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.day-column-dashboard {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+}
+
+.day-header-dashboard {
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    font-weight: 600;
+}
+
+.day-blocks {
+    flex: 1;
+    padding: 10px;
+    background-color: #fafafa;
+    min-height: 150px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.time-block-dashboard {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.time-block-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.time-block-dashboard-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.time-block-dashboard-time {
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.time-block-dashboard-desc {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.no-blocks-message {
+    color: #999;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.no-horario-message {
+    text-align: center;
+    padding: 30px;
+    background-color: #fafafa;
+}
+
+.no-horario-message p {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+/* Responsive styles for the dashboard schedule */
+@media screen and (max-width: 768px) {
+    .horario-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .horario-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .horario-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* R E S P O N S I V */
 

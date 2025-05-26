@@ -28,8 +28,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <link rel="shortcut icon" href="../img/logo2.png">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../estilo/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../estilo/alumnos.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/base.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/students.css?v=<?php echo time(); ?>">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Vue.js -->
@@ -71,6 +71,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
+            <li><a href="horarios.php"><i class="fas fa-clock"></i> Horarios</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
@@ -479,12 +480,69 @@ $usuario_nombre = $_SESSION['user_nombre'];
     </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+    <footer class="footer-dark">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <img src="../img/logo2.png" alt="Logo Quadern Mestres">
+                <div>
+                    <h3>QUADERN de Mestres</h3>
+                    <span>v1.0 · 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Enlaces Útiles</h4>
+            <div class="footer-links">
+                <a href="privacidad.html" target="_blank"><i class="fas fa-shield-alt"></i> Privacidad</a>
+                <a href="condiciones.html" target="_blank"><i class="fas fa-file-contract"></i> Condiciones</a>
+                <a href="contacto.php" target="_blank"><i class="fas fa-envelope"></i> Contacto</a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+                <a href="https://twitter.com/quadernmestres" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/quadernmestres" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/tone4" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/company/quadernmestres" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section credits-section">
+            <p>Proyecto desarrollado por Antonio Esteban Lorenzo · CFGS DAW · IES La Sénia,Paiporta</p>
+            <p>&copy; 2025 QUADERN MESTRES - Todos los derechos reservados</p>
+            <div class="back-to-top" id="back-to-top">
+                <a href="#" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
     </footer>
 
     <!-- Custom JS -->
     <script src="../js/alumnos.js?v=<?php echo time(); ?>"></script>
+    <!-- JavaScript for the up button -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
     <script>
         // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {

@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
           notificationType: "success",
         },
         mounted() {
-          console.log("Vue montado correctamente");
   
           // Load subjects and groups at start
           this.loadAsignaturas();
@@ -109,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           loadAsignaturas() {
             this.loading = true;
-            console.log("Cargando asignaturas...");
   
             fetch("../controllers/attendance/get_asignaturas_grupos.php")
               .then(response => {
@@ -122,10 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Datos recibidos:", data);
                 if (data.success) {
                   this.asignaturas = data.asignaturas;
-                  console.log("Asignaturas cargadas:", this.asignaturas);
                 } else {
                   this.showAlert("Error", data.message, "error");
                 }
@@ -147,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Handle asignatura change
            */
           onAsignaturaChange() {
-            console.log("Asignatura seleccionada:", this.selectedAsignatura);
             this.selectedGrupo = ""; // Reset grupo selection
             this.alumnos = []; // Reset alumnos list
             this.dataLoaded = false;
@@ -160,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Handle grupo change
            */
           onGrupoChange() {
-            console.log("Grupo seleccionado:", this.selectedGrupo);
             this.alumnos = []; // Reset alumnos list
             this.dataLoaded = false;
             
@@ -183,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
             this.loading = true;
             this.dataLoaded = false; // Reset dataLoaded flag
             this.alumnos = []; // Clear alumnos array
-            console.log("Cargando lista de asistencia...");
             
             // First, load the students in the group
             fetch(`../controllers/attendance/get_alumnos_asignatura.php`, {
@@ -198,7 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.text().then(text => {
                   try {
                     // Attempt to parse as JSON
-                    console.log("Respuesta cruda de alumnos:", text);
                     return JSON.parse(text);
                   } catch (e) {
                     // If it is not valid JSON, display the text and throw an error
@@ -208,23 +200,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
               })
               .then(data => {
-                console.log("Datos de alumnos recibidos:", data);
                 if (data.success) {
                   // We make a deep copy to avoid reactivity problems
                   const alumnosCopy = JSON.parse(JSON.stringify(data.alumnos));
                   this.asignaturaActual = data.asignatura;
                   this.grupoActual = data.grupo;
                   
-                  console.log("Alumnos cargados:", alumnosCopy);
-                  console.log("Número de alumnos:", alumnosCopy.length);
-                  
                   // URL for the second request
                   const url2 = `../controllers/attendance/get_asistencias.php`;
-                  console.log("Haciendo fetch a:", url2);
                   
                   // Data for the second request
                   const body2 = `asignatura_id=${this.selectedAsignatura}&grupo_id=${this.selectedGrupo}&fecha=${this.selectedFecha}`;
-                  console.log("Con datos:", body2);
                   
                   // Then, load the recorded attendances (if any)
                   return fetch(url2, {
@@ -238,7 +224,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return response.text().then(text => {
                       try {
                         // Attempt to parse as JSON
-                        console.log("Respuesta cruda de asistencias:", text);
                         return {
                           alumnosCopy: alumnosCopy,
                           asistenciasData: JSON.parse(text)
@@ -255,7 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               })
               .then(combinedData => {
-                console.log("Datos combinados:", combinedData);
                 const alumnosCopy = combinedData.alumnosCopy;
                 const data = combinedData.asistenciasData;
                 
@@ -299,11 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   // Mark as loaded data
                   this.dataLoaded = true;
                   
-                  console.log("Estado dataLoaded:", this.dataLoaded);
-                  console.log("Alumnos después de procesar:", this.alumnos);
-                  console.log("Asistencias:", this.asistencias);
-                  console.log("¿Se debería mostrar la lista?", this.dataLoaded && this.alumnos.length > 0);
-                  
                   // Force Vue update
                   this.$forceUpdate();
                 } else {
@@ -323,9 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 // Debug: check the final state
                 setTimeout(() => {
-                  console.log("Estado FINAL dataLoaded:", this.dataLoaded);
-                  console.log("Estado FINAL alumnos.length:", this.alumnos.length);
-                  console.log("Estado FINAL loading:", this.loading);
                 }, 100);
               });
           },
@@ -334,7 +310,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Changing a student's attendance status
            */
           cambiarEstado(alumno, estado) {
-            console.log(`Cambiando estado de ${alumno.nombre} a ${estado}`);
             alumno.estado = estado;
             
             // Update the attendance object
@@ -348,7 +323,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Select a status for all students
            */
           seleccionarTodos(estado) {
-            console.log(`Seleccionando todos como ${estado}`);
             this.alumnos.forEach(alumno => {
               alumno.estado = estado;
               
@@ -369,9 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
               return;
             }
             
-            this.loading = true;
-            console.log("Guardando asistencias...");
-            
+            this.loading = true;            
             // Prepare data for sending
             const alumnosData = this.alumnos.map(alumno => ({
               id: alumno.id,
@@ -397,7 +369,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                console.log("Respuesta del servidor:", data);
                 if (data.success) {
                   this.showAlert("Éxito", data.message, "success");
                   
@@ -443,9 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
            */
           guardarObservacion() {
             if (!this.selectedAlumno) return;
-            
-            console.log(`Guardando observación para ${this.selectedAlumno.nombre}: ${this.observacionText}`);
-            
+                        
             //Update student observation
             this.selectedAlumno.observaciones = this.observacionText || null;
             
@@ -498,7 +467,6 @@ document.addEventListener("DOMContentLoaded", function () {
            * Show a notification modal
            */
           showAlert(title, message, type) {
-            console.log(`Alerta: ${title} - ${message} (${type})`);
             this.notificationTitle = title;
             this.notificationMessage = message;
             this.notificationType = type;

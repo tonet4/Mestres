@@ -70,6 +70,35 @@ try {
     $notas = [];
 }
 
+// Get user's default schedule
+try {
+    $stmt = $conn->prepare("SELECT id, nombre, descripcion, dias_semana FROM horarios WHERE usuario_id = :usuario_id AND es_predeterminado = 1 LIMIT 1");
+    $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
+    $stmt->execute();
+    $horario_predeterminado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $bloquesPorDia = [];
+    if ($horario_predeterminado) {
+        // Get blocks for this schedule
+        $stmt = $conn->prepare("SELECT id, dia_semana, hora_inicio, hora_fin, titulo, descripcion, color FROM horarios_bloques WHERE horario_id = :horario_id ORDER BY dia_semana, hora_inicio");
+        $stmt->bindParam(':horario_id', $horario_predeterminado['id']);
+        $stmt->execute();
+        $bloques = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Group blocks by day
+        foreach ($bloques as $bloque) {
+            $dia = (int)$bloque['dia_semana'];
+            if (!isset($bloquesPorDia[$dia])) {
+                $bloquesPorDia[$dia] = [];
+            }
+            $bloquesPorDia[$dia][] = $bloque;
+        }
+    }
+} catch (PDOException $e) {
+    $horario_predeterminado = null;
+    $bloquesPorDia = [];
+}
+
 // Process the addition, editing, or deletion of notes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'add') {
@@ -124,6 +153,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 }
+
+// Array of day names
+$diasSemana = [
+    1 => 'Lunes',
+    2 => 'Martes',
+    3 => 'Miércoles',
+    4 => 'Jueves',
+    5 => 'Viernes',
+    6 => 'Sábado',
+    7 => 'Domingo'
+];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -133,8 +173,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
-    <link rel="stylesheet" href="../estilo/base.css">
-    <link rel="stylesheet" href="../estilo/dashboard.css">
+    <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/dashboard.css">
+    <link rel="stylesheet" href="../style/horarios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -177,6 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
+            <li><a href="horarios.php"><i class="fas fa-clock"></i> Horarios</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
@@ -186,6 +228,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     <!-- Main content-->
     <main class="main-content">
+        <!-- Horario predeterminado -->
+        <div class="horario-dashboard-container">
+            <div class="horario-dashboard-header">
+                <h2><i class="fas fa-clock"></i> Mi Horario</h2>
+                <div class="horario-actions">
+                    <?php if ($horario_predeterminado): ?>
+                        <a href="editor_horario.php?id=<?php echo $horario_predeterminado['id']; ?>" class="action-btn">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                    <?php endif; ?>
+                    <a href="horarios.php" class="action-btn">
+                        <i class="fas fa-th-list"></i> Todos mis horarios
+                    </a>
+                </div>
+            </div>
+            
+            <?php if ($horario_predeterminado): ?>
+                <div class="horario-dashboard-content">
+                    <div class="horario-dashboard-title">
+                        <h3><?php echo htmlspecialchars($horario_predeterminado['nombre']); ?></h3>
+                        <?php if (!empty($horario_predeterminado['descripcion'])): ?>
+                            <p class="horario-dashboard-descripcion"><?php echo htmlspecialchars($horario_predeterminado['descripcion']); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <div class="horario-dashboard-grid">
+                        <?php 
+                        // Get the maximum number of days to show based on the schedule configuration
+                        $maxDias = $horario_predeterminado['dias_semana'];
+                        
+                        // Create a column for each day
+                        for ($dia = 1; $dia <= $maxDias; $dia++): 
+                        ?>
+                            <div class="day-column-dashboard">
+                                <!-- Day header -->
+                                <div class="day-header-dashboard">
+                                    <?php echo $diasSemana[$dia]; ?>
+                                </div>
+                                
+                                <!-- Blocks for this day -->
+                                <div class="day-blocks">
+                                    <?php 
+                                    $blocksForDay = $bloquesPorDia[$dia] ?? [];
+                                    if (!empty($blocksForDay)): 
+                                        foreach ($blocksForDay as $bloque): 
+                                            // Format time
+                                            $horaInicio = substr($bloque['hora_inicio'], 0, 5);
+                                            $horaFin = substr($bloque['hora_fin'], 0, 5);
+                                    ?>
+                                        <div class="time-block-dashboard" style="background-color: <?php echo htmlspecialchars($bloque['color'] ?: '#3498db'); ?>; color: <?php echo htmlspecialchars(getLuminanceValue($bloque['color']) > 0.5 ? '#333' : '#fff'); ?>">
+                                            <div class="time-block-dashboard-header">
+                                                <span class="time-block-dashboard-title"><?php echo htmlspecialchars($bloque['titulo']); ?></span>
+                                                <span class="time-block-dashboard-time"><?php echo $horaInicio . ' - ' . $horaFin; ?></span>
+                                            </div>
+                                            <?php if (!empty($bloque['descripcion'])): ?>
+                                                <div class="time-block-dashboard-desc"><?php echo htmlspecialchars($bloque['descripcion']); ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php 
+                                        endforeach; 
+                                    else: 
+                                    ?>
+                                        <div class="no-blocks-message">
+                                            No hay bloques
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="no-horario-message">
+                    <p>No tienes un horario predeterminado configurado.</p>
+                    <a href="horarios.php" class="action-btn">
+                        <i class="fas fa-plus"></i> Crear horario
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
+
         <div class="content-wrapper">
             <!-- Left panel - Inspirational quote and image -->
             <div class="panel inspiration-panel">
@@ -344,3 +467,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 </body>
 
 </html>
+
+<?php
+/**
+ * Helper function to calculate luminance for text color contrast
+ */
+function getLuminanceValue($hex) {
+    // Default to a blue color if none provided
+    $hex = $hex ?: '#3498db';
+    
+    // Convert hex to RGB
+    $r = 0;
+    $g = 0;
+    $b = 0;
+    
+    // 3 or 6 digits
+    if (strlen($hex) === 4) {
+        $r = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+        $g = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+        $b = hexdec(substr($hex, 3, 1) . substr($hex, 3, 1));
+    } else if (strlen($hex) === 7) {
+        $r = hexdec(substr($hex, 1, 2));
+        $g = hexdec(substr($hex, 3, 2));
+        $b = hexdec(substr($hex, 5, 2));
+    }
+    
+    // Normalize RGB values
+    $r /= 255;
+    $g /= 255;
+    $b /= 255;
+    
+    // Calculate luminance
+    return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+?>

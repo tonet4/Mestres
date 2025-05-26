@@ -300,13 +300,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const tooltip = document.getElementById("event-tooltip");
     const daysWithEvents = document.querySelectorAll(".day.has-events");
 
-    console.log("Días con eventos encontrados:", daysWithEvents.length);
 
     daysWithEvents.forEach((day) => {
       day.addEventListener("mouseenter", function (e) {
         try {
-          console.log("Mouse sobre día:", this.dataset.date);
-          console.log("Dataset events:", this.dataset.events);
 
           if (!this.dataset.events) {
             console.error("No hay dataset events para este día");
@@ -475,7 +472,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Console log for debugging
       if (hasEvents) {
-        console.log(`Día ${day} tiene ${dayEvents.length} eventos:`, dayEvents);
       }
 
       // Create data attribute for events
@@ -721,7 +717,6 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.set("action", "update_event");
       }
 
-      console.log("Enviando acción:", formData.get("action"));
 
       // URL del endpoint
       const url =

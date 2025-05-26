@@ -350,6 +350,23 @@
     transform: translateY(-2px);
 }
 
+.btn-outline-secondary-delete {
+    font-family: var(--font-main);
+    color: white;
+    border: 1px solid var(--border-color);
+    background-color: #7f8c8d;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary-delete:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
 /* Modal styles */
 .modal {
     display: none;
@@ -392,6 +409,17 @@
     justify-content: space-between;
 }
 
+.modal-header-delete{
+    color: #e74c3c;
+    font-size: 1.6rem;
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+
 .modal-title {
     font-family: "fuente1";
     font-size: 1.6rem;
@@ -401,9 +429,7 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.delete-header {
-    background: var(--accent-color);
-}
+
 
 .success-header {
     background: var(--success-color);
@@ -549,6 +575,26 @@ textarea.form-control {
 
 .btn-danger:hover {
     background-color: #ffc082;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(255, 214, 165, 0.5);
+}
+
+.btn-danger-delete {
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger-delete:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(255, 214, 165, 0.5);
 }

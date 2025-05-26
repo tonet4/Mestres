@@ -17,23 +17,23 @@
 
 @font-face {
     font-family:"fuente1";
-    src:  url(../fuentes/Caveat/Caveat-VariableFont_wght.ttf);
+    src:  url(../sources/Caveat/Caveat-VariableFont_wght.ttf);
 }
 
 @font-face {
     font-family:"fuente2";
-    src:  url(../fuentes/Patrick_Hand/PatrickHand-Regular.ttf);
+    src:  url(../sources/Patrick_Hand/PatrickHand-Regular.ttf);
 }
 
 
 @font-face {
     font-family:"fuente3";
-    src:  url(../fuentes/skolateka/skolateka.otf);
+    src:  url(../sources/skolateka/skolateka.otf);
 }
 
 @font-face {
     font-family:"fuente4";
-    src:  url(../fuentes/Barrio/Barrio-Regular.ttf);
+    src:  url(../sources/Barrio/Barrio-Regular.ttf);
 }
 
 /* B U T T O N S */

@@ -1,12 +1,11 @@
 <?php
-
 /**
- * @author Antonio Esteban Lorenzo
+ * Schedule editor view
  * 
+ * @author Antonio Esteban Lorenzo
  */
 
-// Include the necessary files
-// Include the necessary files
+// Include necessary files
 require_once '../includes/auth.php';
 require_once '../includes/utils.php';
 require_once '../api/config.php';
@@ -18,8 +17,34 @@ require_login();
 $usuario_id = $_SESSION['user_id'];
 $usuario_nombre = $_SESSION['user_nombre'];
 
-// Get current year (or requested year)
-$year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+// Get the schedule ID from the query parameters
+$horario_id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+if (!$horario_id) {
+    // Redirect to the schedules main page if no ID is provided
+    header('Location: horarios.php');
+    exit;
+}
+
+// Check if the schedule belongs to the user
+try {
+    $stmt = $conn->prepare("SELECT id, nombre, descripcion, dias_semana FROM horarios WHERE id = :id AND usuario_id = :usuario_id");
+    $stmt->bindParam(':id', $horario_id);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    $horario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$horario) {
+        // Schedule not found or not owned by the user
+        header('Location: horarios.php');
+        exit;
+    }
+} catch (PDOException $e) {
+    // Error in the database query
+    header('Location: horarios.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +56,11 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../style/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/calendar.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/calendar_anual.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/calendar_responsive.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/horarios.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!--JS library to take screenshots-->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -44,6 +69,9 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
         <div class="nav-left">
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <img src="../img/logo2.png" alt="Logo Quadern Mestres">
             </div>
             <h1>QUADERN de Mestres</h1>
         </div>
@@ -67,13 +95,13 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
         </div>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
-            <li class="active"><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
+            <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
             <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
             <li><a href="evaluaciones.php"><i class="fas fa-clipboard-list"></i> Evaluaciones</a></li>
-            <li><a href="horarios.php"><i class="fas fa-clock"></i> Horarios</a></li>
+            <li class="active"><a href="horarios.php"><i class="fas fa-clock"></i> Horarios</a></li>
             <li><a href="../api/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
         </ul>
     </div>
@@ -83,142 +111,97 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
 
     <!-- Main content -->
     <main class="main-content">
-        <!-- Calendar view selector -->
-        <div class="calendar-views">
-            <a href="calendario_anual.php" class="calendar-view-btn active" id="yearly-view">
-                <img class="iconos-calendario" src="../img/calendario.png" alt="anual">
-                <h2>Anual</h2>
-            </a>
-            <a href="calendario_mensual.php" class="calendar-view-btn" id="monthly-view">
-                <img class="iconos-calendario" src="../img/calendarioo.png" alt="mensual">
-                <h2>Mensual</h2>
-            </a>
-            <a href="calendario.php" class="calendar-view-btn" id="weekly-view">
-                <img class="iconos-calendario" src="../img/7-dias.png" alt="dias">
-                <h2>Semanal</h2>
-            </a>
-        </div>
-
-        <!-- Calendar header -->
-        <div class="calendar-annual-header">
-            <div class="calendar-title">
-                <h2>Calendario Anual <?php echo $year; ?></h2>
+        <div class="header-section">
+            <div class="header-arrow">
+                <a href="horarios.php" class="back-link"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <div class="calendar-navigation">
-                <button class="nav-btn" id="prev-year">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="nav-btn" id="current-year">
-                    <i class="fas fa-calendar"></i>
-                </button>
-                <button class="nav-btn" id="next-year">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <div class="header-title">
+                
+                <h2 id="horario-titulo"><?php echo htmlspecialchars($horario['nombre']); ?></h2>
+                <span id="horario-descripcion" class="header-description">
+                    <?php echo htmlspecialchars($horario['descripcion'] ?: 'Sin descripción'); ?>
+                </span>
             </div>
-            <div class="add-event-btn">
-                <button id="add-event-btn" class="action-btn">
-                    <i class="fas fa-plus"></i> Añadir Evento
+            <div class="header-actions">
+                <button id="export-horario-btn" class="action-btn export">
+                    <i class="fas fa-file-export"></i> Exportar
+                </button>
+                <button id="add-bloque-btn" class="action-btn">
+                    <i class="fas fa-plus"></i> Añadir Bloque
                 </button>
             </div>
         </div>
 
-        <!-- Icon Filter -->
-        <div class="icon-filter">
-            <h3>Filtrar por icono:</h3>
-            <div class="icon-options">
-                <button class="icon-option active" data-icon="all">
-                    <i class="fas fa-border-all"></i> Todos
-                </button>
-                <button class="icon-option" data-icon="star">
-                    <img src="../img/star.png"> Favoritos
-                </button>
-                <button class="icon-option" data-icon="book">
-                    <img src="../img/book.png"> Académico
-                </button>
-                <button class="icon-option" data-icon="users">
-                    <img src="../img/users.png" alt="reunion"> Reunión
-                </button>
-                <button class="icon-option" data-icon="graduation-cap">
-                    <img src="../img/graduation-cap.png"> Evaluaciones
-                </button>
-                <button class="icon-option" data-icon="calendar">
-                    <img src="../img/calendar.png"> Eventos
-                </button>
-                <button class="icon-option" data-icon="flag">
-                    <img src="../img/flag.png" alt="festivos"> Festivos
-                </button>
+        <!-- Schedule grid section -->
+        <div class="horario-container">
+            <div class="loading-indicator" id="loading">
+                <i class="fas fa-spinner fa-spin"></i> Cargando...
             </div>
-        </div>
-
-        <!-- Annual Calendar Container -->
-        <div class="annual-calendar-container">
-            <!-- Will be populated by JavaScript -->
+            
+            <div id="horario-grid" class="horario-grid">
+                <!-- This will be filled with JavaScript -->
+            </div>
+            
+            <div id="no-bloques" class="no-data-message" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No hay bloques en este horario</p>
+                <p>Añade tu primer bloque para comenzar a organizar tu horario</p>
+            </div>
         </div>
     </main>
 
-    <div id="custom-modal" class="modal custom-modal">
-        <div class="modal-content">
-            <h2 id="custom-modal-title">Título</h2>
-            <p id="custom-modal-message">Mensaje</p>
-            <div class="modal-buttons">
-                <button id="custom-modal-cancel" class="modal-btn cancel">Cancelar</button>
-                <button id="custom-modal-confirm" class="modal-btn confirm">Confirmar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal to add/edit events -->
-    <div id="event-modal" class="modal">
+    <!-- Modal for creating/editing blocks -->
+    <div id="bloque-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2 id="event-modal-title" class="modal-title">Añadir Evento</h2>
-            <form id="event-form">
-                <input type="hidden" id="event-action" name="action" value="add">
-                <input type="hidden" id="event-id" name="event_id" value="">
-                <input type="hidden" id="event-color" name="color" value="#3498db">
-
+            <h2 id="bloque-modal-title" class="modal-title">Nuevo Bloque Horario</h2>
+            
+            <form id="bloque-form">
+                <input type="hidden" id="bloque-id" name="id" value="">
+                <input type="hidden" id="bloque-horario-id" name="horario_id" value="<?php echo $horario_id; ?>">
+                <input type="hidden" id="bloque-color" name="color" value="#3498db">
+                
                 <div class="form-group">
-                    <label for="event-date">Fecha:</label>
-                    <input type="date" id="event-date" name="event_date" required>
+                    <label for="bloque-dia">Día <span class="required">*</span></label>
+                    <select id="bloque-dia" name="dia_semana" required>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <?php if ($horario['dias_semana'] >= 6): ?>
+                        <option value="6">Sábado</option>
+                        <?php endif; ?>
+                        <?php if ($horario['dias_semana'] >= 7): ?>
+                        <option value="7">Domingo</option>
+                        <?php endif; ?>
+                    </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="event-title">Título:</label>
-                    <input type="text" id="event-title" name="title" placeholder="Título del evento" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="event-description">Descripción:</label>
-                    <textarea id="event-description" name="description" placeholder="Descripción del evento"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Icono:</label>
-                    <div class="icon-selection">
-                        <div class="icon-option selected" data-icon="calendar">
-                            <img src="../img/calendar.png"> Evento
-                        </div>
-                        <div class="icon-option" data-icon="star">
-                            <img src="../img/star.png"> Favoritos</img>
-                        </div>
-                        <div class="icon-option" data-icon="book">
-                            <img src="../img/book.png"> Académico
-                        </div>
-                        <div class="icon-option" data-icon="users">
-                            <img src="../img/users.png" alt="reunion"> Reunión
-                        </div>
-                        <div class="icon-option" data-icon="graduation-cap">
-                            <img src="../img/graduation-cap.png"> Evaluación
-                        </div>
-                        <div class="icon-option" data-icon="flag">
-                            <img src="../img/flag.png" alt="festivos"> Festivos
-                        </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloque-hora-inicio">Hora inicio <span class="required">*</span></label>
+                        <input type="time" id="bloque-hora-inicio" name="hora_inicio" required>
                     </div>
-                    <input type="hidden" id="event-icon" name="icon" value="calendar">
+                    
+                    <div class="form-group">
+                        <label for="bloque-hora-fin">Hora fin <span class="required">*</span></label>
+                        <input type="time" id="bloque-hora-fin" name="hora_fin" required>
+                    </div>
                 </div>
-
+                
                 <div class="form-group">
-                    <label>Color:</label>
+                    <label for="bloque-titulo">Título <span class="required">*</span></label>
+                    <input type="text" id="bloque-titulo" name="titulo" required placeholder="Ej: Matemáticas 2º B">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bloque-descripcion">Descripción</label>
+                    <textarea id="bloque-descripcion" name="descripcion" placeholder="Aula, notas, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Color</label>
                     <div class="color-options">
                         <div class="color-option selected" data-color="#3498db" style="background-color: #3498db;"></div>
                         <div class="color-option" data-color="#2ecc71" style="background-color: #2ecc71;"></div>
@@ -229,18 +212,31 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
                         <div class="color-option" data-color="#34495e" style="background-color: #34495e;"></div>
                         <div class="color-option" data-color="#e67e22" style="background-color: #e67e22;"></div>
                     </div>
-
-                    <div class="color-picker-container">
-                        <label for="custom-color-picker">Color personalizado:</label>
-                        <input type="color" id="custom-color-picker" class="color-picker" value="#3498db">
-                    </div>
                 </div>
-
+                
                 <div class="modal-buttons">
-                    <button type="button" id="delete-event" class="modal-btn delete">Eliminar</button>
+                    <button type="button" id="delete-bloque" class="modal-btn delete" style="display: none;">Eliminar</button>
                     <button type="submit" class="modal-btn save">Guardar</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal for schedule export preview -->
+    <div id="export-modal" class="modal export-modal">
+        <div class="modal-content export-modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Vista Previa del Horario</h2>
+            
+            <div id="export-preview" class="export-preview">
+                <!-- This will be filled with JavaScript -->
+            </div>
+            
+            <div class="modal-buttons">
+                <button id="download-horario" class="modal-btn save">
+                    <i class="fas fa-download"></i> Descargar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -285,29 +281,7 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
     </footer>
 
     <!-- Scripts -->
-    <script src="../js/calendar_anual.js?v=<?php echo time(); ?>"></script>
-    <!-- JavaScript for the up button -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const backToTopButton = document.getElementById('back-to-top');
-
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.add('show');
-                } else {
-                    backToTopButton.classList.remove('show');
-                }
-            });
-
-            backToTopButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    <script src="../js/editor_horario.js?v=<?php echo time(); ?>"></script>
     <script>
         // Script for the side menu
         document.addEventListener('DOMContentLoaded', function() {
