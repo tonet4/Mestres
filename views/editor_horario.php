@@ -56,7 +56,7 @@ try {
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../style/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/horarios.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/schedules.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!--JS library to take screenshots-->

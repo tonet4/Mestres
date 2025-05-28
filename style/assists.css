@@ -1,7 +1,7 @@
 /**
  * @author Antonio Esteban Lorenzo
  * 
- *  A T T E N D A N C E
+ *  A S S I S T S
  *       
  /
 /* Header styles */
@@ -486,6 +486,10 @@ textarea.form-control {
 }
 
 .btn-primary {
+    font-family: var(--font-main);
+    display: flex;
+    gap: 5px;
+    align-items: center;
     background-color: var(--primary-color);
     border: none;
     color: var(--text-color);
@@ -503,6 +507,10 @@ textarea.form-control {
 }
 
 .btn-secondary {
+    font-family: var(--font-main);
+    display: flex;
+    gap: 5px;
+    align-items: center;
     background-color: #f8f9fa;
     border: 1px solid var(--border-color);
     color: var(--text-color);

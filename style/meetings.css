@@ -169,7 +169,7 @@
 }
 
 .modal-header {
-    background-color: white !important;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
     color: var(--text-color) !important;
     border-bottom: none !important;
     padding: 1.2rem 1.5rem !important;
@@ -183,11 +183,12 @@
 }
 
 .modal-header .modal-title {
-    color: #fa2424 !important;
+    color: var(--text-color) !important;
     font-family: "fuente1" !important;
     font-size: 1.6rem !important;
     font-weight: 700 !important;
 }
+
 
 .modal .btn-close {
     opacity: 0.7 !important;

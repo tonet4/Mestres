@@ -28,7 +28,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
 
     <!-- Styles -->
     <link rel="stylesheet" href="../style/base.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/asistencias.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/assists.css?v=<?php echo time(); ?>">
 
     <link rel="shortcut icon" href="../img/logo2.png"> 
         <!-- Font Awesome Icons -->
@@ -240,7 +240,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">
-                                <i class="fas fa-sticky-note me-2"></i>Observaciones
+                                Observaciones
                             </h5>
                             <button type="button" class="btn-close" @click="closeObservacionModal">
                                 <i class="fas fa-times"></i>

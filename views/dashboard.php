@@ -175,7 +175,7 @@ $diasSemana = [
     <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../style/base.css">
     <link rel="stylesheet" href="../style/dashboard.css">
-    <link rel="stylesheet" href="../style/horarios.css">
+    <link rel="stylesheet" href="../style/schedules.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 

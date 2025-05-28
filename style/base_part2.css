@@ -1230,7 +1230,7 @@ img {
     margin-bottom: 50px;
     font-size: 2rem;
     color: var(--text-color);
-    font-family: "fuente3";
+    font-family: "fuente1";
 }
 
 .benefits-grid {
@@ -1274,7 +1274,7 @@ img {
     font-size: 1.3rem;
     margin-bottom: 15px;
     color: var(--text-color);
-    font-family: "fuente3";
+    font-family: "fuente1";
 }
 
 .benefit-card p {

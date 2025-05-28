@@ -1,0 +1,21 @@
+2025-05-26 16:29:26 - Solicitud recibida
+2025-05-26 16:29:26 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-26 16:29:26 - POST: []
+2025-05-26 16:29:26 - Autenticación: Sí
+2025-05-26 16:29:26 - Acción determinada: get_events_by_year
+2025-05-26 16:29:26 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"},{"id":22,"usuario_id":2,"fecha":"2025-05-16","titulo":"Ir al M\u00e9dico","descripcion":"","icono":"star","color":"#f1c40f"},{"id":23,"usuario_id":2,"fecha":"2025-05-16","titulo":"Quedar con Escarti","descripcion":"[REUNION_ID:20] Hora: 12:00 - nsakjbcjjhcidih\r\n\u00f1\u00f1\u00f1\u00f1\r\ndddd7","icono":"users","color":"#9b59b6"},{"id":21,"usuario_id":2,"fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}]}
+
+2025-05-26 16:31:00 - Solicitud recibida
+2025-05-26 16:31:00 - GET: {"action":"get_events_by_year","year":"2025"}
+2025-05-26 16:31:00 - POST: []
+2025-05-26 16:31:00 - Autenticación: Sí
+2025-05-26 16:31:00 - Acción determinada: get_events_by_year
+2025-05-26 16:31:00 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_year","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_year","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"},{"id":22,"usuario_id":2,"fecha":"2025-05-16","titulo":"Ir al M\u00e9dico","descripcion":"","icono":"star","color":"#f1c40f"},{"id":23,"usuario_id":2,"fecha":"2025-05-16","titulo":"Quedar con Escarti","descripcion":"[REUNION_ID:20] Hora: 12:00 - nsakjbcjjhcidih\r\n\u00f1\u00f1\u00f1\u00f1\r\ndddd7","icono":"users","color":"#9b59b6"},{"id":21,"usuario_id":2,"fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}]}
+
+2025-05-28 08:24:51 - Solicitud recibida
+2025-05-28 08:24:51 - GET: {"action":"get_events_by_month","month":"5","year":"2025"}
+2025-05-28 08:24:51 - POST: []
+2025-05-28 08:24:51 - Autenticación: Sí
+2025-05-28 08:24:51 - Acción determinada: get_events_by_month
+2025-05-28 08:24:51 - Respuesta: {"success":true,"debug_info":{"get":{"action":"get_events_by_month","month":"5","year":"2025"},"post":[],"session":{"user_id":"2","usuario_id":2,"user_nombre":"Antonio","usuario_nombre":"Antonio","user_apellidos":"Lorenzo","user_email":"antonio@gmail.com","user_rol":"profesor","loggedin":true},"auth":true},"message":"Eventos obtenidos correctamente","action":"get_events_by_month","data":[{"id":20,"usuario_id":2,"fecha":"2025-05-15","titulo":"Salir en bicicleta","descripcion":"[REUNION_ID:19] Hora: 19:00 - Me voy a Calicanto y volver","icono":"users","color":"#9b59b6"},{"id":22,"usuario_id":2,"fecha":"2025-05-16","titulo":"Ir al M\u00e9dico","descripcion":"","icono":"star","color":"#f1c40f"},{"id":23,"usuario_id":2,"fecha":"2025-05-16","titulo":"Quedar con Escarti","descripcion":"[REUNION_ID:20] Hora: 12:00 - nsakjbcjjhcidih\r\n\u00f1\u00f1\u00f1\u00f1\r\ndddd7","icono":"users","color":"#9b59b6"},{"id":21,"usuario_id":2,"fecha":"2025-05-24","titulo":"Jugar a f\u00fatbol","descripcion":"partido a las 12","icono":"star","color":"#e74c3c"}]}
+

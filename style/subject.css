@@ -363,8 +363,9 @@
 }
 
 .btn-outline-secondary-delete:hover {
-    background-color: #f8f9fa;
+    background-color: #7c8888;
     transform: translateY(-2px);
+    color: white;
 }
 
 /* Modal styles */
@@ -401,7 +402,8 @@
 }
 
 .modal-header {
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
     padding: 1.2rem 1.5rem;
     border-bottom: none;
     display: flex;

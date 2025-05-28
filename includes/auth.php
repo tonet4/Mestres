@@ -3,7 +3,8 @@
  * @author Antonio Esteban Lorenzo
  * 
  */
-// Log in if you are not logged in
+
+// Sign in if you are not signed in
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -50,7 +51,7 @@ if(!is_logged_in() && isset($_COOKIE['remember_user'])) {
         if($stmt->rowCount() > 0) {
             $usuario = $stmt->fetch();
             
-            // Iniciar sesión
+            // Session start
             $_SESSION['user_id'] = $usuario['id'];
             $_SESSION['user_nombre'] = $usuario['nombre'];
             $_SESSION['user_apellidos'] = $usuario['apellidos'];
@@ -58,7 +59,7 @@ if(!is_logged_in() && isset($_COOKIE['remember_user'])) {
             $_SESSION['user_rol'] = $usuario['rol'];
             $_SESSION['loggedin'] = true;
             
-            // Actualizar última conexión
+            // Update last connection
             $stmt = $conn->prepare("UPDATE usuarios SET ultima_conexion = NOW() WHERE id = :id");
             $stmt->bindParam(':id', $usuario['id']);
             $stmt->execute();

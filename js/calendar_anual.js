@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Update document title
-    document.title = `Calendario Anual ${currentYear} - QUADERN MESTRES`;
 
     // Load events of the year
     loadEvents();

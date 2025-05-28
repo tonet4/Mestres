@@ -306,9 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
               })
               .then(data => {
-                if (data.success) {
-                  this.showAlert("Éxito", data.message, "success");
-  
+                if (data.success) {  
                   // If we're editing, update the alumno in the array
                   if (this.editMode) {
                     const index = this.alumnos.findIndex(a => a.id === data.alumno.id);
@@ -321,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                   } else {
                     // Otherwise, add the new alumno to the array
-                    data.alumno.expanded = true; // Nuevo alumno expandido por defecto
+                    data.alumno.expanded = true;
                     this.alumnos.unshift(data.alumno);
                   }
   

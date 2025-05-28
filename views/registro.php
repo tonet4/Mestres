@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUADERN MESTRES</title>
     <link rel="shortcut icon" href="../img/logo2.png">
-    <link rel="stylesheet" href="../style/base_principal.css">
+    <link rel="stylesheet" href="../style/base_part2.css">
     <link rel="stylesheet" href="../style/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <div class="form-group terms-group">
                     <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">Acepto los <a href="terminos.php">términos y condiciones</a></label>
+                    <label for="terms">Acepto los <a href="condiciones.html">términos y condiciones</a></label>
                 </div>
                 
                 <button type="submit" class="btn btn-registro btn-block">Registrarme</button>

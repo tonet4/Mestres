@@ -32,8 +32,8 @@ $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
     <link rel="shortcut icon" href="../img/logo2.png">
     <link rel="stylesheet" href="../style/base.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../style/calendar.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/calendar_anual.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../style/calendar_responsive.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/annual_calendar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../style/responsive_calendar.css?v=<?php echo time(); ?>">
     <!--Icon Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
