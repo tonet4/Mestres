@@ -68,7 +68,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnos-Grupos</a></li>
             <li class="active"><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>

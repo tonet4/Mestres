@@ -66,7 +66,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li class="active"><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li class="active"><a href="alumnos.php"><i class="fas fa-users"></i> Alumnos-Grupos</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
@@ -412,14 +412,13 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <div class="modal-content">
                         <div class="modal-header delete-header">
                             <h5 class="modal-title">
-                                <i class="fas fa-exclamation-triangle me-2"></i>Confirmar
+                                Eliminar
                             </h5>
                             <button type="button" class="btn-close btn-close-white" @click="closeDeleteModal"></button>
                         </div>
                         <div class="modal-body">
                             <p class="mb-1">¿Estás seguro de que deseas eliminar al alumno?</p>
                             <p class="font-weight-bold">{{ selectedAlumno?.nombre }} {{ selectedAlumno?.apellidos }}</p>
-                            <p class="text-danger mb-0"><small>Esta acción no se puede deshacer.</small></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-outline-secondary" @click="closeDeleteModal">Cancelar</button>
@@ -437,14 +436,13 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <div class="modal-content">
                         <div class="modal-header delete-header">
                             <h5 class="modal-title">
-                                <i class="fas fa-exclamation-triangle me-2"></i>Confirmar
+                                Eliminar
                             </h5>
                             <button type="button" class="btn-close btn-close-white" @click="closeDeleteGrupoModal"></button>
                         </div>
                         <div class="modal-body">
                             <p class="mb-1">¿Estás seguro de que deseas eliminar el grupo?</p>
                             <p class="font-weight-bold">{{ selectedGrupo?.nombre }}</p>
-                            <p class="text-danger mb-0"><small>Esta acción no se puede deshacer y desvinculará a todos los alumnos asociados.</small></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-outline-secondary" @click="closeDeleteGrupoModal">Cancelar</button>

@@ -67,7 +67,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnos-Grupos</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-user-check"></i> Asistencias</a></li>
@@ -356,10 +356,10 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-secondary" @click="closeConfirmModal">
-                                <i class="fas fa-times"></i> Cancelar
+                                Cancelar
                             </button>
                             <button type="button" class="btn-danger" @click="confirmarAccion">
-                                <i class="fas fa-check"></i> Confirmar
+                                Eliminar
                             </button>
                         </div>
                     </div>

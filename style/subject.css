@@ -772,96 +772,226 @@ textarea.form-control {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-    .asignaturas-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    .modal {
+        padding: 10px; 
+        overflow-y: auto; 
     }
     
-    .icon-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas para tablets */
-    } 
-
-    .card-title {
-        font-size: 1rem;
+    .modal-dialog {
+        margin: 0 !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: calc(100vh - 20px) !important; 
     }
     
-    .grupo-badge {
-        font-size: 0.75rem;
-        padding: 0.2rem 0.5rem;
+    .modal-content {
+        height: auto !important; 
+        max-height: calc(100vh - 20px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
     }
     
-    .asignatura-actions .btn-link {
-        width: 24px;
-        height: 24px;
-        font-size: 0.75rem;
+    .modal-header {
+        flex-shrink: 0; 
+        padding: 1rem !important;
     }
     
-    .modal-title {
-        font-size: 1.4rem;
+    .modal-body {
+        flex: 1 !important;
+        overflow-y: auto !important; 
+        padding: 1rem !important;
+        -webkit-overflow-scrolling: touch; 
+        max-height: calc(100vh - 140px) !important; 
     }
-
-    .action-buttons {
-        flex-direction: column;
-        gap: 5px;
+    
+    .modal-footer {
+        flex-shrink: 0; 
+        padding: 1rem !important;
+        border-top: 1px solid var(--border-color);
     }
-
-    .search-row {
-        flex-direction: column;
+    
+    #asignaturaModal .modal-content {
+        min-height: auto !important;
+    }
+    
+    #asignaturaModal .modal-body {
+        max-height: calc(100vh - 140px) !important; 
     }
     
     .form-row {
-        flex-direction: column;
+        flex-direction: column !important;
+        margin: 0 !important;
+    }
+    
+    .form-col {
+        padding: 0 !important;
+        min-width: 100% !important;
+        margin-bottom: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px !important;
+    }
+    
+    .form-control {
+        padding: 0.7rem !important;
+        font-size: 16px !important; 
+    }
+    
+    textarea.form-control {
+        min-height: 80px !important;
+    }
+    
+
+    .color-selector {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    
+    .color-input {
+        width: 100% !important;
+        max-width: 100px;
     }
     
     
+    .icon-grid-container {
+        max-height: 120px !important;
+    }
+    
+    .icon-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    
+    .icon-option {
+        padding: 6px !important;
+    }
+    
+    .icon-preview-img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    
+    .form-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+    }
+    
+    .form-actions button {
+        width: 100% !important;
+        padding: 0.8rem !important;
+    }
+
+    .modal-title {
+        font-size: 1.4rem !important;
+    }
 }
 
 @media (max-width: 576px) {
-    .card-title {
-        max-width: 100%;
+    .modal {
+        padding: 5px;
     }
-
+    
+    .modal-dialog {
+        max-height: calc(100vh - 10px) !important;
+    }
+    
+    .modal-content {
+        max-height: calc(100vh - 10px) !important;
+        border-radius: 8px !important; 
+    }
+    
+    .modal-header {
+        padding: 0.8rem !important;
+    }
+    
+    .modal-body {
+        padding: 0.8rem !important;
+        max-height: calc(100vh - 120px) !important;
+    }
+    
+    .modal-footer {
+        padding: 0.8rem !important;
+    }
+    
+    .modal-title {
+        font-size: 1.2rem !important;
+    }
+    
     .icon-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas para móviles */
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 8px !important;
     }
     
     .icon-grid-container {
-        max-height: 180px; /* Altura ligeramente menor en móviles */
-    }
-
-    .asignatura-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-
-    .grupo-badge {
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        max-height: 100px !important; 
     }
     
-    .asignatura-actions {
-        position: static;
-        margin-top: 10px;
+    .icon-option {
+        padding: 4px !important;
     }
     
-    .header-content {
-        width: 100%;
+    .icon-preview-img {
+        width: 24px !important;
+        height: 24px !important;
     }
     
-    .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .asignatura-actions {
-        align-self: flex-end;
-        margin-top: -30px;
+    .form-control {
+        min-height: 48px !important;
     }
     
+    .color-input {
+        height: 48px !important;
+    }
     
+    .color-preview {
+        width: 48px !important;
+        height: 48px !important;
+    }
 }
 
+@media (max-width: 768px) {
+    #gruposAsignaturaModal .modal-content {
+        max-height: calc(100vh - 20px) !important;
+    }
+    
+    #gruposAsignaturaModal .modal-body {
+        max-height: calc(100vh - 140px) !important;
+        overflow-y: auto !important;
+    }
+    
+    .grupo-selector {
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .form-check-label {
+        font-size: 0.9rem !important;
+    }
+    
+    .grupo-curso {
+        font-size: 0.7rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #gruposAsignaturaModal .modal-body {
+        padding: 0.8rem !important;
+        max-height: calc(100vh - 120px) !important;
+    }
+    
+    .grupo-selector {
+        padding: 6px !important;
+    }
+    
+    .form-check-input {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
 /* Animation */
 .highlight-asignatura {
     animation: highlight-pulse 3s ease-in-out;

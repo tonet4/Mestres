@@ -76,7 +76,7 @@ try {
     $stmt->bindParam(':usuario_id', $_SESSION['user_id']);
     $stmt->execute();
     $horario_predeterminado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     $bloquesPorDia = [];
     if ($horario_predeterminado) {
         // Get blocks for this schedule
@@ -84,7 +84,7 @@ try {
         $stmt->bindParam(':horario_id', $horario_predeterminado['id']);
         $stmt->execute();
         $bloques = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         // Group blocks by day
         foreach ($bloques as $bloque) {
             $dia = (int)$bloque['dia_semana'];
@@ -213,7 +213,7 @@ $diasSemana = [
         <ul class="sidebar-menu">
             <li class="active"><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnos-Grupos</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
@@ -243,7 +243,7 @@ $diasSemana = [
                     </a>
                 </div>
             </div>
-            
+
             <?php if ($horario_predeterminado): ?>
                 <div class="horario-dashboard-content">
                     <div class="horario-dashboard-title">
@@ -252,44 +252,44 @@ $diasSemana = [
                             <p class="horario-dashboard-descripcion"><?php echo htmlspecialchars($horario_predeterminado['descripcion']); ?></p>
                         <?php endif; ?>
                     </div>
-                    
+
                     <div class="horario-dashboard-grid">
-                        <?php 
+                        <?php
                         // Get the maximum number of days to show based on the schedule configuration
                         $maxDias = $horario_predeterminado['dias_semana'];
-                        
+
                         // Create a column for each day
-                        for ($dia = 1; $dia <= $maxDias; $dia++): 
+                        for ($dia = 1; $dia <= $maxDias; $dia++):
                         ?>
                             <div class="day-column-dashboard">
                                 <!-- Day header -->
                                 <div class="day-header-dashboard">
                                     <?php echo $diasSemana[$dia]; ?>
                                 </div>
-                                
+
                                 <!-- Blocks for this day -->
                                 <div class="day-blocks">
-                                    <?php 
+                                    <?php
                                     $blocksForDay = $bloquesPorDia[$dia] ?? [];
-                                    if (!empty($blocksForDay)): 
-                                        foreach ($blocksForDay as $bloque): 
+                                    if (!empty($blocksForDay)):
+                                        foreach ($blocksForDay as $bloque):
                                             // Format time
                                             $horaInicio = substr($bloque['hora_inicio'], 0, 5);
                                             $horaFin = substr($bloque['hora_fin'], 0, 5);
                                     ?>
-                                        <div class="time-block-dashboard" style="background-color: <?php echo htmlspecialchars($bloque['color'] ?: '#3498db'); ?>; color: <?php echo htmlspecialchars(getLuminanceValue($bloque['color']) > 0.5 ? '#333' : '#fff'); ?>">
-                                            <div class="time-block-dashboard-header">
-                                                <span class="time-block-dashboard-title"><?php echo htmlspecialchars($bloque['titulo']); ?></span>
-                                                <span class="time-block-dashboard-time"><?php echo $horaInicio . ' - ' . $horaFin; ?></span>
+                                            <div class="time-block-dashboard" style="background-color: <?php echo htmlspecialchars($bloque['color'] ?: '#3498db'); ?>; color: <?php echo htmlspecialchars(getLuminanceValue($bloque['color']) > 0.5 ? '#333' : '#fff'); ?>">
+                                                <div class="time-block-dashboard-header">
+                                                    <span class="time-block-dashboard-title"><?php echo htmlspecialchars($bloque['titulo']); ?></span>
+                                                    <span class="time-block-dashboard-time"><?php echo $horaInicio . ' - ' . $horaFin; ?></span>
+                                                </div>
+                                                <?php if (!empty($bloque['descripcion'])): ?>
+                                                    <div class="time-block-dashboard-desc"><?php echo htmlspecialchars($bloque['descripcion']); ?></div>
+                                                <?php endif; ?>
                                             </div>
-                                            <?php if (!empty($bloque['descripcion'])): ?>
-                                                <div class="time-block-dashboard-desc"><?php echo htmlspecialchars($bloque['descripcion']); ?></div>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php 
-                                        endforeach; 
-                                    else: 
-                                    ?>
+                                        <?php
+                                        endforeach;
+                                    else:
+                                        ?>
                                         <div class="no-blocks-message">
                                             No hay bloques
                                         </div>
@@ -384,6 +384,28 @@ $diasSemana = [
         <input type="hidden" name="nota_id" id="delete-nota-id">
     </form>
 
+    <!-- Confirmation modal for deletion -->
+    <div class="modal" id="deleteModal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content-das">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Eliminar Nota</h5>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-1">¿Estás seguro de que deseas eliminar esta nota?</p>
+                    <p class="font-weight-bold text-muted"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer-dark">
         <div class="footer-section">
@@ -472,15 +494,16 @@ $diasSemana = [
 /**
  * Helper function to calculate luminance for text color contrast
  */
-function getLuminanceValue($hex) {
+function getLuminanceValue($hex)
+{
     // Default to a blue color if none provided
     $hex = $hex ?: '#3498db';
-    
+
     // Convert hex to RGB
     $r = 0;
     $g = 0;
     $b = 0;
-    
+
     // 3 or 6 digits
     if (strlen($hex) === 4) {
         $r = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
@@ -491,12 +514,12 @@ function getLuminanceValue($hex) {
         $g = hexdec(substr($hex, 3, 2));
         $b = hexdec(substr($hex, 5, 2));
     }
-    
+
     // Normalize RGB values
     $r /= 255;
     $g /= 255;
     $b /= 255;
-    
+
     // Calculate luminance
     return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
 }

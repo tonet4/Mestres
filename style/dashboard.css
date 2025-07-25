@@ -411,6 +411,193 @@
     color: #666;
 }
 
+#deleteModal .modal-content-das {
+    width: 500px;
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden !important;
+}
+
+.modal-dialog{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#deleteModal .modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: var(--text-color) !important;
+    border-bottom: none !important;
+    padding: 1.2rem 1.5rem !important;
+}
+
+#deleteModal .modal-title {
+    font-family: "fuente1" !important;
+    font-size: 1.6rem !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+#deleteModal .modal-header .modal-title {
+    color: var(--text-color) !important;
+    font-family: "fuente1" !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+}
+
+#deleteModal .btn-close {
+    opacity: 0.7 !important;
+    width: 30px;
+    height: 30px;
+    border: none;
+    transition: transform 0.2s ease;
+    border-radius: 50%;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    background: none;
+}
+
+#deleteModal .btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg);
+}
+
+#deleteModal .modal-body {
+    padding: 1.8rem !important;
+    background-color: white !important;
+}
+
+#deleteModal .modal-body p {
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+    font-family: var(--font-main) !important;
+    margin-bottom: 0.5rem !important;
+}
+
+#deleteModal .modal-body .font-weight-bold {
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+    font-family: var(--font-main) !important;
+}
+
+#deleteModal .modal-footer {
+    background-color: #f8f9fa !important;
+    border-top: 1px solid var(--border-color) !important;
+    padding: 0.8rem 1rem !important;
+}
+
+#deleteModal .btn-outline-secondary {
+    background-color: #f8f9fa !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    font-family: var(--font-main) !important;
+}
+
+#deleteModal .btn-outline-secondary:hover {
+    background-color: #e9ecef !important;
+    transform: translateY(-2px) !important;
+}
+
+#deleteModal .btn-danger {
+    background-color: red !important;
+    border-color: var(--accent-color) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    font-family: var(--font-main) !important;
+}
+
+#deleteModal .btn-danger:hover {
+    background-color: #f45f5f !important;
+    border-color: #ffc082 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 4px 8px rgba(255, 214, 165, 0.5) !important;
+}
+
+/* Style for the notification modal matching your design */
+#deleteModal .modal-header {
+    color: white !important;
+}
+
+#deleteModal .modal-title {
+    color: white !important;
+}
+
+#deleteModal .btn-close {
+    color: white !important;
+}
+
+/* Backdrop for modal */
+.modal-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1040 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-backdrop.show {
+    opacity: 1 !important;
+}
+
+/* Modal visible state */
+#deleteModal.show {
+    display: block !important;
+    z-index: 1050 !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden !important;
+}
+
+/* Modal animations */
+#deleteModal .modal-content-das {
+    animation: modalSlideIn 0.3s ease-out !important;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px) !important;
+        opacity: 0 !important;
+    }
+    to {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Responsive styles matching your design */
+@media (max-width: 768px) {
+    #deleteModal .modal-header .modal-title {
+        font-size: 1.4rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #deleteModal .modal-title {
+        font-size: 1.2rem !important;
+    }
+    
+    #deleteModal .modal-body {
+        padding: 1.2rem !important;
+    }
+    
+    #deleteModal .modal-footer {
+        padding: 0.8rem 1.2rem !important;
+    }
+}
+
 /* Responsive styles for the dashboard schedule */
 @media screen and (max-width: 768px) {
     .horario-dashboard-header {

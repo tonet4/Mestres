@@ -644,7 +644,7 @@
 }
 
 .btn-danger {
-    background-color: var(--accent-color);
+    background-color: red;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -655,7 +655,7 @@
 }
 
 .btn-danger:hover {
-    background-color: #ff8c7a;
+    background-color: rgb(243, 130, 130);
     transform: translateY(-2px);
 }
 

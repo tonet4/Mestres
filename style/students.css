@@ -289,6 +289,7 @@
 
 /* Buttons */
 .btn-outline-primary {
+    font-family: var(--font-main);
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     background-color: transparent;
@@ -306,6 +307,7 @@
 }
 
 .btn-outline-secondary {
+    font-family: var(--font-main);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     background-color: transparent;
@@ -385,17 +387,6 @@
 }
 
 /* Modal header variants */
-.delete-header {
-    background: var(--accent-color);
-}
-
-.success-header {
-    background: var(--success-color);
-}
-
-.error-header {
-    background: var(--accent-color);
-}
 
 .btn-close {
     background: none;
@@ -506,6 +497,7 @@ textarea.form-control {
 }
 
 .btn-secondary {
+    font-family: var(--font-main);
     background-color: #f8f9fa;
     border: 1px solid var(--border-color);
     color: var(--text-color);
@@ -522,9 +514,13 @@ textarea.form-control {
 }
 
 .btn-danger {
-    background-color: var(--accent-color);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-family: var(--font-main);
+    background-color: red;
     border: none;
-    color: var(--text-color);
+    color: white;
     font-weight: 600;
     padding: 0.6rem 1.5rem;
     border-radius: 12px;
@@ -533,7 +529,7 @@ textarea.form-control {
 }
 
 .btn-danger:hover {
-    background-color: #ffc082;
+    background-color: rgb(227, 131, 131);
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(255, 214, 165, 0.5);
 }
@@ -785,74 +781,148 @@ textarea.form-control {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-    #gruposModal .modal-content {
-        height: 500px;
+    .modal {
+        padding: 10px; 
+        overflow-y: auto; 
     }
     
-    #gruposModal .modal-body {
-        flex-direction: column;
+    .modal-dialog {
+        margin: 0 !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: calc(100vh - 20px) !important;
     }
     
-    #gruposModal .grupo-form {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding-right: 0;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-        order: 1;
-        max-height: 50%;
+    .modal-dialog.modal-wide {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
     }
     
-    #gruposModal .grupos-list {
-        order: 2;
-        max-height: 200px;
-        overflow-y: scroll !important;
+    .modal-content {
+        height: auto !important; 
+        max-height: calc(100vh - 20px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
     }
     
-    .alumnos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    .modal-header {
+        flex-shrink: 0;
+        padding: 1rem !important;
     }
+    
+    .modal-body {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        padding: 1rem !important;
+        -webkit-overflow-scrolling: touch; 
+    }
+    
+    .modal-footer {
+        flex-shrink: 0; 
+        padding: 1rem !important;
+        border-top: 1px solid var(--border-color);
+    }
+    
 
+    #alumnoModal .modal-content {
+        min-height: auto !important;
+    }
+    
+    #alumnoModal .modal-body {
+        max-height: calc(100vh - 140px) !important; 
+    }
+    
     .form-layout {
         grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .form-column {
+        width: 100% !important;
     }
     
     .left-column {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 20px;
-        margin-bottom: 20px;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding-bottom: 20px !important;
+        margin-bottom: 20px !important;
     }
     
-    .card-title {
-        font-size: 1rem;
+    .avatar-preview {
+        width: 80px !important;
+        height: 80px !important;
     }
     
-    .grupo-badge {
-        font-size: 0.75rem;
-        padding: 0.2rem 0.5rem;
+    .form-group {
+        margin-bottom: 15px !important;
     }
     
-    .alumno-actions .btn-link {
-        width: 24px;
-        height: 24px;
-        font-size: 0.75rem;
+    .form-control {
+        padding: 0.7rem !important;
+        font-size: 16px !important; 
     }
     
-    .modal-title {
-        font-size: 1.4rem;
+    textarea.form-control {
+        min-height: 120px !important;
     }
-
-    .action-buttons {
-        flex-direction: column;
-        gap: 5px;
+    
+    /* Ajustar botones */
+    .form-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
     }
-
-    .search-row {
-        flex-direction: column;
+    
+    .form-actions button {
+        width: 100% !important;
+        padding: 0.8rem !important;
     }
 }
 
+@media (max-width: 576px) {
+    .modal {
+        padding: 5px;
+    }
+    
+    .modal-dialog {
+        max-height: calc(100vh - 10px) !important;
+    }
+    
+    .modal-content {
+        max-height: calc(100vh - 10px) !important;
+        border-radius: 8px !important; 
+    }
+    
+    .modal-header {
+        padding: 0.8rem !important;
+    }
+    
+    .modal-body {
+        padding: 0.8rem !important;
+        max-height: calc(100vh - 120px) !important;
+    }
+    
+    .modal-footer {
+        padding: 0.8rem !important;
+    }
+    
+    .modal-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .form-control {
+        min-height: 48px !important;
+    }
+    
+    /* Avatar más pequeño */
+    .avatar-preview {
+        width: 70px !important;
+        height: 70px !important;
+    }
+}
 @media (max-width: 576px) {
     .alumnos-grid {
         grid-template-columns: 1fr; 

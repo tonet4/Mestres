@@ -64,7 +64,7 @@ $usuario_nombre = $_SESSION['user_nombre'];
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fas fa-home"></i> Inicio</a></li>
             <li class="active"><a href="calendario.php"><i class="fas fa-calendar"></i> Calendario</a></li>
-            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnado</a></li>
+            <li><a href="alumnos.php"><i class="fas fa-users"></i> Alumnos-Grupos</a></li>
             <li><a href="reuniones.php"><i class="fas fa-comments"></i> Reuniones</a></li>
             <li><a href="asignaturas.php"><i class="fas fa-book"></i> Asignaturas</a></li>
             <li><a href="asistencias.php"><i class="fas fa-book"></i> Asistencias</a></li>
@@ -126,21 +126,23 @@ $usuario_nombre = $_SESSION['user_nombre'];
                 </div>
             </div>
 
-            <!-- Calendar table -->
-            <table class="calendar-table">
-                <thead>
-                    <tr id="week-day-headers">
-                        <th>Hora</th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miércoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                    </tr>
-                </thead>
-                <tbody id="calendar-table-body">
-                </tbody>
-            </table>
+            <!-- Calendar table wrapper for horizontal scroll -->
+            <div class="calendar-table-wrapper">
+                <table class="calendar-table">
+                    <thead>
+                        <tr id="week-day-headers">
+                            <th>Hora</th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-table-body">
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Bottom panels -->
@@ -243,7 +245,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
     <!--Modal to add/edit events -->
     <div id="event-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <div class="item1">
+                <span class="close-modal">&times;</span>
             <h2 id="event-modal-title" class="modal-title">Añadir Evento</h2>
             <form id="event-form">
                 <input type="hidden" id="event-action" name="action" value="add">
@@ -262,7 +265,8 @@ $usuario_nombre = $_SESSION['user_nombre'];
                     <label for="event-title">Título:</label>
                     <input type="text" id="event-title" name="title" placeholder="Título del evento" required>
                 </div>
-
+            </div>
+            <div class="item2">
                 <div class="form-group">
                     <label for="event-description">Descripción:</label>
                     <textarea id="event-description" name="description" placeholder="Descripción del evento"></textarea>
@@ -286,6 +290,9 @@ $usuario_nombre = $_SESSION['user_nombre'];
                         <input type="color" id="custom-color-picker" class="color-picker" value="#3498db">
                     </div>
                 </div>
+            </div>
+
+                
 
                 <div class="modal-buttons">
                     <button type="button" id="delete-event" class="modal-btn delete">Eliminar</button>

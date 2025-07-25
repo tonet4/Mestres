@@ -155,6 +155,11 @@
         width: 240px;
         max-width: 95vw;
     }
+
+    .event-tooltip-img{
+        width: 40px;
+        height: 40px;
+    }
 }
 
 

@@ -652,7 +652,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.periodos.push(data.periodo);
                   }
 
-                  this.showNotification("Success", data.message, "success");
+                  this.showNotification("Éxito", data.message, "success");
                   this.resetPeriodoForm();
                 } else {
                   this.showNotification("Error", data.message, "error");
@@ -718,7 +718,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.cargarDatos();
                   }
 
-                  this.showNotification("Success", data.message, "success");
+                  this.showNotification("Éxito", data.message, "success");
                 } else {
                   this.showNotification("Error", data.message, "error");
                 }
@@ -833,7 +833,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                   }
                   
-                  this.showNotification("Success", data.message, "success");
+                  this.showNotification("Éxito", data.message, "success");
                   this.closeEvaluacionModal();
                 } else {
                   this.showNotification("Error", data.message, "error");
@@ -906,7 +906,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   // Reset notasFinales as they may change
                   this.notasFinales = {};
 
-                  this.showNotification("Success", data.message, "success");
+                  this.showNotification("Éxito", data.message, "success");
                 } else {
                   this.showNotification("Error", data.message, "error");
                 }

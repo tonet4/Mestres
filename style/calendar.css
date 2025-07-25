@@ -1,3 +1,9 @@
+/**
+ * @author Antonio Esteban Lorenzo
+ * 
+ *
+ *      C A L E N D A R 
+ /
 /* M A I N */
 .calendar-container {
     width: 100%;
@@ -148,11 +154,17 @@
 }
 
 /* C A L E N D A R - T A B L E */
+.calendar-table-wrapper {
+    overflow-x: auto;
+    position: relative;
+}
+
 .calendar-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 3px;
     table-layout: fixed;
+    min-width: 800px;
 }
 
 .calendar-table th {
@@ -358,6 +370,7 @@
 /* M O D A L S */
 .modal {
     display: none;
+    grid-template-columns: 1fr 1fr;
     position: fixed;
     top: 0;
     left: 0;
@@ -370,6 +383,7 @@
 }
 
 .modal-content {
+    display: grid;
     background-color: white;
     margin: 1% auto;
     padding: 30px;
@@ -772,19 +786,19 @@
 }
 
 .hour-action-btn.add-before {
-    color: #4caf50; /* Verde para "añadir antes" */
+    color: #4caf50; 
 }
 
 .hour-action-btn.add {
-    color: #2196f3; /* Azul para "añadir después" */
+    color: #2196f3; 
 }
 
 .hour-action-btn.delete {
-    color: #f44336; /* Rojo para "eliminar" */
+    color: #f44336; 
 }
 
 .action-btn.copy {
-    background-color: #9b59b6; /* Un color púrpura para diferenciar */
+    background-color: #9b59b6; 
 }
 
 .action-btn.copy:hover {
@@ -794,90 +808,117 @@
 /* R E S P O N S I V */
 
 @media screen and (max-width: 768px) {
-        .calendar-table {
-        display: block;
-        width: 100%;
+    .calendar-container {
+        padding: 15px;
+        margin-top: 15px;
+    }
+    
+    /* Wrapper for horizontal scroll */
+    .calendar-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Table with horizontal scroll */
+    .calendar-table {
+        width: auto;
+        min-width: 600px; /* Minimum width to show all columns */
         border-collapse: separate;
         border-spacing: 2px;
     }
     
-    .calendar-table th:not(:first-child):not(:nth-child(2)),
-    .calendar-table td:not(:first-child):not(:nth-child(2)) {
-        display: none;
-    }
-    
-    .calendar-table th:first-child,
-    .calendar-table td:first-child,
-    .calendar-table th:nth-child(2),
-    .calendar-table td:nth-child(2) {
-        display: table-cell;
-    }
-    
+    /* Keep the first column (hours) fixed */
     .calendar-table th:first-child,
     .calendar-table td:first-child {
-        width: 100px;
+        position: sticky;
+        left: 0;
+        z-index: 10;
+        background-color: var(--warning-color);
+        border-right: 2px solid var(--border-color);
+        min-width: 80px;
+        max-width: 80px;
     }
     
-    .calendar-table th:nth-child(2),
-    .calendar-table td:nth-child(2) {
-        width: calc(100% - 100px);
+    .calendar-table th:first-child {
+        background-color: var(--primary-color);
+        color: white;
+        z-index: 11;
+    }
+    
+    /* Day columns */
+    .calendar-table th:not(:first-child),
+    .calendar-table td:not(:first-child) {
+        min-width: 120px;
+        width: 120px;
     }
     
     .calendar-table td {
-        height: 120px;
+        height: 100px;
         vertical-align: top;
     }
     
+    /* Adjustments for hour cell on mobile */
     .hora-calendar {
         flex-direction: column;
         align-items: center;
         justify-content: center;
         height: 100%;
-        padding: 8px 5px;
+        padding: 4px 2px;
         margin: 0;
         border-bottom: none;
     }
     
     .hour-cell {
-        width: 90px;
-        margin-bottom: 8px;
+        width: 75px;
+        margin-bottom: 4px;
         text-align: center;
         background-color: var(--warning-color);
-        border-radius: 6px;
-        padding: 8px 5px;
-        font-size: 0.9rem;
+        border-radius: 4px;
+        padding: 4px 2px;
+        font-size: 0.8rem;
+        line-height: 1.1;
     }
     
     .hour-actions {
         display: flex;
         justify-content: center;
-        margin-top: 8px;
+        margin-top: 4px;
         margin-left: 0;
         width: 100%;
+        gap: 2px;
     }
     
     .hour-action-btn {
-        width: 30px;
-        height: 30px;
-        margin: 0 3px;
+        width: 24px;
+        height: 24px;
+        margin: 0 1px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 0.8rem;
+    }
+    
+    .hour-action-btn.add-before {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #4caf50;
     }
     
     .hour-action-btn.add {
-        background-color: rgba(46, 204, 113, 0.2);
-        color: #2ecc71;
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #2196f3;
     }
     
     .hour-action-btn.delete {
-        background-color: rgba(231, 76, 60, 0.2);
-        color: #e74c3c;
+        background-color: rgba(244, 67, 54, 0.2);
+        color: #f44336;
     }
     
+    /* Calendar cells on mobile */
     .calendar-cell {
-        padding: 8px;
+        padding: 6px;
         height: 100%;
         overflow-y: auto;
     }
@@ -885,39 +926,13 @@
     .calendar-event {
         white-space: normal;
         word-break: break-word;
-        margin-bottom: 8px;
-        padding: 10px;
+        margin-bottom: 4px;
+        padding: 6px;
+        font-size: 0.8rem;
+        line-height: 1.2;
     }
     
-    .day-navigation {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 15px 0;
-        padding: 0 10px;
-    }
-    
-    .day-navigation button {
-        background-color: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-    
-    .day-navigation .current-day {
-        font-size: 1.1rem;
-        font-weight: 600;
-        text-align: center;
-        flex-grow: 1;
-    }
-    
+    /* Calendar header on mobile */
     .calendar-header {
         flex-direction: column;
         align-items: center;
@@ -925,9 +940,10 @@
     }
     
     .calendar-title {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         text-align: center;
         width: 100%;
+        line-height: 1.3;
     }
     
     .calendar-navigation {
@@ -937,81 +953,245 @@
         gap: 10px;
     }
     
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
     .calendar-actions {
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
     }
 
+    /* Views on mobile */
     .calendar-views {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
     }
     
     .calendar-view-btn {
         width: auto;
         margin-bottom: 0;
-        padding: 6px 10px;
+        padding: 8px 12px;
+        min-width: 90px;
     }
     
     .calendar-views h2 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        margin-top: 4px;
     }
     
     .iconos-calendario {
-        width: 45px;
-        height: 45px;
+        width: 35px;
+        height: 35px;
     }
 
+    /* Action buttons on mobile */
     .action-btn {
-        flex: 1;
-        min-width: 120px;
-        max-width: none;
+        width: 100%;
+        max-width: 250px;
         justify-content: center;
         margin-bottom: 5px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
     }
     
+    /* Bottom panels on mobile */
     .bottom-panels {
         flex-direction: column;
+        gap: 15px;
+        margin-top: 25px;
     }
     
     .panel {
-        margin-bottom: 15px;
+        margin-bottom: 0;
         width: 100%;
+        min-width: auto;
     }
     
+    .panel-header {
+        padding: 12px 15px;
+    }
+    
+    .panel-content {
+        padding: 15px;
+    }
+    
+    /* Modal on mobile */
     .modal-content {
-        width: 90%;
-        max-width: 350px;
+        width: 95%;
+        max-width: 400px;
         padding: 20px;
         max-height: 90vh;
         overflow-y: auto;
+        margin: 5% auto;
+    }
+    
+    .modal-title {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
     }
     
     .form-group input[type="text"],
     .form-group input[type="time"],
     .form-group textarea {
-        padding: 12px;
+        padding: 12px 16px;
         font-size: 16px;
     }
     
+    .form-group textarea {
+        height: 100px;
+    }
+    
+    .color-options {
+        gap: 8px;
+    }
+    
     .color-option {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
     }
     
     .modal-buttons {
-        display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 10px;
         margin-top: 20px;
     }
     
     .modal-btn {
+        width: 100%;
         padding: 12px 18px;
-        min-width: 100px;
+        font-size: 1rem;
+    }
+    
+    /* Notes on mobile */
+    .notes-editor,
+    .weekend-editor {
+        min-height: 120px;
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .note-item {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+    
+    .note-text {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+    
+    .note-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+    
+    .edit-note,
+    .delete-note {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .edit-note:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+    
+    .delete-note:hover {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    
+    .btnMas {
+        width: 18px;
+        height: 18px;
+    }
+    
+    /* Form buttons on mobile */
+    .form-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    /* Scroll indicator for mobile */
+    .calendar-table-wrapper::after {
+        content: "← Deslizar para ver más →";
+        display: block;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        color: var(--text-color);
+        opacity: 0.7;
+        background-color: #f8f9fa;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    /* Specific styles for sticky header */
+    @supports (position: sticky) {
+        .calendar-table th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 11;
+        }
+        
+        .calendar-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+        }
+    }
+}
+
+/* Additional styles for tablets */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .calendar-container {
+        padding: 20px;
+    }
+    
+    .calendar-header {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .calendar-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .bottom-panels {
+        gap: 20px;
+    }
+    
+    .panel {
+        min-width: 280px;
     }
 }
